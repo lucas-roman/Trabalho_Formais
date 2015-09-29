@@ -1,16 +1,19 @@
 package test.lexer.grammar;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.grammar.Grammar;
+import main.lexer.grammar.GrammarBuilder;
 import main.lexer.grammar.GrammarSymbol;
 import main.lexer.grammar.NonTerminal;
 import main.lexer.grammar.Terminal;
-import main.lexer.grammar.builder.GrammarBuilder;
+import main.lexer.grammar.exceptions.SameProductionException;
+import main.lexer.grammar.exceptions.StartSymbolMissingException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,13 +24,13 @@ public class TestGrammar {
 	Grammar grammar;
 
 	@Before
-	public void init() {
+	public void init() throws SameProductionException, StartSymbolMissingException {
 		GrammarBuilder builder = new GrammarBuilder();
-		Terminal tA = builder.addTerminal('a');
-		Terminal tB = builder.addTerminal('b');
-		NonTerminal ntS = builder.addNonTerminal('S');
-		NonTerminal ntA =  builder.addNonTerminal('A');
-		NonTerminal ntB =builder.addNonTerminal('B');
+		Terminal tA = builder.addTerminal("a");
+		Terminal tB = builder.addTerminal("b");
+		NonTerminal ntS = builder.addNonTerminal("S");
+		NonTerminal ntA =  builder.addNonTerminal("A");
+		NonTerminal ntB =builder.addNonTerminal("B");
 		List<GrammarSymbol> prodS0 = new ArrayList<GrammarSymbol>();
 		prodS0.add(tA);
 		builder.addProduction(ntS, prodS0);
@@ -56,6 +59,7 @@ public class TestGrammar {
 		List<GrammarSymbol> prodB1 = new ArrayList<GrammarSymbol>();
 		prodB1.add(tB);
 		builder.addProduction(ntA, prodB1);
+		builder.markStartSymbol(ntS);
 		grammar = builder.createGrammar();
 	}
 
@@ -64,6 +68,8 @@ public class TestGrammar {
 		grammar = null;
 	}
 
+	
+	 
 	@Test
 	public void testCreatedAutomata() throws DeterministicException {
 			Automata testAutomata = grammar.createAutomata();
@@ -79,7 +85,7 @@ public class TestGrammar {
 			Assert.assertFalse(testAutomata.accepts("abababaaab"));
 			Assert.assertFalse(testAutomata.accepts("bababaaaaba"));
 			Automata deterministic = testAutomata.convert();
-			Grammar newGrammar = new Grammar(deterministic);
+			Grammar newGrammar = Grammar.convertAutomataToGrammar(deterministic);
 			testAutomata = newGrammar.createAutomata();
 			Assert.assertTrue(testAutomata.accepts(""));
 			Assert.assertTrue(testAutomata.accepts("a"));
@@ -93,5 +99,5 @@ public class TestGrammar {
 			Assert.assertFalse(testAutomata.accepts("abababaaab"));
 			Assert.assertFalse(testAutomata.accepts("bababaaaaba"));
 	}
-
+	
 }
