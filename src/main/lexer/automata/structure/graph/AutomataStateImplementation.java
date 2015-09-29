@@ -8,6 +8,9 @@ import java.util.Set;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 
+/*
+ * This class represents a state as a graph unit. Please check interface documentation.
+ */
 class AutomataStateImplementation implements AutomataState {
 
 	/*

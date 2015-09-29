@@ -9,11 +9,14 @@ import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
 
 
-
-public class NonDeterministicAutomata implements Automata, Converteable {
+/*
+ * Non deterministic automata. This is what you get when you convert a grammar, for example. Should always become a Deterministic Automata.
+ */
+public class NonDeterministicAutomata implements Automata {
 
 	private AutomataStructure stateImpl;
 
+	//Creates a Non Deterministic Automata from the given structure.
 	public NonDeterministicAutomata(AutomataStructure stateManager)  {
 		stateImpl = stateManager;
 	}

@@ -11,6 +11,9 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 
+/*
+ * A graph implementation for the structure.
+ */
 class AutomataStructureGraphImplementation implements AutomataStructure {
 	
 	private int size = 0;
@@ -63,12 +66,9 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 		stateFrom.addEpslonTransition(stateTo);
 	}
 	
-	public void markAcceptState(String string) throws InvalidStateException, InitialStateMissingException {
+	public void markAcceptState(String string) throws InvalidStateException {
 		if (!states.containsKey(string)) {
 			throw new InvalidStateException();
-		}
-		if (initialState == null) {
-			throw new InitialStateMissingException();
 		}
 		AutomataState state = states.get(string);
 		state.markAsAccept();

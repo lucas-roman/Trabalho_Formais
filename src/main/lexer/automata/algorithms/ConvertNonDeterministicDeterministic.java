@@ -17,6 +17,7 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
+//Converts a non deterministic automata to a deterministic automata.
 public class ConvertNonDeterministicDeterministic {
 
 	private Map<Set<AutomataState>, String> states;
@@ -26,6 +27,7 @@ public class ConvertNonDeterministicDeterministic {
 	private AutomataBuilder builder;
 	int id = 1;
 
+	//Calculates the new automata.
 	public ConvertNonDeterministicDeterministic(
 			NonDeterministicAutomata nonDeterministic) {
 		this.states = new HashMap<>();
@@ -94,6 +96,7 @@ public class ConvertNonDeterministicDeterministic {
 
 	}
 
+	//Returns the new deterministic automata.
 	public Automata convert() throws InitialStateMissingException, MissingStateException, IllegalAutomataException {
 		return builder.build();
 	}

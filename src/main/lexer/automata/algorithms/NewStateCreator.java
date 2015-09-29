@@ -6,7 +6,8 @@ import java.util.Set;
 
 import main.lexer.automata.structure.graph.AutomataState;
 
-public class NewStateCreator {
+//Should be used by the convert to calculate the transitions for new states.
+class NewStateCreator {
 	
 	private Set<AutomataState> stateSet;
 	
@@ -16,6 +17,7 @@ public class NewStateCreator {
 	
 	private static Map<Set<AutomataState>, NewStateCreator> instances = new HashMap<>();
 	
+	//Returns instances of this class.
 	public static NewStateCreator create(Set<AutomataState> stateSet) {
 		if(!instances.containsKey(stateSet)) {
 			instances.put(stateSet, new NewStateCreator(stateSet));
@@ -57,14 +59,17 @@ public class NewStateCreator {
 		}
 	}
 	
+	//Returns the set of the states which represents the new state.
 	public Set<AutomataState> getSymbolicState() {
 		return stateSet;
 	}
 	
+	//Returns the transitions of the new state.
 	public Map<Character, Set<AutomataState>> getSymbolicStateTransitions() {
 		return newStateMap;
 	}
 	
+	//Returns true if the new state is an accept state. False otherwise.
 	public boolean accepts() {
 		return accepts;
 	}

@@ -1,5 +1,9 @@
 package main.lexer.automata.structure.graph;
 
+
+/*
+ * Simple implementation. One state accepts, the other rejects. Used by states of the graph.
+ */
 public interface DecisionStrategyInterface {
 	
 	public boolean decide();

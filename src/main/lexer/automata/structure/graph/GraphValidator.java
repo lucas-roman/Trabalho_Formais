@@ -2,6 +2,9 @@ package main.lexer.automata.structure.graph;
 
 import java.util.Set;
 
+/*
+ * This class should be used to count the number of elements a graph has.
+ */
 public class GraphValidator {
 	
 	private Set<GraphUnit> visit;

@@ -98,13 +98,11 @@ class InvalidState implements AutomataState {
 
 	@Override
 	public boolean epslonAccept() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean accepts() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
