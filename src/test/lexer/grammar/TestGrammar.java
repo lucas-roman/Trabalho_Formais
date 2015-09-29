@@ -32,6 +32,7 @@ public class TestGrammar {
 		builder.addNonTerminal("B");
 		builder.addProduction(builder.getNonTerminalOf("S"),
 				builder.getTerminalOf('a'));
+		builder.addEmptyWord();
 		builder.addProduction(builder.getNonTerminalOf("S"),
 				builder.getTerminalOf('a'), builder.getNonTerminalOf("A"));
 		builder.addProduction(builder.getNonTerminalOf("S"),
@@ -65,6 +66,7 @@ public class TestGrammar {
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException {
 		Automata testAutomata = grammar.createAutomata().convert();
+		Assert.assertTrue(testAutomata.accepts(""));
 		Assert.assertTrue(testAutomata.accepts("a"));
 		Assert.assertTrue(testAutomata.accepts("b"));
 		Assert.assertTrue(testAutomata.accepts("abba"));

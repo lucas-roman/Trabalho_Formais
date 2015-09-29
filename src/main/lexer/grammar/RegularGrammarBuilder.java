@@ -15,12 +15,16 @@ public class RegularGrammarBuilder {
 
 	private NonTerminal startSymbol;
 
+	private boolean emptyWord = false;
+
 	public RegularGrammar createGrammar() throws StartSymbolMissingException {
 		if(startSymbol == null) {
 			throw new StartSymbolMissingException();
 		}
-		return new RegularGrammar(nonTermMap.values(), termMap.values(), 
+		RegularGrammar rg = new RegularGrammar(nonTermMap.values(), termMap.values(), 
 				startSymbol);
+		rg.emptyWordEnable(emptyWord);
+		return rg;
 	}
 
 	public void markStartSymbol(NonTerminal nT) {
@@ -51,22 +55,24 @@ public class RegularGrammarBuilder {
 		return nonTermMap.get(term);
 	}
 
-	public void addProduction(NonTerminal head, Terminal symbol1, NonTerminal symbol2)
-			throws SameProductionException {
+	public void addProduction(NonTerminal head, Terminal symbol1, NonTerminal symbol2) {
 		head.addProduction(symbol1, symbol2);
 
 	}
 	
-	public void addProduction(NonTerminal head, Terminal symbol1)
-			throws SameProductionException {
+	public void addProduction(NonTerminal head, Terminal symbol1) {
 		head.addProduction(symbol1);
 
 	}
 	
-	public void addProduction(NonTerminal head, NonTerminal symbol1)
-			throws SameProductionException {
+	public void addProduction(NonTerminal head, NonTerminal symbol1) {
 		head.addProduction(symbol1);
 
+	}
+
+	//Let the automata recognize the empty word.
+	public void addEmptyWord() {
+		emptyWord  = true;
 	}
 
 

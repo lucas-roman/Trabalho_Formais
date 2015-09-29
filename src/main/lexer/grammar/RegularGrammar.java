@@ -21,6 +21,8 @@ public class RegularGrammar {
 
 	private NonTerminal startSymbol;
 
+	private boolean emptyWord = false;
+
 	// Takes an automata and creates a grammar. To implement.
 	public static RegularGrammar convertAutomataToGrammar(Automata deterministic) {
 		RegularGrammarBuilder builder = new RegularGrammarBuilder();
@@ -43,8 +45,10 @@ public class RegularGrammar {
 				new AutomataStructureGraphFactory());
 		builder.addState("Final");
 		builder.markAcceptState("Final");
+		for(NonTerminal state : nonTerminalSymbols) {
+			builder.addState(state.getSymbolValue());
+		}
 		for (NonTerminal currentState : nonTerminalSymbols) {
-			builder.addState(currentState.getSymbolValue());
 			for (RegularProduction p : currentState.getProductions()) {
 				if (p.lastProduction()) {
 					builder.addTransition(currentState.getSymbolValue(),
@@ -59,7 +63,14 @@ public class RegularGrammar {
 			}
 		}
 		builder.markInitialState(startSymbol.getSymbolValue());
+		if(emptyWord) {
+			builder.markAcceptState(startSymbol.getSymbolValue());
+		}
 		return builder.build();
+	}
+
+	void emptyWordEnable(boolean emptyWord) {
+		this.emptyWord  = emptyWord;
 	}
 
 }
