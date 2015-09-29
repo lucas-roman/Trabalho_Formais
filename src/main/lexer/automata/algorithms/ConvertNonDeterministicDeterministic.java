@@ -61,7 +61,6 @@ public class ConvertNonDeterministicDeterministic {
 		} catch (InvalidStateException e) {
 		} catch (MissingStateException e) {
 
-		} catch (InitialStateMissingException e) {
 		}
 
 	}

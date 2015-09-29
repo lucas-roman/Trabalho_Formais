@@ -7,19 +7,19 @@ import java.util.Map;
 import main.lexer.grammar.exceptions.SameProductionException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
 
-public class GrammarBuilder {
+public class RegularGrammarBuilder {
 
 	private Map<String, NonTerminal> nonTermMap = new HashMap<>();
 
-	private Map<String, Terminal> termMap = new HashMap<>();
+	private Map<Character, Terminal> termMap = new HashMap<>();
 
 	private NonTerminal startSymbol;
 
-	public Grammar createGrammar() throws StartSymbolMissingException {
+	public RegularGrammar createGrammar() throws StartSymbolMissingException {
 		if(startSymbol == null) {
 			throw new StartSymbolMissingException();
 		}
-		return new Grammar(nonTermMap.values(), termMap.values(), 
+		return new RegularGrammar(nonTermMap.values(), termMap.values(), 
 				startSymbol);
 	}
 
@@ -27,7 +27,7 @@ public class GrammarBuilder {
 		startSymbol = nT;
 	}
 
-	public Terminal addTerminal(String value) {
+	public Terminal addTerminal(char value) {
 		if (!termMap.containsKey(value)) {
 			Terminal newT = new Terminal(value);
 			termMap.put(value, newT);
@@ -43,7 +43,7 @@ public class GrammarBuilder {
 		return nonTermMap.get(c);
 	}
 	
-	public Terminal getTerminalOf(String term) {
+	public Terminal getTerminalOf(char term) {
 		return termMap.get(term);
 	}
 	
@@ -51,9 +51,21 @@ public class GrammarBuilder {
 		return nonTermMap.get(term);
 	}
 
-	public void addProduction(NonTerminal head, List<GrammarSymbol> production)
+	public void addProduction(NonTerminal head, Terminal symbol1, NonTerminal symbol2)
 			throws SameProductionException {
-		head.addTransition(production);
+		head.addProduction(symbol1, symbol2);
+
+	}
+	
+	public void addProduction(NonTerminal head, Terminal symbol1)
+			throws SameProductionException {
+		head.addProduction(symbol1);
+
+	}
+	
+	public void addProduction(NonTerminal head, NonTerminal symbol1)
+			throws SameProductionException {
+		head.addProduction(symbol1);
 
 	}
 

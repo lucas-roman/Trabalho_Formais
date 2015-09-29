@@ -94,8 +94,7 @@ public class AutomataBuilder {
 	}
 
 	//Marks the state as an accept state. If it is invalid, throws an InvalidStateException.
-	public void markAcceptState(String string) throws InvalidStateException,
-			InitialStateMissingException {
+	public void markAcceptState(String string) throws InvalidStateException {
 		structure.markAcceptState(string);
 	}
 

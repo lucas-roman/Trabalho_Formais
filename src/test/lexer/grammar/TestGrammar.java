@@ -1,17 +1,15 @@
 package test.lexer.grammar;
 
-import java.util.ArrayList;
-
-import java.util.List;
-
 import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.DeterministicException;
-import main.lexer.grammar.Grammar;
-import main.lexer.grammar.GrammarBuilder;
-import main.lexer.grammar.GrammarSymbol;
-import main.lexer.grammar.NonTerminal;
-import main.lexer.grammar.Terminal;
+import main.lexer.automata.exceptions.IllegalAutomataException;
+import main.lexer.automata.exceptions.InitialStateMissingException;
+import main.lexer.automata.exceptions.InvalidStateException;
+import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.OverrideInitialStateException;
+import main.lexer.grammar.RegularGrammar;
+import main.lexer.grammar.RegularGrammarBuilder;
 import main.lexer.grammar.exceptions.SameProductionException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
 
@@ -21,45 +19,38 @@ import org.junit.Test;
 
 public class TestGrammar {
 
-	Grammar grammar;
+	RegularGrammar grammar;
 
 	@Before
-	public void init() throws SameProductionException, StartSymbolMissingException {
-		GrammarBuilder builder = new GrammarBuilder();
-		Terminal tA = builder.addTerminal("a");
-		Terminal tB = builder.addTerminal("b");
-		NonTerminal ntS = builder.addNonTerminal("S");
-		NonTerminal ntA =  builder.addNonTerminal("A");
-		NonTerminal ntB =builder.addNonTerminal("B");
-		List<GrammarSymbol> prodS0 = new ArrayList<GrammarSymbol>();
-		prodS0.add(tA);
-		builder.addProduction(ntS, prodS0);
-		List<GrammarSymbol> prodS1 = new ArrayList<GrammarSymbol>();
-		prodS1.add(tA);
-		prodS1.add(ntA);
-		builder.addProduction(ntS, prodS1);
-		List<GrammarSymbol> prodS2 = new ArrayList<GrammarSymbol>();
-		prodS2.add(tB);
-		builder.addProduction(ntS, prodS2);
-		List<GrammarSymbol> prodS3 = new ArrayList<GrammarSymbol>();
-		prodS3.add(tB);
-		prodS3.add(ntB);
-		builder.addProduction(ntS, prodS3);
-		List<GrammarSymbol> prodA0 = new ArrayList<GrammarSymbol>();
-		prodA0.add(tA);
-		prodA0.add(ntA);
-		builder.addProduction(ntA, prodA0);
-		List<GrammarSymbol> prodA1 = new ArrayList<GrammarSymbol>();
-		prodA1.add(tA);
-		builder.addProduction(ntA, prodA1);
-		List<GrammarSymbol> prodB0 = new ArrayList<GrammarSymbol>();
-		prodB0.add(tB);
-		prodB0.add(ntB);
-		builder.addProduction(ntA, prodB0);
-		List<GrammarSymbol> prodB1 = new ArrayList<GrammarSymbol>();
-		prodB1.add(tB);
-		builder.addProduction(ntA, prodB1);
-		builder.markStartSymbol(ntS);
+	public void init() throws SameProductionException,
+			StartSymbolMissingException {
+		RegularGrammarBuilder builder = new RegularGrammarBuilder();
+		builder.addTerminal('a');
+		builder.addTerminal('b');
+		builder.addNonTerminal("S");
+		builder.addNonTerminal("A");
+		builder.addNonTerminal("B");
+		builder.addProduction(builder.getNonTerminalOf("S"),
+				builder.getTerminalOf('a'));
+		builder.addProduction(builder.getNonTerminalOf("S"),
+				builder.getTerminalOf('a'), builder.getNonTerminalOf("A"));
+		builder.addProduction(builder.getNonTerminalOf("S"),
+				builder.getTerminalOf('b'));
+		builder.addProduction(builder.getNonTerminalOf("S"),
+				builder.getTerminalOf('b'), builder.getNonTerminalOf("B"));
+		builder.addProduction(builder.getNonTerminalOf("A"),
+				builder.getTerminalOf('a'), builder.getNonTerminalOf("A"));
+		builder.addProduction(builder.getNonTerminalOf("A"),
+				builder.getTerminalOf('b'), builder.getNonTerminalOf("A"));
+		builder.addProduction(builder.getNonTerminalOf("A"),
+				builder.getTerminalOf('a'));
+		builder.addProduction(builder.getNonTerminalOf("B"),
+				builder.getTerminalOf('b'), builder.getNonTerminalOf("B"));
+		builder.addProduction(builder.getNonTerminalOf("B"),
+				builder.getTerminalOf('b'));
+		builder.addProduction(builder.getNonTerminalOf("B"),
+				builder.getTerminalOf('a'), builder.getNonTerminalOf("B"));
+		builder.markStartSymbol(builder.getNonTerminalOf("S"));
 		grammar = builder.createGrammar();
 	}
 
@@ -68,36 +59,22 @@ public class TestGrammar {
 		grammar = null;
 	}
 
-	
-	 
 	@Test
-	public void testCreatedAutomata() throws DeterministicException {
-			Automata testAutomata = grammar.createAutomata();
-			Assert.assertTrue(testAutomata.accepts(""));
-			Assert.assertTrue(testAutomata.accepts("a"));
-			Assert.assertTrue(testAutomata.accepts("b"));
-			Assert.assertTrue(testAutomata.accepts("abba"));
-			Assert.assertTrue(testAutomata.accepts("baabbababbab"));
-			Assert.assertTrue(testAutomata.accepts("aa"));
-			Assert.assertTrue(testAutomata.accepts("bb"));
-			Assert.assertFalse(testAutomata.accepts("ab"));
-			Assert.assertFalse(testAutomata.accepts("ba"));
-			Assert.assertFalse(testAutomata.accepts("abababaaab"));
-			Assert.assertFalse(testAutomata.accepts("bababaaaaba"));
-			Automata deterministic = testAutomata.convert();
-			Grammar newGrammar = Grammar.convertAutomataToGrammar(deterministic);
-			testAutomata = newGrammar.createAutomata();
-			Assert.assertTrue(testAutomata.accepts(""));
-			Assert.assertTrue(testAutomata.accepts("a"));
-			Assert.assertTrue(testAutomata.accepts("b"));
-			Assert.assertTrue(testAutomata.accepts("abba"));
-			Assert.assertTrue(testAutomata.accepts("baabbababbab"));
-			Assert.assertTrue(testAutomata.accepts("aa"));
-			Assert.assertTrue(testAutomata.accepts("bb"));
-			Assert.assertFalse(testAutomata.accepts("ab"));
-			Assert.assertFalse(testAutomata.accepts("ba"));
-			Assert.assertFalse(testAutomata.accepts("abababaaab"));
-			Assert.assertFalse(testAutomata.accepts("bababaaaaba"));
+	public void testCreatedAutomata() throws DeterministicException,
+			MissingStateException, OverrideInitialStateException,
+			InvalidStateException, InitialStateMissingException,
+			IllegalAutomataException {
+		Automata testAutomata = grammar.createAutomata().convert();
+		Assert.assertTrue(testAutomata.accepts("a"));
+		Assert.assertTrue(testAutomata.accepts("b"));
+		Assert.assertTrue(testAutomata.accepts("abba"));
+		Assert.assertTrue(testAutomata.accepts("baabbababbab"));
+		Assert.assertTrue(testAutomata.accepts("aa"));
+		Assert.assertTrue(testAutomata.accepts("bb"));
+		Assert.assertFalse(testAutomata.accepts("ab"));
+		Assert.assertFalse(testAutomata.accepts("ba"));
+		Assert.assertFalse(testAutomata.accepts("abababaaab"));
+		Assert.assertFalse(testAutomata.accepts("bababaaaaba"));
 	}
-	
+
 }

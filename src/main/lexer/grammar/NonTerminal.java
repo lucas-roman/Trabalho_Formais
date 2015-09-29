@@ -9,7 +9,7 @@ public class NonTerminal implements GrammarSymbol {
 
 	private String value;
 	
-	private List<Production> transitions = new ArrayList<>();
+	private List<RegularProduction> transitions = new ArrayList<>();
 
 	public NonTerminal(String c) {
 		value = c;
@@ -20,16 +20,23 @@ public class NonTerminal implements GrammarSymbol {
 		return value;
 	}
 
-	public void addTransition(List<GrammarSymbol> trans) throws SameProductionException {
-		if(transitions.contains(trans)) {
-			throw new SameProductionException();
-		}
-		transitions.add(new Production(trans));
+	public Iterable<RegularProduction> getProductions() {
+		return transitions;
 	}
 
-	@Override
-	public boolean isTerminal() {
-		return false;
+	public void addProduction(NonTerminal symbol1) {
+		RegularProduction rp = new RegularProduction(symbol1);
+		transitions.add(rp);
+	}
+	
+	public void addProduction(Terminal symbol1) {
+		RegularProduction rp = new RegularProduction(symbol1);
+		transitions.add(rp);
+	}
+	 
+	public void addProduction(Terminal term, NonTerminal symbol1) {
+		RegularProduction rp = new RegularProduction(term, symbol1);
+		transitions.add(rp);
 	}
 	
 }
