@@ -69,8 +69,14 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 		AutomataState stateTo = states.get(to);
 		stateFrom.addEpslonTransition(stateTo);
 	}
-
+<<<<<<< HEAD
+	
 	public void markAcceptState(String string) throws InvalidStateException {
+=======
+
+	@Override
+	public void markAcceptState(String string) throws InvalidStateException, InitialStateMissingException {
+>>>>>>> fc433f8ab1851ddb399d9e18fcbfe6b00e0160c4
 		if (!states.containsKey(string)) {
 			throw new InvalidStateException();
 		}

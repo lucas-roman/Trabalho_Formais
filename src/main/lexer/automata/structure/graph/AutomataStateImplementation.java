@@ -36,12 +36,14 @@ class AutomataStateImplementation implements AutomataState {
 		_decisionType = new DecisionStrategyInterface.DecisionRejectStrategy();
 	}
 
+	@Override
 	public void addTransition(AutomataState nextState, char transition)
 			throws InvalidStateException {
 		nextState.checkValidState();
 		nextState(transition).add(nextState);
 	}
 
+	@Override
 	public void addEpslonTransition(AutomataState to)
 			throws InvalidStateException {
 		to.checkValidState();
@@ -54,8 +56,9 @@ class AutomataStateImplementation implements AutomataState {
 	}
 
 	/*
-	 * Method should remain empty
+	 * This method should remain empty
 	 */
+	@Override
 	public void checkValidState() throws InvalidStateException {
 	}
 
@@ -83,21 +86,17 @@ class AutomataStateImplementation implements AutomataState {
 		epslonClosure(newVisit);
 		return newVisit;
 	}
-	
+
+	@Override
 	public void epslonClosure(Set<AutomataState> visited) {
 		visited.add(this);
 		recursivelyGetEpslonClosure(visited);
 	}
-	
-	
-	
+
 	@Override
 	public void markAsAccept() {
 		_decisionType = new DecisionStrategyInterface.DecisionAcceptStrategy();
 	}
-	
-	
-
 
 	@Override
 	public Set<AutomataState> nextStateOfEpslonClosure(char c) {
@@ -115,10 +114,11 @@ class AutomataStateImplementation implements AutomataState {
 		}
 	}
 
+	@Override
 	public String toString() {
 		return name;
 	}
-	
+
 	@Override
 	public Set<GraphUnit> nextStatesOfGraph() {
 		Set<GraphUnit> returnSet = new HashSet<>();
@@ -132,8 +132,7 @@ class AutomataStateImplementation implements AutomataState {
 		}
 		return returnSet;
 	}
-	
-	
+
 	@Override
 	public boolean epslonAccept() {
 		Set<AutomataState> epslon = epslonClosure();
@@ -144,32 +143,23 @@ class AutomataStateImplementation implements AutomataState {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public Set<Character> getTransitions() {
 		return nextStates.keySet();
 	}
-	
+
 	@Override
 	public boolean accepts() {
 		return _decisionType.decide();
 	}
-	
-	
+
 
 	/*
-	 * 
-	 * =================================================================================================================================
-	 * =================================================================================================================================
 	 * =================================================================================================================================
 	 * Private Methods
 	 * =================================================================================================================================
-	 * =================================================================================================================================
-	 * =================================================================================================================================
-	 * 
 	 */
-
-	
 	private boolean processRestOfWordByEpslonClosure(String word, int index) {
 		for (AutomataState possibility : nextStateOfEpslonClosure(word
 				.charAt(index++))) {
@@ -179,14 +169,10 @@ class AutomataStateImplementation implements AutomataState {
 		}
 		return false;
 	}
-	
-	
 
 	private boolean isLastCharacterOfWord(String word, int index) {
 		return index == word.length();
 	}
-	
-	
 
 	private void recursivelyGetEpslonClosure(Set<AutomataState> visited) {
 		for (AutomataState reachableByEp : statesByEpslon) {
@@ -196,13 +182,10 @@ class AutomataStateImplementation implements AutomataState {
 		}
 	}
 
-	
-
-	
 	private boolean hasEpslonTransition() {
 		return statesByEpslon.size() > 0;
 	}
-	
+
 	private boolean moreThanOneStateBySameTransition() {
 		for(Set<AutomataState> trans : nextStates.values()) {
 			if(trans.size() > 1)
@@ -214,7 +197,7 @@ class AutomataStateImplementation implements AutomataState {
 
 
 
-	
-	
+
+
 
 }
