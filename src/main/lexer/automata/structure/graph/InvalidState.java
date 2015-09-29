@@ -32,16 +32,16 @@ class InvalidState implements AutomataState {
 			throws InvalidStateException {
 		throw new InvalidStateException();
 	}
-	
+
+	@Override
 	public void addEpslonTransition(AutomataState to) throws InvalidStateException {
 		throw new InvalidStateException();
 	}
-	
+
 	@Override
 	public void checkValidState() throws InvalidStateException {
 		throw new InvalidStateException();
 	}
-
 
 	@Override
 	public boolean process(String string, int index) {
@@ -73,7 +73,7 @@ class InvalidState implements AutomataState {
 	@Override
 	public void markAsAccept() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -107,6 +107,4 @@ class InvalidState implements AutomataState {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
 }

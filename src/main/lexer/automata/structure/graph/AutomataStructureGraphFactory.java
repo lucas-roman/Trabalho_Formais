@@ -9,7 +9,4 @@ public class AutomataStructureGraphFactory implements AutomataStructureFactory{
 	public AutomataStructure createAutomataStructure() {
 		return new AutomataStructureGraphImplementation();
 	}
-	
-	
-
 }
