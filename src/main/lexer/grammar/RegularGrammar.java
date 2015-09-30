@@ -10,7 +10,6 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
-import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
@@ -40,6 +39,17 @@ public class RegularGrammar {
 		}
 		return null;
 	}
+	
+	/*
+	    * Ideia:
+	    * if(destino.accepts())	//É estado final, adiciona uma produção pelo terminal
+	    * 	Terminal term = new Terminal(c);
+	    * 	build.addProduction(state, c);
+	    * else	//Não é final, adiciona o terminal e não terminal (estado destino)
+	    * 	Terminal term = new Terminal(c);
+	    * 	NonTerminal nt = new NonTerminal(estadoDestino.getNome());
+	    * 	builder.addProduction(state, term, nt);
+	    */
 
 	RegularGrammar(Collection<NonTerminal> nonTerminalSymb, Collection<Terminal> terminalSymb, NonTerminal startSymbol) {
 		nonTerminalSymbols = new HashSet<>(nonTerminalSymb);

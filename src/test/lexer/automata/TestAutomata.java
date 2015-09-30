@@ -10,6 +10,8 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
+import main.lexer.automata.structure.AutomataStructure;
+import main.lexer.automata.structure.factory.AutomataStructureFactory;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 import org.junit.After;
@@ -133,6 +135,37 @@ public class TestAutomata {
 	@Test(expected=DeterministicException.class)
 	public void testFailDeterministicToDeterministicConvert() throws DeterministicException {
 		deterministicAutomata.convert();
+	}
+	
+	@Test
+	public void testSize() throws InitialStateMissingException,
+			IllegalAutomataException, MissingStateException,
+			InvalidStateException, OverrideInitialStateException {
+		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
+		builder.addState("q0");
+		builder.addState("q1");
+		builder.addState("q2");
+		builder.addState("q3");
+		builder.addState("q4");
+		builder.addState("q5");
+		builder.markInitialState("q0");
+		builder.addTransition("q0", "q1", 'a');
+		builder.addTransition("q0", "q2", 'b');
+		builder.addTransition("q1", "q2", 'a');
+		builder.addTransition("q2", "q3", 'a');
+		builder.addTransition("q3", "q4", 'a');
+		builder.addTransition("q4", "q5", 'a');
+		builder.addTransition("q5", "q1", 'a');
+		Automata aut = builder.build();
+		Assert.assertEquals(aut.getStates().size(), 6);
+		builder.addState("q6");
+		builder.addState("q7");
+		builder.addState("q8");
+		builder.addTransition("q0", "q6", 'a');
+		builder.addEmptyTransition("q0", "q7");
+		builder.addTransition("q7", "q8", 'a');
+		aut = builder.build();
+		Assert.assertEquals(aut.getStates().size(), 9);
 	}
 
 }

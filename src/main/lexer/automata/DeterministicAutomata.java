@@ -7,24 +7,23 @@ import main.lexer.automata.structure.AutomataStructure;
 /*
  * Deterministic automata. Prefer this over non deterministic automata for performance.
  */
-public class DeterministicAutomata implements Automata{
+public class DeterministicAutomata extends AutomataSkeleton{
 	
 	
-	private AutomataStructure stateImpl;
+	
 
 	//Creates a Deterministic Automata passing a structure to it.
-	public DeterministicAutomata(AutomataStructure stateManager) {
-		stateImpl = stateManager;
+	public DeterministicAutomata(AutomataStructure structure) {
+		super(structure);
 	}
 	
-	@Override
-	public boolean accepts(String string) {
-		return stateImpl.check(string);
-	}
+
 
 	@Override
 	public Automata convert() throws DeterministicException {
 		throw new DeterministicException();
 	}
+
+
 
 }

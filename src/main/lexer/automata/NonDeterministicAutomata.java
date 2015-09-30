@@ -1,5 +1,7 @@
 package main.lexer.automata;
 
+import java.util.Set;
+
 import main.lexer.automata.algorithms.ConvertNonDeterministicDeterministic;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
@@ -12,19 +14,13 @@ import main.lexer.automata.structure.graph.AutomataState;
 /*
  * Non deterministic automata. This is what you get when you convert a grammar, for example. Should always become a Deterministic Automata.
  */
-public class NonDeterministicAutomata implements Automata {
-
-	private AutomataStructure stateImpl;
+public class NonDeterministicAutomata extends AutomataSkeleton {
 
 	//Creates a Non Deterministic Automata from the given structure.
-	public NonDeterministicAutomata(AutomataStructure stateManager)  {
-		stateImpl = stateManager;
+	public NonDeterministicAutomata(AutomataStructure struct)  {
+		super(struct);
 	}
 
-	@Override
-	public boolean accepts(String string) {
-		return stateImpl.check(string);
-	}
 
 	//Returns a deterministic automata which accepts the same language as this non deterministic automata. If it fails, it returns itself (NonDeterministic).
 	@Override
@@ -37,9 +33,16 @@ public class NonDeterministicAutomata implements Automata {
 			return this;
 		}
 	}
-
-	public AutomataState initialState() {
-		return stateImpl.automataInitialState();
+	
+	
+	protected void calculateStates(AutomataState state,
+			Set<AutomataState> returnValue) {
+		super.calculateStates(state, returnValue);
+		for(AutomataState stat : state.epslonClosure()) {
+			if(!returnValue.contains(stat)) {
+				calculateStates(stat, returnValue);
+			}
+		}
 	}
 
 }
