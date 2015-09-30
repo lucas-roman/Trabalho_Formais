@@ -79,15 +79,8 @@ public class ConvertNonDeterministicDeterministic {
 		try {
 			
 			builder.addState("q0");
-			builder.markInitialState("q0");
 			states.put(state, "q0");
 			calculateStates(state);
-		} catch (MissingStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OverrideInitialStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (InvalidStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

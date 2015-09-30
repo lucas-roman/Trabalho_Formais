@@ -20,14 +20,14 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 
 	private AutomataStateImplementation initialState = null;
 
-	private Map<String, AutomataStateImplementation> states;
+	private Map<Integer, AutomataStateImplementation> states;
 
 	public AutomataStructureGraphImplementation() {
 		states = new HashMap<>();
 	}
 
 	@Override
-	public void addTransition(String from, String to, char trans) throws InvalidStateException, MissingStateException, NonDeterministicException {
+	public void addTransition(int from, int to, char trans) throws InvalidStateException, MissingStateException, NonDeterministicException {
 		AutomataStateImplementation stateFrom = states.get(from);
 		AutomataStateImplementation stateTo = states.get(to);
 		if(stateFrom == null || stateTo == null) {
@@ -38,14 +38,8 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 	}
 
 	@Override
-	public AutomataState createState(String stateName) throws InvalidStateException {
-		AutomataStateImplementation state;
-		if (stateName == null || stateName.equals("")) {
-			throw new InvalidStateException();
-		}
-		else {
-			state =  new AutomataStateImplementation(stateName);
-		}
+	public AutomataState createState(int stateName) {
+		AutomataStateImplementation state =  new AutomataStateImplementation(stateName);
 		size++;
 		if(initialState == null) {
 			initialState = state;
@@ -63,13 +57,14 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 	}
 
 	@Override
-	public void addEpslonTransition(String from, String to) throws InvalidStateException {
+	public void addEpslonTransition(int from, int to) throws InvalidStateException {
 		AutomataStateImplementation stateFrom = states.get(from);
 		AutomataStateImplementation stateTo = states.get(to);
 		stateFrom.addEpslonTransition(stateTo);
 	}
 
-	public void markAcceptState(String string) throws InvalidStateException {
+	@Override
+	public void markAcceptState(int string) throws InvalidStateException {
 		if (!states.containsKey(string)) {
 			throw new InvalidStateException();
 		}
@@ -78,7 +73,7 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 	}
 
 	@Override
-	public void markInitialState(String s) throws MissingStateException  {
+	public void markInitialState(int s) throws MissingStateException  {
 		AutomataStateImplementation state = states.get(s);
 		if(state == null) {
 			throw new MissingStateException();

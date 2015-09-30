@@ -33,7 +33,6 @@ public class TestAutomata {
 		AutomataBuilder deterministicBuilder = new AutomataBuilder(
 				new AutomataStructureGraphFactory());
 		deterministicBuilder.addState("q0").addState("q1").addState("q2");
-		deterministicBuilder.markInitialState("q0");
 		deterministicBuilder.markAcceptState("q0");
 		deterministicBuilder.addState("q3").addState("q4");
 		deterministicBuilder.markAcceptState("q1");
@@ -59,7 +58,6 @@ public class TestAutomata {
 				new AutomataStructureGraphFactory());
 		builder.addState("q0").addState("S").addState("A").addState("B")
 				.addState("F");
-		builder.markInitialState("q0");
 		builder.markAcceptState("q0");
 		builder.markAcceptState("F");
 		builder.addEmptyTransition("q0", "S");
@@ -148,7 +146,6 @@ public class TestAutomata {
 		builder.addState("q3");
 		builder.addState("q4");
 		builder.addState("q5");
-		builder.markInitialState("q0");
 		builder.addTransition("q0", "q1", 'a');
 		builder.addTransition("q0", "q2", 'b');
 		builder.addTransition("q1", "q2", 'a');

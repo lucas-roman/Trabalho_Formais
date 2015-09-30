@@ -1,6 +1,5 @@
 package main.lexer.automata;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import main.lexer.automata.structure.AutomataStructure;
@@ -32,6 +31,11 @@ public abstract class AutomataSkeleton implements Automata {
 	@Override
 	public Set<AutomataState> acceptStates() {
 		return stateImpl.acceptStates();
+	}
+	
+	@Override
+	public int size() {
+		return getStates().size();
 	}
 	
 

@@ -60,6 +60,7 @@ public class RegularGrammar {
 	// Should convert this grammar to an automata which accepts the language. (To implement)
 	public Automata createAutomata() throws MissingStateException, OverrideInitialStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException {
 		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
+		builder.addState(startSymbol.getSymbolValue());
 		builder.addState("Final");
 		builder.markAcceptState("Final");
 
@@ -81,8 +82,6 @@ public class RegularGrammar {
 				}
 			}
 		}
-
-		builder.markInitialState(startSymbol.getSymbolValue());
 		if(emptyWord) {
 			builder.markAcceptState(startSymbol.getSymbolValue());
 		}

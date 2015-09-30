@@ -25,5 +25,8 @@ public interface Automata {
 	
 	//Returns the accept state of the automata.
 	public Set<AutomataState> acceptStates();
+	
+	//Returns size of the automata.
+	public int size();
 
 }

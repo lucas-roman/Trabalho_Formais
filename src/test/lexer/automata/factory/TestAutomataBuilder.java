@@ -45,7 +45,6 @@ public class TestAutomataBuilder {
 	public void testDeterministicReturn() throws InvalidStateException,
 			InitialStateMissingException, MissingStateException,  OverrideInitialStateException, IllegalAutomataException {
 		deterministicAutomataBuilder.addState("q0");
-		deterministicAutomataBuilder.markInitialState("q0");
 		deterministicAutomataBuilder.addState("q1").addState("q2");
 		try {
 			deterministicAutomataBuilder.addTransition("q0", "q1", 'a');
@@ -64,7 +63,6 @@ public class TestAutomataBuilder {
 	public void testNonDeterministicReturn() throws InvalidStateException,
 			InitialStateMissingException, MissingStateException,OverrideInitialStateException, IllegalAutomataException {
 		nonDeterministicAutomataBuilder.addState("q0");
-		nonDeterministicAutomataBuilder.markInitialState("q0");
 		nonDeterministicAutomataBuilder.addState("q1").addState("q2");
 		try {
 			nonDeterministicAutomataBuilder.addTransition("q0", "q1", 'a');
@@ -85,7 +83,6 @@ public class TestAutomataBuilder {
 			MissingStateException, OverrideInitialStateException, IllegalAutomataException {
 		AutomataBuilder testSameCharTransition = new AutomataBuilder(new AutomataStructureGraphFactory());
 		testSameCharTransition.addState("q0");
-		testSameCharTransition.markInitialState("q0");
 		testSameCharTransition.addState("q1").addState("q2");
 		try {
 			testSameCharTransition.addTransition("q0", "q1", 'c');
@@ -101,11 +98,6 @@ public class TestAutomataBuilder {
 
 	}
 
-	@Test(expected = InvalidStateException.class)
-	public void testInvalidStateAddition() throws InvalidStateException {
-		nonDeterministicAutomataBuilder.addState("");
-	}
-
 	@Test
 	public void testAddValidState() {
 		try {
@@ -115,18 +107,12 @@ public class TestAutomataBuilder {
 		}
 	}
 
-	@Test(expected = MissingStateException.class)
-	public void testIllegalInitialState() throws MissingStateException, OverrideInitialStateException {
-		AutomataBuilder illegal = new AutomataBuilder(new AutomataStructureGraphFactory());
-		illegal.markInitialState("q0");
-	}
 
 	@Test(expected=IllegalAutomataException.class)
 	public void testConectivity() throws InvalidStateException,
 			MissingStateException, InitialStateMissingException,  OverrideInitialStateException, IllegalAutomataException {
 		AutomataBuilder testConectivity = new AutomataBuilder(new AutomataStructureGraphFactory());
 		testConectivity.addState("q0");
-		testConectivity.markInitialState("q0");
 		testConectivity.addState("q1").addState("q2").addState("q3");
 		try {
 			testConectivity.addTransition("q0", "q1", 'c');
@@ -137,15 +123,6 @@ public class TestAutomataBuilder {
 			Assert.fail("Failed to initialize states.");
 		}
 
-	}
-
-	@Test(expected = OverrideInitialStateException.class)
-	public void testOverrideInitialState() throws InvalidStateException,
-			MissingStateException, OverrideInitialStateException {
-		AutomataBuilder test = new AutomataBuilder(new AutomataStructureGraphFactory());
-		test.addState("q0").addState("q1");
-		test.markInitialState("q0");
-		test.markInitialState("q1");
 	}
 
 

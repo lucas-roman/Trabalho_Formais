@@ -25,11 +25,11 @@ class AutomataStateImplementation implements AutomataState {
 
 	private Map<Character, Set<AutomataState>> nextStates;
 
-	private String name;
+	private int name;
 
 	private DecisionStrategyInterface _decisionType;
 
-	AutomataStateImplementation(String name) {
+	AutomataStateImplementation(int name) {
 		nextStates = new HashMap<>();
 		statesByEpslon = selectSetType();
 		this.name = name;
@@ -105,7 +105,7 @@ class AutomataStateImplementation implements AutomataState {
 
 	@Override
 	public String toString() {
-		return name;
+		return "" + name;
 	}
 
 	@Override
@@ -181,6 +181,11 @@ class AutomataStateImplementation implements AutomataState {
 				return true;
 		}
 		return false;
+	}
+
+	@Override
+	public int stateID() {
+		return name;
 	}
 
 

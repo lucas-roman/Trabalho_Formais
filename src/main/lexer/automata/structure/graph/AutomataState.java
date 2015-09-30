@@ -37,4 +37,7 @@ public interface AutomataState extends GraphUnit {
 
 	//Checks if this state is an accept state.
 	public boolean accepts();
+	
+	//Returns the ID of the state.
+	public int stateID();
 }

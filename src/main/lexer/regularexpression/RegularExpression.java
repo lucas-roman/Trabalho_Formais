@@ -5,8 +5,8 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
-import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
+import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 //Defines basic structure of a regular expression
@@ -57,18 +57,7 @@ public abstract class RegularExpression {
 		return new BracedRegularExpression(this);
 	}
 
-	public Automata createAutomata() throws InvalidStateException,
-			MissingStateException, InitialStateMissingException,
-			IllegalAutomataException, OverrideInitialStateException {
-		AutomataBuilder builder = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
-		processBuilder(builder);
-		return builder.build();
-	}
-
-	protected abstract void processBuilder(AutomataBuilder builder)
-			throws InvalidStateException, MissingStateException,
-			OverrideInitialStateException;
+	public abstract Automata createAutomata() throws MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException;
 
 	/*
 	 * String representation
