@@ -1,6 +1,6 @@
 package main.lexer.regularexpression;
 
-public class ConcatenatedRegularExpresion implements RegularExpression {
+public class ConcatenatedRegularExpresion extends RegularExpression {
 	
 	
 

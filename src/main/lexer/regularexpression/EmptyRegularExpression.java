@@ -1,5 +1,5 @@
 package main.lexer.regularexpression;
 
-public class EmptyRegularExpression implements RegularExpression {
+public class EmptyRegularExpression extends RegularExpression {
 
 }
