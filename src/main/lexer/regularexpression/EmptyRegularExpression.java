@@ -1,5 +1,9 @@
 package main.lexer.regularexpression;
 
-public class EmptyRegularExpression extends RegularExpression {
+class EmptyRegularExpression extends RegularExpression {
+	
+	public String toString() {
+		return "°";
+	}
 
 }

@@ -1,18 +1,21 @@
 package main.lexer.regularexpression;
 
-class UnionRegularExpression extends RegularExpression {
+class ConcatRegularExpresion extends RegularExpression {
 
 	private RegularExpression leftChild;
+	
 	private RegularExpression rightChild;
-
-	public UnionRegularExpression(RegularExpression leftChild,
+	
+	public ConcatRegularExpresion(RegularExpression leftChild,
 			RegularExpression rightChild) {
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
 	}
 	
+	
 	public String toString() {
-		return leftChild + "|" + rightChild;
+		return "" + leftChild + rightChild;
 	}
+	
 
 }
