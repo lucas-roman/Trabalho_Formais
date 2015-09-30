@@ -1,14 +1,11 @@
 package main.lexer.automata;
 
-import java.util.Set;
-
 import main.lexer.automata.algorithms.ConvertNonDeterministicDeterministic;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.structure.AutomataStructure;
-import main.lexer.automata.structure.graph.AutomataState;
 
 
 /*
@@ -34,15 +31,5 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 		}
 	}
 	
-	
-	protected void calculateStates(AutomataState state,
-			Set<AutomataState> returnValue) {
-		super.calculateStates(state, returnValue);
-		for(AutomataState stat : state.epslonClosure()) {
-			if(!returnValue.contains(stat)) {
-				calculateStates(stat, returnValue);
-			}
-		}
-	}
 
 }

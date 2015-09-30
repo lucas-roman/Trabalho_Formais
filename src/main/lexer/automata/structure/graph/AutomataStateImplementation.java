@@ -36,30 +36,19 @@ class AutomataStateImplementation implements AutomataState {
 		_decisionType = new DecisionStrategyInterface.DecisionRejectStrategy();
 	}
 
-	@Override
-	public void addTransition(AutomataState nextState, char transition)
-			throws InvalidStateException {
-		nextState.checkValidState();
+	//Adds transition from this state to nextState by char transition.
+	public void addTransition(AutomataStateImplementation nextState, char transition) {
 		nextState(transition).add(nextState);
 	}
 
-	@Override
-	public void addEpslonTransition(AutomataState to)
-			throws InvalidStateException {
-		to.checkValidState();
+	//Adds an epslon transition from this state to the other.
+	public void addEpslonTransition(AutomataStateImplementation to) {
 		statesByEpslon.add(to);
 	}
 
 	@Override
 	public int countNeighborhood(Set<GraphUnit> visited) {
 		return new GraphValidator(this, visited).countNeighborhood();
-	}
-
-	/*
-	 * This method should remain empty
-	 */
-	@Override
-	public void checkValidState() throws InvalidStateException {
 	}
 
 	@Override
@@ -93,7 +82,7 @@ class AutomataStateImplementation implements AutomataState {
 		recursivelyGetEpslonClosure(visited);
 	}
 
-	@Override
+	//Marks this state as an accept state
 	public void markAsAccept() {
 		_decisionType = new DecisionStrategyInterface.DecisionAcceptStrategy();
 	}

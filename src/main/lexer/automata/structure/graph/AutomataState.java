@@ -2,22 +2,10 @@ package main.lexer.automata.structure.graph;
 
 import java.util.Set;
 
-import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 
 public interface AutomataState extends GraphUnit {
 
-	// This method throws an exception if either the state that calls it or the state passed to it are invalid states.
-	public void addTransition(AutomataState stateTo, char transition)
-			throws InvalidStateException;
-
-	// Adds a transition from this state to another using the empty word. If this or the other state is invalid, throws an exception.
-	public void addEpslonTransition(AutomataState to)
-			throws InvalidStateException;
-
-	/* Checks if current state is valid. If not, throws an exception.
-	 */
-	public void checkValidState() throws InvalidStateException;
 
 	/* This method should be used to check if the string is part of the language described by the automata.
 	 * Note: Do not call this method on a state other than the initial state. (For automata implementer).
@@ -37,9 +25,6 @@ public interface AutomataState extends GraphUnit {
 
 	//Returns all the states reachable by the epslon closure by the character.
 	Set<AutomataState> nextStateOfEpslonClosure(char c);
-
-	//Marks this stage as an accept state.
-	void markAsAccept();
 
 	//Checks if this state makes the automata non deterministic. If it does, throws NonDeterministicException.
 	public void checkNonDetermininstic() throws NonDeterministicException;

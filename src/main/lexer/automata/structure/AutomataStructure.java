@@ -1,5 +1,7 @@
 package main.lexer.automata.structure;
 
+import java.util.Set;
+
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
@@ -40,5 +42,11 @@ public interface AutomataStructure {
 
 	//Returns the initial state of the automata.
 	public AutomataState automataInitialState();
+
+	//Returns the states of the automata.
+	public Set<AutomataState> states();
+	
+	//Return the accept states.
+	public Set<AutomataState> acceptStates();
 
 }

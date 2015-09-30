@@ -18,9 +18,9 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 
 	private int size = 0;
 
-	private AutomataState initialState = null;
+	private AutomataStateImplementation initialState = null;
 
-	private Map<String, AutomataState> states;
+	private Map<String, AutomataStateImplementation> states;
 
 	public AutomataStructureGraphImplementation() {
 		states = new HashMap<>();
@@ -28,8 +28,8 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 
 	@Override
 	public void addTransition(String from, String to, char trans) throws InvalidStateException, MissingStateException, NonDeterministicException {
-		AutomataState stateFrom = states.get(from);
-		AutomataState stateTo = states.get(to);
+		AutomataStateImplementation stateFrom = states.get(from);
+		AutomataStateImplementation stateTo = states.get(to);
 		if(stateFrom == null || stateTo == null) {
 			throw new MissingStateException();
 		}
@@ -39,14 +39,13 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 
 	@Override
 	public AutomataState createState(String stateName) throws InvalidStateException {
-		AutomataState state;
+		AutomataStateImplementation state;
 		if (stateName == null || stateName.equals("")) {
-			state = InvalidState.getInstance();
+			throw new InvalidStateException();
 		}
 		else {
 			state =  new AutomataStateImplementation(stateName);
 		}
-		state.checkValidState();
 		size++;
 		if(initialState == null) {
 			initialState = state;
@@ -65,8 +64,8 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 
 	@Override
 	public void addEpslonTransition(String from, String to) throws InvalidStateException {
-		AutomataState stateFrom = states.get(from);
-		AutomataState stateTo = states.get(to);
+		AutomataStateImplementation stateFrom = states.get(from);
+		AutomataStateImplementation stateTo = states.get(to);
 		stateFrom.addEpslonTransition(stateTo);
 	}
 
@@ -74,13 +73,13 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 		if (!states.containsKey(string)) {
 			throw new InvalidStateException();
 		}
-		AutomataState state = states.get(string);
+		AutomataStateImplementation state = states.get(string);
 		state.markAsAccept();
 	}
 
 	@Override
 	public void markInitialState(String s) throws MissingStateException  {
-		AutomataState state = states.get(s);
+		AutomataStateImplementation state = states.get(s);
 		if(state == null) {
 			throw new MissingStateException();
 		}
@@ -105,6 +104,26 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 	@Override
 	public AutomataState automataInitialState() {
 		return initialState;
+	}
+
+	@Override
+	public Set<AutomataState> states() {
+		Set<AutomataState> retSet = new HashSet<>();
+		for(AutomataStateImplementation stat : states.values()) {
+			retSet.add(stat);
+		}
+		return retSet;
+	}
+
+	@Override
+	public Set<AutomataState> acceptStates() {
+		Set<AutomataState> retSet = new HashSet<>();
+		for(AutomataState state : states()) {
+			if(state.accepts()) {
+				retSet.add(state);
+			}
+		}
+		return retSet;
 	}
 
 }

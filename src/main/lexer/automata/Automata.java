@@ -22,5 +22,8 @@ public interface Automata {
 	
 	//Returns the initial state of the automata.
 	public AutomataState initialState();
+	
+	//Returns the accept state of the automata.
+	public Set<AutomataState> acceptStates();
 
 }

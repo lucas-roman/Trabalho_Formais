@@ -26,21 +26,13 @@ public abstract class AutomataSkeleton implements Automata {
 	
 	@Override
 	public Set<AutomataState> getStates() {
-		Set<AutomataState> returnValue = new HashSet<AutomataState>();
-		calculateStates(initialState(), returnValue);
-		return returnValue;
+		return stateImpl.states();
 	}
 	
-	protected void calculateStates(AutomataState state,
-			Set<AutomataState> returnValue) {
-		returnValue.add(state);
-		for(char c : state.getTransitions()) {
-			for(AutomataState stat : state.nextState(c)) {
-				if(!returnValue.contains(stat)) {
-					calculateStates(stat, returnValue);
-				}
-			}
-		}
+	@Override
+	public Set<AutomataState> acceptStates() {
+		return stateImpl.acceptStates();
 	}
+	
 
 }
