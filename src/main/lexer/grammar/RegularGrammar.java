@@ -29,6 +29,7 @@ public class RegularGrammar {
 	public static RegularGrammar convertAutomataToGrammar(Automata deterministic) {
 		RegularGrammarBuilder builder = new RegularGrammarBuilder();
 		Set<AutomataState> visited = new HashSet<>();
+
 		//Result will always be deterministic. (We always need a little hack xD)
 		Automata result;
 		try {
@@ -42,6 +43,8 @@ public class RegularGrammar {
 			   for(AutomataState state : state.nextState(char c)) {
 				        //aqui dentro só vai ser processado 1 estado
 				        //faz alguma coisa com ele
+				   Set<AutomataState> neighboorhood = state.nextState(c);
+				   if(state.nextState(c).a)
 
 				   /*
 				    * Ideia:
@@ -53,6 +56,7 @@ public class RegularGrammar {
 				    * 	NonTerminal nt = new NonTerminal(estadoDestino.getNome());
 				    * 	builder.addProduction(state, term, nt);
 				    */
+				   visited.add(state);
 				}
 			}
 
