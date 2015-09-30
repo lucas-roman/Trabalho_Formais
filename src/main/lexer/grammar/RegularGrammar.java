@@ -37,9 +37,28 @@ public class RegularGrammar {
 		} catch (DeterministicException e) {
 			result = deterministic;
 		}
+
+		for(char c : state.getTransitions()) {
+			   for(AutomataState state : state.nextState(char c)) {
+				        //aqui dentro só vai ser processado 1 estado
+				        //faz alguma coisa com ele
+
+				   /*
+				    * Ideia:
+				    * if(destino.accepts())	//É estado final, adiciona uma produção pelo terminal
+				    * 	Terminal term = new Terminal(c);
+				    * 	build.addProduction(state, c);
+				    * else	//Não é final, adiciona o terminal e não terminal (estado destino)
+				    * 	Terminal term = new Terminal(c);
+				    * 	NonTerminal nt = new NonTerminal(estadoDestino.getNome());
+				    * 	builder.addProduction(state, term, nt);
+				    */
+				}
+			}
+
 		return null;
 	}
-	
+
 	/*
 	    * Ideia:
 	    * if(destino.accepts())	//Ã‰ estado final, adiciona uma produÃ§Ã£o pelo terminal
