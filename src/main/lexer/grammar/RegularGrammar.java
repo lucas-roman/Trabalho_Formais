@@ -9,8 +9,10 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
+import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 public class RegularGrammar {
@@ -24,30 +26,35 @@ public class RegularGrammar {
 	private boolean emptyWord = false;
 
 	// Takes an automata and creates a grammar. To implement.
-	public static RegularGrammar convertAutomataToGrammar(Automata deterministic) {
+	public static RegularGrammar convertAutomataToGrammar(Automata deterministic) throws NonDeterministicException{
 		RegularGrammarBuilder builder = new RegularGrammarBuilder();
+		Set<AutomataState> visited = new HashSet<>();
+
+		if(/*AFND*/){
+			throw new NonDeterministicException();
+		} else {
+
+		}
+
 		return null;
 	}
 
-	RegularGrammar(Collection<NonTerminal> nonTerminalSymb,
-			Collection<Terminal> terminalSymb, NonTerminal startSymbol) {
+	RegularGrammar(Collection<NonTerminal> nonTerminalSymb, Collection<Terminal> terminalSymb, NonTerminal startSymbol) {
 		nonTerminalSymbols = new HashSet<>(nonTerminalSymb);
 		terminalSymbols = new HashSet<>(terminalSymb);
 		this.startSymbol = startSymbol;
 	}
 
-	// Should convert this grammar to an automata which accepts the language. To
-	// implement
-	public Automata createAutomata() throws MissingStateException,
-			OverrideInitialStateException, InvalidStateException,
-			InitialStateMissingException, IllegalAutomataException {
-		AutomataBuilder builder = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
+	// Should convert this grammar to an automata which accepts the language. (To implement)
+	public Automata createAutomata() throws MissingStateException, OverrideInitialStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException {
+		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		builder.addState("Final");
 		builder.markAcceptState("Final");
+
 		for(NonTerminal state : nonTerminalSymbols) {
 			builder.addState(state.getSymbolValue());
 		}
+
 		for (NonTerminal currentState : nonTerminalSymbols) {
 			for (RegularProduction p : currentState.getProductions()) {
 				if (p.lastProduction()) {
@@ -62,10 +69,12 @@ public class RegularGrammar {
 				}
 			}
 		}
+
 		builder.markInitialState(startSymbol.getSymbolValue());
 		if(emptyWord) {
 			builder.markAcceptState(startSymbol.getSymbolValue());
 		}
+
 		return builder.build();
 	}
 
