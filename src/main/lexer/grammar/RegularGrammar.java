@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import main.lexer.automata.Automata;
+import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
@@ -26,16 +27,17 @@ public class RegularGrammar {
 	private boolean emptyWord = false;
 
 	// Takes an automata and creates a grammar. To implement.
-	public static RegularGrammar convertAutomataToGrammar(Automata deterministic) throws NonDeterministicException{
+	public static RegularGrammar convertAutomataToGrammar(Automata deterministic) {
 		RegularGrammarBuilder builder = new RegularGrammarBuilder();
 		Set<AutomataState> visited = new HashSet<>();
-
-		if(/*AFND*/){
-			throw new NonDeterministicException();
-		} else {
-
+		//Result will always be deterministic. (We always need a little hack xD)
+		Automata result;
+		try {
+			Automata determ = deterministic.convert();
+			result = determ;
+		} catch (DeterministicException e) {
+			result = deterministic;
 		}
-
 		return null;
 	}
 
