@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 
 /*

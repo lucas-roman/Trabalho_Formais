@@ -10,8 +10,6 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
-import main.lexer.automata.structure.AutomataStructure;
-import main.lexer.automata.structure.factory.AutomataStructureFactory;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 import org.junit.After;

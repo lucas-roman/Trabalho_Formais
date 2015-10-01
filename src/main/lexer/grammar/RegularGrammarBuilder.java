@@ -2,12 +2,10 @@ package main.lexer.grammar;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import main.lexer.automata.factory.AutomataBuilder;
-import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
+import main.lexer.grammar.exceptions.NonTerminalMissingException;
+import main.lexer.grammar.exceptions.TerminalMissingException;
 
 public class RegularGrammarBuilder {
 
@@ -49,11 +47,17 @@ public class RegularGrammarBuilder {
 		return nonTermMap.get(c);
 	}
 
-	public Terminal getTerminalOf(char term) {
+	public Terminal getTerminalOf(char term) throws TerminalMissingException {
+		if(!termMap.containsKey(term)) {
+			throw new TerminalMissingException();
+		}
 		return termMap.get(term);
 	}
 
-	public NonTerminal getNonTerminalOf(String term) {
+	public NonTerminal getNonTerminalOf(String term) throws NonTerminalMissingException {
+		if(!nonTermMap.containsKey(term)) {
+			throw new NonTerminalMissingException();
+		}
 		return nonTermMap.get(term);
 	}
 
@@ -70,24 +74,6 @@ public class RegularGrammarBuilder {
 	public void addProduction(NonTerminal head, NonTerminal symbol1) {
 		head.addProduction(symbol1);
 
-	}
-
-    public void addProduction(AutomataBuilder builder, AutomataState current, Set<AutomataState> visited) {
-		visited.add(nextState);
-		for (Entry<Character, Set<AutomataState>> keyVal : result.initialState().getTransitions()) {
-			for (AutomataState nextState : keyVal.getValue()) {
-				if (!visited.contains(nextState)) {
-					if (nextState.accepts()) {
-						Terminal term = new Terminal(keyVal.getKey());
-						builder.addProduction(head, symbol1);
-					}
-					Terminal term2 = new Terminal(keyVal.getKey());
-					builder.addProduction(head, term2, nextState);
-
-				}
-
-			}
-		}
 	}
 
 	//Let the automata recognize the empty word.

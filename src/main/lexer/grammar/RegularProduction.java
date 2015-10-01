@@ -32,6 +32,17 @@ public class RegularProduction {
 	public boolean lastProduction() {
 		return nonTerminal == null;
 	}
+	
+	public String toString() {
+		String result = "";
+		if(terminal != null) {
+			result += terminal.getSymbolValue();
+		}
+		if(nonTerminal != null) {
+			result += nonTerminal.getSymbolValue();
+		}
+		return result;
+	}
 
 
 }

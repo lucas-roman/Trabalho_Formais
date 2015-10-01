@@ -12,6 +12,8 @@ import main.lexer.grammar.RegularGrammar;
 import main.lexer.grammar.RegularGrammarBuilder;
 import main.lexer.grammar.exceptions.SameProductionException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
+import main.lexer.grammar.exceptions.NonTerminalMissingException;
+import main.lexer.grammar.exceptions.TerminalMissingException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +25,7 @@ public class TestGrammar {
 
 	@Before
 	public void init() throws SameProductionException,
-			StartSymbolMissingException {
+			StartSymbolMissingException, NonTerminalMissingException, TerminalMissingException {
 		RegularGrammarBuilder builder = new RegularGrammarBuilder();
 		builder.addTerminal('a');
 		builder.addTerminal('b');
@@ -83,7 +85,7 @@ public class TestGrammar {
 	public void testAutomataToGrammar() throws DeterministicException,
 			MissingStateException, OverrideInitialStateException,
 			InvalidStateException, InitialStateMissingException,
-			IllegalAutomataException {
+			IllegalAutomataException, NonTerminalMissingException, StartSymbolMissingException {
 		Automata testAutomata = grammar.createAutomata().convert();
 		RegularGrammar rGr = RegularGrammar.convertAutomataToGrammar(testAutomata);
 		Automata aut2 = rGr.createAutomata().convert();

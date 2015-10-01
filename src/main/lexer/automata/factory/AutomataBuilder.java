@@ -11,7 +11,6 @@ import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
-import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.factory.AutomataStructureFactory;
 
@@ -21,7 +20,6 @@ import main.lexer.automata.structure.factory.AutomataStructureFactory;
 public class AutomataBuilder {
 
 	private boolean automataNonDeterministic;
-	private boolean initStateMarked;
 	private AutomataStructure structure;
 	private Map<String, Integer> stateId = new HashMap<>();
 	private int id = 0;
@@ -30,7 +28,6 @@ public class AutomataBuilder {
 	// the factory here, not the structure.
 	public AutomataBuilder(AutomataStructureFactory fac) {
 		automataNonDeterministic = false;
-		initStateMarked = false;
 		structure = fac.createAutomataStructure();
 	}
 
