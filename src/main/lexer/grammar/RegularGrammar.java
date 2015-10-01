@@ -2,6 +2,7 @@ package main.lexer.grammar;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.Automata;
@@ -39,27 +40,20 @@ public class RegularGrammar {
 			result = deterministic;
 		}
 
-		for(char c : state.getTransitions()) {
-			   for(AutomataState state : state.nextState(char c)) {
-				        //aqui dentro só vai ser processado 1 estado
-				        //faz alguma coisa com ele
-				   Set<AutomataState> neighboorhood = state.nextState(c);
-				   if(state.nextState(c).a)
+		for(Entry<Character, Set<AutomataState>> keyVal : result.initialState().getTransitions()) {
+	        for(AutomataState nextState : keyVal.getValue()) {
+	        	if(!visited.contains(nextState)){
+		        	if(nextState.accepts()){
+		        		Terminal term = new Terminal(keyVal.getKey());
+		        		builder.addProduction(head, symbol1);
+		        	}
+		        	Terminal term2 = new Terminal(keyVal.getKey());
+		        	builder.addProduction(head, term2, nextState);
 
-				   /*
-				    * Ideia:
-				    * if(destino.accepts())	//É estado final, adiciona uma produção pelo terminal
-				    * 	Terminal term = new Terminal(c);
-				    * 	build.addProduction(state, c);
-				    * else	//Não é final, adiciona o terminal e não terminal (estado destino)
-				    * 	Terminal term = new Terminal(c);
-				    * 	NonTerminal nt = new NonTerminal(estadoDestino.getNome());
-				    * 	builder.addProduction(state, term, nt);
-				    */
-				   visited.add(state);
-				}
-			}
-
+		        	visited.add(nextState);
+	        	}
+	        }
+		}
 		return null;
 	}
 
