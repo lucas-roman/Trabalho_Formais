@@ -12,6 +12,15 @@ import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 
 /*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
+/*
  * A graph implementation for the structure.
  */
 class AutomataStructureGraphImplementation implements AutomataStructure {

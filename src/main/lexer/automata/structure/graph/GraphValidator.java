@@ -3,6 +3,15 @@ package main.lexer.automata.structure.graph;
 import java.util.Set;
 
 /*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
+/*
  * This class should be used to count the number of elements a graph has.
  */
 public class GraphValidator {

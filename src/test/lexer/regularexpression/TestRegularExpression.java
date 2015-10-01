@@ -11,6 +11,15 @@ import main.lexer.regularexpression.RegularExpression;
 
 import org.junit.Test;
 
+/*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
 public class TestRegularExpression {
 
 	private String regularExpressionValue1 = "(a|b)*(dÂª)";

@@ -15,33 +15,51 @@ import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.factory.AutomataStructureFactory;
 
 /*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
+
+/*
  * This class should be used to create automatas.
  */
 public class AutomataBuilder {
 
+	/*
+	 * Attributes of this class.
+	 */
 	private boolean automataNonDeterministic;
 	private AutomataStructure structure;
 	private Map<String, Integer> stateId = new HashMap<>();
 	private int id = 0;
 
-	// Constructs a builder given a type for the structure. It should be passed
-	// the factory here, not the structure.
+	/*
+	 *  Constructs a builder given a type for the structure.
+	 *  PS: It should be passed the factory here, not the structure!
+	 */
 	public AutomataBuilder(AutomataStructureFactory fac) {
 		automataNonDeterministic = false;
 		structure = fac.createAutomataStructure();
 	}
 
+	/*
+	 * @return id returns de ID of the builder.
+	 */
 	public int currentID() {
 		return id;
 	}
 
 	/*
-	 * Adds a transition from a state to another. State should be added first
-	 * with the addState method. Throws a MissingStateException if there is no
+	 * Adds a transition from a state to another.
+	 * State should be added first with the addState method.
+	 * Throws a MissingStateException if there is no
 	 * such state, InvalidStateException if any state is invalid.
 	 */
-	public void addTransition(String from, String to, char trans)
-			throws MissingStateException, InvalidStateException {
+	public void addTransition(String from, String to, char trans) throws MissingStateException, InvalidStateException {
 		if (!stateId.containsKey(from) || !stateId.containsKey(to)) {
 			throw new MissingStateException();
 		}
@@ -67,14 +85,15 @@ public class AutomataBuilder {
 	}
 
 	/*
-	 * Builds the automata. If given the states and the transitions it is non
-	 * deterministic, returns a non deterministic automata. Deterministic
-	 * automata otherwise. If the automata is missing its initial state, throws
-	 * a InitialStateMissingException. If some state is not reachable, throws a
-	 * IllegalAutomataException.
+	 * Builds the automata. If given the states and the transitions and it is non
+	 * deterministic, returns a non deterministic automata.
+	 * It returns Deterministic automata otherwise.
+	 * If the automata is missing its initial state, throws a InitialStateMissingException.
+	 * If some state is not reachable, throws a IllegalAutomataException.
+	 *
+	 * @return it returns an automata
 	 */
-	public Automata build() throws InitialStateMissingException,
-			IllegalAutomataException {
+	public Automata build() throws InitialStateMissingException, IllegalAutomataException {
 		if (structure.empty()) {
 			throw new InitialStateMissingException();
 		}
@@ -108,14 +127,13 @@ public class AutomataBuilder {
 		}
 	}
 
-	// Marks the state as an accept state. If it is invalid, throws an
-	// InvalidStateException.
-	public void markAcceptState(String string) throws InvalidStateException,
-			MissingStateException {
+	/*
+	 *  Marks the state as an accept state. If it is invalid, throws an InvalidStateException.
+	 */
+	public void markAcceptState(String string) throws InvalidStateException, MissingStateException {
 		if (!stateId.containsKey(string)) {
 			throw new MissingStateException();
 		}
 		structure.markAcceptState(stateId.get(string));
 	}
-
 }

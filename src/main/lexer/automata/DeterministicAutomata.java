@@ -3,21 +3,26 @@ package main.lexer.automata;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 
+/*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
 
 /*
- * Deterministic automata. Prefer this over non deterministic automata for performance.
+ * This class represents an deterministic automata.
+ * PS: Prefer this over non deterministic automata for performance.
  */
 public class DeterministicAutomata extends AutomataSkeleton{
-	
-	
-	
-
-	//Creates a Deterministic Automata passing a structure to it.
+	/* Creates a Deterministic Automata passing a structure to it.
+	 * */
 	public DeterministicAutomata(AutomataStructure structure) {
 		super(structure);
 	}
-	
-
 
 	@Override
 	public Automata convert() throws DeterministicException {

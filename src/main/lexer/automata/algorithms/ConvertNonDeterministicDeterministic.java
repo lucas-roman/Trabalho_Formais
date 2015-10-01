@@ -16,27 +16,43 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-//Converts a non deterministic automata to a deterministic automata.
+/*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
+
+/* This class converts a non deterministic automata to a deterministic automata.
+ * */
 public class ConvertNonDeterministicDeterministic {
 
+	/*
+	 * Attibutes from this class.
+	 */
 	private Map<Set<AutomataState>, String> states;
-
 	private Set<Set<AutomataState>> statesEvaluated;
-
 	private AutomataBuilder builder;
 	int id = 1;
 
-	//Calculates the new automata.
-	public ConvertNonDeterministicDeterministic(
-			NonDeterministicAutomata nonDeterministic) {
+	/* Calculates the new automata.
+	 * @param nonDeterministic is the automata that is going to be converted to a deterministic automata.
+	 * */
+	public ConvertNonDeterministicDeterministic(NonDeterministicAutomata nonDeterministic) {
 		this.states = new HashMap<>();
 		this.statesEvaluated = new HashSet<>();
 		builder = new AutomataBuilder(new AutomataStructureGraphFactory());
-		Set<AutomataState> newInitialState = nonDeterministic.initialState()
-				.epslonClosure();
+		Set<AutomataState> newInitialState = nonDeterministic.initialState().epslonClosure();
 		calculateInitState(newInitialState);
 	}
 
+	/*
+	 * It calculates the new states of the new deterministic automata.
+	 * @param state Set of state of the nonDeterministicAutomata.
+	 */
 	private void calculateStates(Set<AutomataState> state) {
 		try {
 			statesEvaluated.add(state);
@@ -45,12 +61,10 @@ public class ConvertNonDeterministicDeterministic {
 				builder.markAcceptState(states.get(state));
 			}
 			Set<Set<AutomataState>> statesToCalculateTransition = new HashSet<>();
-			for (Entry<Character, Set<AutomataState>> keyValue : calculator
-					.getSymbolicStateTransitions().entrySet()) {
+			for (Entry<Character, Set<AutomataState>> keyValue : calculator.getSymbolicStateTransitions().entrySet()) {
 				addStateIfAbsent(keyValue.getValue());
 				statesToCalculateTransition.add(keyValue.getValue());
-				builder.addTransition(states.get(state),
-						states.get(keyValue.getValue()), keyValue.getKey());
+				builder.addTransition(states.get(state), states.get(keyValue.getValue()), keyValue.getKey());
 			}
 			for (Set<AutomataState> newState : statesToCalculateTransition) {
 				if (!statesEvaluated.contains(newState)) {
@@ -59,13 +73,14 @@ public class ConvertNonDeterministicDeterministic {
 			}
 		} catch (InvalidStateException e) {
 		} catch (MissingStateException e) {
-
 		}
-
 	}
 
-	private void addStateIfAbsent(Set<AutomataState> state)
-			throws InvalidStateException {
+	/*
+	 * It adds an missing state to the set of states.
+	 * @param state Set of states that is going to receive the missing state.
+	 */
+	private void addStateIfAbsent(Set<AutomataState> state) throws InvalidStateException {
 		if (!states.containsKey(state)) {
 			builder.addState("q" + id);
 			states.put(state, "q" + id);
@@ -73,10 +88,12 @@ public class ConvertNonDeterministicDeterministic {
 		}
 	}
 
+	/*
+	 * It creates the initial state of the automata and it adds to the 'states' of this class.
+	 * @param state Set of states of the nonDeterministicAutomata.
+	 */
 	private void calculateInitState(Set<AutomataState> state) {
-
 		try {
-			
 			builder.addState("q0");
 			states.put(state, "q0");
 			calculateStates(state);
@@ -84,12 +101,11 @@ public class ConvertNonDeterministicDeterministic {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
-	//Returns the new deterministic automata.
+	/* It returns the new deterministic automata.
+	 */
 	public Automata convert() throws InitialStateMissingException, MissingStateException, IllegalAutomataException {
 		return builder.build();
 	}
-
 }

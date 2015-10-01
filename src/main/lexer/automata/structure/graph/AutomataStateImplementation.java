@@ -8,8 +8,19 @@ import java.util.Set;
 
 import main.lexer.automata.exceptions.NonDeterministicException;
 
+
 /*
- * This class represents a state as a graph unit. Please check interface documentation.
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
+/*
+ * This class represents a state as a graph unit.
+ * Please check interface documentation.
  */
 class AutomataStateImplementation implements AutomataState {
 
@@ -22,11 +33,8 @@ class AutomataStateImplementation implements AutomataState {
 	}
 
 	private Set<AutomataState> statesByEpslon;
-
 	private Map<Character, Set<AutomataState>> nextStates;
-
 	private int name;
-
 	private DecisionStrategyInterface _decisionType;
 
 	AutomataStateImplementation(int name) {
@@ -177,8 +185,9 @@ class AutomataStateImplementation implements AutomataState {
 
 	private boolean moreThanOneStateBySameTransition() {
 		for(Set<AutomataState> trans : nextStates.values()) {
-			if(trans.size() > 1)
+			if(trans.size() > 1) {
 				return true;
+			}
 		}
 		return false;
 	}

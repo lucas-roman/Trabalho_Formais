@@ -7,19 +7,31 @@ import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.structure.AutomataStructure;
 
+/*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
 
 /*
- * Non deterministic automata. This is what you get when you convert a grammar, for example. Should always become a Deterministic Automata.
+ * This class represents an non deterministic automata.
+ * This is what you get when you convert a grammar, for example.
+ * Should always become a Deterministic Automata.
  */
 public class NonDeterministicAutomata extends AutomataSkeleton {
-
-	//Creates a Non Deterministic Automata from the given structure.
+	/* Creates a Non Deterministic Automata from the given structure.
+	 * */
 	public NonDeterministicAutomata(AutomataStructure struct)  {
 		super(struct);
 	}
 
-
-	//Returns a deterministic automata which accepts the same language as this non deterministic automata. If it fails, it returns itself (NonDeterministic).
+	/* Returns a deterministic automata which accepts the same language as this non deterministic automata.
+	 * If it fails, it returns itself (NonDeterministic).
+	 * */
 	@Override
 	public Automata convert() throws DeterministicException {
 		ConvertNonDeterministicDeterministic converter = new ConvertNonDeterministicDeterministic(this);
@@ -30,6 +42,4 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 			return this;
 		}
 	}
-	
-
 }

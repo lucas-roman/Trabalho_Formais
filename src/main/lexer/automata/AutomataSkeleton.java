@@ -6,6 +6,18 @@ import java.util.Set;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
 
+/*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
+/*
+ * This class represents part of the structure of an automata.
+ */
 public abstract class AutomataSkeleton implements Automata {
 	
 
@@ -70,6 +82,5 @@ public abstract class AutomataSkeleton implements Automata {
 		return result;
 		
 	}
-	
 
 }

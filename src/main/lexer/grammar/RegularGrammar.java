@@ -19,6 +19,15 @@ import main.lexer.grammar.exceptions.NonTerminalMissingException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
 import main.lexer.grammar.exceptions.TerminalMissingException;
 
+/*
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
 public class RegularGrammar {
 
 	private Set<NonTerminal> nonTerminalSymbols;
