@@ -8,16 +8,18 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.regularexpression.RegularExpression;
+import main.lexer.regularexpression.StringToRE;
+import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
 import org.junit.Test;
 
 /*
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 public class TestRegularExpression {
@@ -166,6 +168,28 @@ public class TestRegularExpression {
 		Assert.assertTrue(aut.accepts("aaaaaaaaa"));
 		Assert.assertFalse(aut.accepts("b"));
 		Assert.assertFalse(aut.accepts(""));
+	}
+
+	@Test
+	public void testStringToRe() throws MissingStateException,
+			InvalidStateException, InitialStateMissingException,
+			IllegalAutomataException, IllegalRegularExpressionException {
+		String stringToRE1 = "aab*(ab)?";
+		String stringToRE2 = "ab*";
+		RegularExpression re = StringToRE.stringToRE(stringToRE1);
+		Assert.assertTrue(re.createAutomata().accepts("ab"));
+		Assert.assertTrue(re.createAutomata().accepts("abb"));
+		Assert.assertTrue(re.createAutomata().accepts("abbbb"));
+		Assert.assertFalse(re.createAutomata().accepts(""));
+		Assert.assertFalse(re.createAutomata().accepts("abab"));
+		re = StringToRE.stringToRE(stringToRE2);
+		Assert.assertTrue(re.createAutomata().accepts("aabbbbb"));
+		Assert.assertTrue(re.createAutomata().accepts("aabbbbab"));
+		Assert.assertTrue(re.createAutomata().accepts("aaab"));
+		Assert.assertTrue(re.createAutomata().accepts("aa"));
+		Assert.assertFalse(re.createAutomata().accepts(""));
+		Assert.assertFalse(re.createAutomata().accepts("aaabb"));
+		Assert.assertFalse(re.createAutomata().accepts("aaabbab"));
 	}
 
 }
