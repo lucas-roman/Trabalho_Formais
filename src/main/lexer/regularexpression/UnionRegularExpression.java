@@ -6,6 +6,7 @@ import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
+import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 class UnionRegularExpression extends RegularExpression {
@@ -28,13 +29,20 @@ class UnionRegularExpression extends RegularExpression {
 		Automata leftChildAutomata = leftChild.createAutomata();
 		Automata rightChildAutomata = rightChild.createAutomata();
 		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
-		getBuilderValueOf(builder, leftChildAutomata, rightChildAutomata);
+		builder.addState("0");
+		getBuilderValueOf(builder, leftChildAutomata, rightChildAutomata, 1);
+		int size1 = leftChildAutomata.size();
+		for(AutomataState acceptState : leftChildAutomata.acceptStates()) {
+			builder.markAcceptState(1 + acceptState.stateID() + "");
+		}
+		for(AutomataState acceptState : rightChildAutomata.acceptStates()) {
+			builder.markAcceptState(size1 + acceptState.stateID() + 1 + "");
+		}
+		builder.addEmptyTransition("0", "1");
+		builder.addEmptyTransition("0", size1 + 1 + "");
 		return builder.build();
 	}
 
-	private void getBuilderValueOf(AutomataBuilder builder, Automata leftChildAutomata,
-			Automata rightChildAutomata) {
-	}
 
 
 }

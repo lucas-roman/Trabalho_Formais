@@ -3,6 +3,7 @@ package main.lexer.automata.structure.graph;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.InvalidStateException;
@@ -134,8 +135,8 @@ class AutomataStateImplementation implements AutomataState {
 	}
 
 	@Override
-	public Set<Character> getTransitions() {
-		return nextStates.keySet();
+	public Set<Entry<Character, Set<AutomataState>>> getTransitions() {
+		return nextStates.entrySet();
 	}
 
 	@Override

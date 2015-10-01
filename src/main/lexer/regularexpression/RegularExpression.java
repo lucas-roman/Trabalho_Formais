@@ -1,5 +1,8 @@
 package main.lexer.regularexpression;
 
+import java.util.Map.Entry;
+import java.util.Set;
+
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
@@ -7,7 +10,6 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
-import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 //Defines basic structure of a regular expression
 public abstract class RegularExpression {
@@ -57,7 +59,61 @@ public abstract class RegularExpression {
 		return new BracedRegularExpression(this);
 	}
 
-	public abstract Automata createAutomata() throws MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException;
+	public abstract Automata createAutomata() throws MissingStateException,
+			InvalidStateException, InitialStateMissingException,
+			IllegalAutomataException;
+
+	// Returns a builder without the initial state nor the final state marked
+	// for the given automata.
+	void getBuilderValueOf(AutomataBuilder builder, Automata aut1, Automata aut2, int firstIndex)
+			throws InvalidStateException {
+		addStates(builder, aut1, firstIndex);
+		// Here, builder's current id is one past last state value. So, it is
+		// safe to add it with the state value from other automata.
+		int lastID = builder.currentID();
+		// We need to pass the lastID so we don't have conflicts regarding state
+		// names.
+		addStates(builder, aut2, lastID);
+		addTransitions(builder, aut1, firstIndex);
+		addTransitions(builder, aut2, lastID);
+	}
+
+	private void addTransitions(AutomataBuilder builder,
+			Automata aut2, int lastID) throws InvalidStateException {
+		for (AutomataState state : aut2.getStates()) {
+			for(Entry<Character, Set<AutomataState>> keyPair : state.getTransitions()) {
+				for(AutomataState other : keyPair.getValue()) {
+					try {
+						builder.addTransition(state.stateID() + lastID + "",
+								other.stateID() + lastID + "", keyPair.getKey());
+					} catch (MissingStateException e) {
+						// All states already added. Safe to ignore.
+					}
+				}
+			}
+			for (AutomataState epslonReachable : state.epslonClosure()) {
+				// Ignore empty transitions to same state
+				if (epslonReachable != state) {
+					try {
+						builder.addEmptyTransition(state.stateID() + lastID
+								+ "", epslonReachable.stateID() + lastID + "");
+					} catch (MissingStateException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+	}
+
+
+	private void addStates(AutomataBuilder build, Automata aut,
+			int lastID) throws InvalidStateException {
+		for (AutomataState state : aut.getStates()) {
+			build.addState(state.stateID() + lastID + "");
+		}
+	}
+
 
 	/*
 	 * String representation

@@ -1,5 +1,6 @@
 package main.lexer.automata.structure.graph;
 
+import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.NonDeterministicException;
@@ -30,9 +31,9 @@ public interface AutomataState extends GraphUnit {
 	public void checkNonDetermininstic() throws NonDeterministicException;
 
 	//Get all possible transitions (by letter) from this state.
-	public Set<Character> getTransitions();
-
-	//Checks if any of epslon closure of this state is an accept state.
+	public Set<Entry<Character, Set<AutomataState>>> getTransitions();
+	
+	//Returns true if any state of the epslon closure accepts.
 	public boolean epslonAccept();
 
 	//Checks if this state is an accept state.

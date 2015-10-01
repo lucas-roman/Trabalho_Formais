@@ -2,6 +2,7 @@ package main.lexer.automata.algorithms;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.structure.graph.AutomataState;
@@ -49,12 +50,12 @@ class NewStateCreator {
 	}
 	
 	private void createTransitionsForState(AutomataState state) {
-		for(char c : state.getTransitions()) {
-			if(!newStateMap.containsKey(c))
-				newStateMap.put(c, state.nextStateOfEpslonClosure(c));
-			if(state.nextStateOfEpslonClosure(c).size() > newStateMap.get(c).size()) {
-				newStateMap.remove(c);
-				newStateMap.put(c, state.nextStateOfEpslonClosure(c));
+		for(Entry<Character, Set<AutomataState>> keyPair : state.getTransitions()) {
+			if(!newStateMap.containsKey(keyPair.getKey()))
+				newStateMap.put(keyPair.getKey(), state.nextStateOfEpslonClosure(keyPair.getKey()));
+			if(state.nextStateOfEpslonClosure(keyPair.getKey()).size() > newStateMap.get(keyPair.getKey()).size()) {
+				newStateMap.remove(keyPair.getKey());
+				newStateMap.put(keyPair.getKey(), state.nextStateOfEpslonClosure(keyPair.getKey()));
 			}
 		}
 	}
