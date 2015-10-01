@@ -9,12 +9,12 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-class UnionRegularExpression extends RegularExpression {
+class REAlternation extends RegularExpression {
 
 	private RegularExpression leftChild;
 	private RegularExpression rightChild;
 
-	public UnionRegularExpression(RegularExpression leftChild,
+	public REAlternation(RegularExpression leftChild,
 			RegularExpression rightChild) {
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
@@ -30,7 +30,8 @@ class UnionRegularExpression extends RegularExpression {
 		Automata rightChildAutomata = rightChild.createAutomata();
 		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		builder.addState("0");
-		getBuilderValueOf(builder, leftChildAutomata, rightChildAutomata, 1);
+		decomposeAutomataIntoBuilder(builder, leftChildAutomata);
+		decomposeAutomataIntoBuilder(builder, rightChildAutomata);
 		int size1 = leftChildAutomata.size();
 		for(AutomataState acceptState : leftChildAutomata.acceptStates()) {
 			builder.markAcceptState(1 + acceptState.stateID() + "");

@@ -5,11 +5,10 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
-import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-class EmptyRegularExpression extends RegularExpression {
+class REEmptySet extends RegularExpression {
 	
 	public String toString() {
 		return "°";

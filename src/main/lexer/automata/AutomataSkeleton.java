@@ -1,5 +1,6 @@
 package main.lexer.automata;
 
+import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.structure.AutomataStructure;
@@ -36,6 +37,38 @@ public abstract class AutomataSkeleton implements Automata {
 	@Override
 	public int size() {
 		return getStates().size();
+	}
+	
+	public String toString() {
+		String result ="States : ";
+		for(AutomataState state : getStates()) {
+			result += "\n";
+			result += "ID -> ";
+			result += state + "\n";
+			result += "Transitions : ";
+			result += "\n";
+			for(Entry<Character, Set<AutomataState>> trans : state.getTransitions()) {
+				for(AutomataState transState : trans.getValue()) {
+					result += trans.getKey() + " -> " + transState + "\n";
+				}
+			}
+			result += "\n";
+			result += "Epslon : ";
+			result += "\n";
+			for(AutomataState stateByEpslon : state.epslonClosure()) {
+				if(stateByEpslon != state) {
+					result += stateByEpslon + "\n";
+				}
+			}
+		}
+		result += "\n";
+		result += "Accept state : ";
+		result += "\n";
+		for(AutomataState state : acceptStates()) {
+			result += state + "\n";
+		}
+		return result;
+		
 	}
 	
 

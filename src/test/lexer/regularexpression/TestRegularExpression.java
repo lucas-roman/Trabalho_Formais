@@ -26,19 +26,18 @@ public class TestRegularExpression {
 	private RegularExpression reEmptyWord = RegularExpression
 			.createRegularExpression('\0');
 	private RegularExpression reEmpty = RegularExpression
-			.emptyRegularExpression();
-	
+			.emptySetRegularExpression();
 
 	@Test
 	public void testStringValue() {
-		RegularExpression val1 = rea.union(reb).brace().closure()
-				.concatenate(red.concatenate(reEmptyWord).brace());
+		RegularExpression val1 = rea.alternation(reb).parenthesis().kleene()
+				.concatenate(red.concatenate(reEmptyWord).parenthesis());
 		Assert.assertEquals(regularExpressionValue1, val1.toString());
 		Assert.assertEquals(regularExpressionValue2, reEmpty.toString());
 	}
 
 	@Test
-	public void testSimpleAutomataRegularExpression()
+	public void testLiteralRegularExpressionAutomata()
 			throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException,
 			OverrideInitialStateException {
@@ -51,12 +50,12 @@ public class TestRegularExpression {
 	}
 
 	@Test
-	public void testSimpleAutomataUnionRegularExpression()
+	public void testAlternationRegularExpressionAutomata()
 			throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException,
 			OverrideInitialStateException {
 		RegularExpression re = RegularExpression.createRegularExpression('a')
-				.union(RegularExpression.createRegularExpression('b'));
+				.alternation(RegularExpression.createRegularExpression('b'));
 		Automata aut = re.createAutomata();
 		Assert.assertTrue(aut.accepts("a"));
 		Assert.assertTrue(aut.accepts("b"));
@@ -68,7 +67,7 @@ public class TestRegularExpression {
 	}
 
 	@Test
-	public void testSimpleAutomataConcatRegularExpression()
+	public void testConcatenateRegularExpressionAutomata()
 			throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException,
 			OverrideInitialStateException {
@@ -83,12 +82,12 @@ public class TestRegularExpression {
 	}
 
 	@Test
-	public void testSimpleAutomataClosureRegularExpression()
+	public void testKleeneRegularExpressionAutomata()
 			throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException,
 			OverrideInitialStateException {
 		RegularExpression re = RegularExpression.createRegularExpression('a')
-				.closure();
+				.kleene();
 		Automata aut = re.createAutomata();
 		Assert.assertTrue(aut.accepts(""));
 		Assert.assertTrue(aut.accepts("a"));
@@ -98,18 +97,18 @@ public class TestRegularExpression {
 	}
 
 	@Test
-	public void testSimpleAutomataEmptyRegularExpression()
+	public void testEmptySetRegularExpressionAutomata()
 			throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException,
 			OverrideInitialStateException {
-		RegularExpression re = RegularExpression.emptyRegularExpression();
+		RegularExpression re = RegularExpression.emptySetRegularExpression();
 		Automata aut = re.createAutomata();
 		Assert.assertFalse(aut.accepts(""));
 		Assert.assertFalse(aut.accepts("a"));
 	}
 
 	@Test
-	public void testSimpleAutomataEmptyWordRegularExpression()
+	public void testEmptyStringRegularExpressionAutomata()
 			throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException,
 			OverrideInitialStateException {
@@ -120,17 +119,44 @@ public class TestRegularExpression {
 	}
 
 	@Test
-	public void testBracedRegularExceptionAutomata()
+	public void testParenthesisRegularExceptionAutomata()
 			throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException,
 			OverrideInitialStateException {
 		RegularExpression re = RegularExpression.createRegularExpression('a')
-				.brace();
+				.parenthesis();
 		Automata aut = re.createAutomata();
 		Assert.assertFalse(aut.accepts(""));
 		Assert.assertTrue(aut.accepts("a"));
 		Assert.assertFalse(aut.accepts("aa"));
 		Assert.assertFalse(aut.accepts("b"));
+	}
+
+	@Test
+	public void testInterrogationRegularExpression()
+			throws MissingStateException, InvalidStateException,
+			InitialStateMissingException, IllegalAutomataException {
+		RegularExpression re = RegularExpression.createRegularExpression('a')
+				.interrogation();
+		Automata aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts(""));
+		Assert.assertTrue(aut.accepts("a"));
+		Assert.assertFalse(aut.accepts("aa"));
+		Assert.assertFalse(aut.accepts("b"));
+	}
+
+	@Test
+	public void testPositiveRegularExpression() throws MissingStateException,
+			InvalidStateException, InitialStateMissingException,
+			IllegalAutomataException {
+		RegularExpression re = RegularExpression.createRegularExpression('a')
+				.positive();
+		Automata aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("a"));
+		Assert.assertTrue(aut.accepts("aa"));
+		Assert.assertTrue(aut.accepts("aaaaaaaaa"));
+		Assert.assertFalse(aut.accepts("b"));
+		Assert.assertFalse(aut.accepts(""));
 	}
 
 }

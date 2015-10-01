@@ -9,13 +9,13 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-class ConcatRegularExpresion extends RegularExpression {
+class REConcatenation extends RegularExpression {
 
 	private RegularExpression leftChild;
 
 	private RegularExpression rightChild;
 
-	public ConcatRegularExpresion(RegularExpression leftChild,
+	public REConcatenation(RegularExpression leftChild,
 			RegularExpression rightChild) {
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
@@ -32,8 +32,8 @@ class ConcatRegularExpresion extends RegularExpression {
 		Automata leftChildAutomata = leftChild.createAutomata();
 		Automata rightChildAutomata = rightChild.createAutomata();
 		AutomataBuilder build = new AutomataBuilder(new AutomataStructureGraphFactory());
-		getBuilderValueOf(build, leftChildAutomata,
-				rightChildAutomata, 0);
+		decomposeAutomataIntoBuilder(build, leftChildAutomata);
+		decomposeAutomataIntoBuilder(build, rightChildAutomata);
 		int aut1Size = leftChildAutomata.size();
 		for (AutomataState acceptState : leftChildAutomata.acceptStates()) {
 			build.addEmptyTransition(acceptState.stateID() + "",

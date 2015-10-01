@@ -5,31 +5,24 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
-import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-class NormalRegularExpression extends RegularExpression {
-
-	private char recognizedChar;
-
-	NormalRegularExpression(char c) {
-		recognizedChar = c;
-	}
-
+class REEmptyString extends RegularExpression {
+	
 	public String toString() {
-		return "" + recognizedChar;
+		return "ª";
 	}
-
 
 	@Override
-	public Automata createAutomata() throws MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException {
+	public Automata createAutomata() throws MissingStateException,
+			InvalidStateException, InitialStateMissingException,
+			IllegalAutomataException {
 		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		builder.addState("q0");
-		builder.addState("q1");
-		builder.addTransition("q0", "q1", recognizedChar);
-		builder.markAcceptState("q1");
+		builder.markAcceptState("q0");
 		return builder.build();
 	}
+
 
 }

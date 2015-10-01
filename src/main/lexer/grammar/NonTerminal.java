@@ -3,8 +3,6 @@ package main.lexer.grammar;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.lexer.grammar.exceptions.SameProductionException;
-
 public class NonTerminal implements GrammarSymbol {
 
 	private String value;

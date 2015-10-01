@@ -79,4 +79,25 @@ public class TestGrammar {
 		Assert.assertFalse(testAutomata.accepts("bababaaaaba"));
 	}
 
+	@Test
+	public void testAutomataToGrammar() throws DeterministicException,
+			MissingStateException, OverrideInitialStateException,
+			InvalidStateException, InitialStateMissingException,
+			IllegalAutomataException {
+		Automata testAutomata = grammar.createAutomata().convert();
+		RegularGrammar rGr = RegularGrammar.convertAutomataToGrammar(testAutomata);
+		Automata aut2 = rGr.createAutomata().convert();
+		Assert.assertTrue(aut2.accepts(""));
+		Assert.assertTrue(aut2.accepts("a"));
+		Assert.assertTrue(aut2.accepts("b"));
+		Assert.assertTrue(aut2.accepts("abba"));
+		Assert.assertTrue(aut2.accepts("baabbababbab"));
+		Assert.assertTrue(aut2.accepts("aa"));
+		Assert.assertTrue(aut2.accepts("bb"));
+		Assert.assertFalse(aut2.accepts("ab"));
+		Assert.assertFalse(aut2.accepts("ba"));
+		Assert.assertFalse(aut2.accepts("abababaaab"));
+		Assert.assertFalse(aut2.accepts("bababaaaaba"));
+	}
+
 }

@@ -1,10 +1,8 @@
 package main.lexer.grammar;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import main.lexer.grammar.exceptions.SameProductionException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
 
 public class RegularGrammarBuilder {

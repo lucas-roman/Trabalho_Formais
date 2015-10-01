@@ -23,14 +23,14 @@ public abstract class RegularExpression {
 	// empty word.
 	public static RegularExpression createRegularExpression(char c) {
 		if (c == 0) {
-			return new EmptyWordRegularExpression();
+			return new REEmptyString();
 		}
-		return new NormalRegularExpression(c);
+		return new RELiteral(c);
 	}
 
 	// Returns a regular expression that does not accept any word.
-	public static RegularExpression emptyRegularExpression() {
-		return new EmptyRegularExpression();
+	public static RegularExpression emptySetRegularExpression() {
+		return new REEmptySet();
 	}
 
 	/*
@@ -40,42 +40,45 @@ public abstract class RegularExpression {
 	// Concatenates this regular expression with another regular expression
 	// this.other
 	public RegularExpression concatenate(RegularExpression other) {
-		return new ConcatRegularExpresion(this, other);
+		return new REConcatenation(this, other);
 	}
 
 	// Returns the union of this regular expression with the other regular
 	// expression this | other
-	public RegularExpression union(RegularExpression other) {
-		return new UnionRegularExpression(this, other);
+	public RegularExpression alternation(RegularExpression other) {
+		return new REAlternation(this, other);
 	}
 
 	// Returns the closure of this regular expression RE*
-	public RegularExpression closure() {
-		return new ClosureRegularExpression(this);
+	public RegularExpression kleene() {
+		return new REKleene(this);
 	}
 
 	// Be this regular expression RE, returns (RE)
-	public RegularExpression brace() {
-		return new BracedRegularExpression(this);
+	public RegularExpression parenthesis() {
+		return new REParenthesis(this);
+	}
+	
+	// Returns RE? -> (RE | Epslon)
+	public RegularExpression interrogation() {
+		return new REInterrogation(this);
+	}
+	
+	//Returns RE+  ->  RERE*
+	public RegularExpression positive() {
+		return new REPositive(this);
 	}
 
 	public abstract Automata createAutomata() throws MissingStateException,
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException;
 
-	// Returns a builder without the initial state nor the final state marked
-	// for the given automata.
-	void getBuilderValueOf(AutomataBuilder builder, Automata aut1, Automata aut2, int firstIndex)
+	// Adds automata to builder.
+	void decomposeAutomataIntoBuilder(AutomataBuilder builder, Automata automata)
 			throws InvalidStateException {
-		addStates(builder, aut1, firstIndex);
-		// Here, builder's current id is one past last state value. So, it is
-		// safe to add it with the state value from other automata.
-		int lastID = builder.currentID();
-		// We need to pass the lastID so we don't have conflicts regarding state
-		// names.
-		addStates(builder, aut2, lastID);
-		addTransitions(builder, aut1, firstIndex);
-		addTransitions(builder, aut2, lastID);
+		int index = builder.currentID();
+		addStates(builder, automata, index);
+		addTransitions(builder, automata, index);
 	}
 
 	private void addTransitions(AutomataBuilder builder,
@@ -109,10 +112,12 @@ public abstract class RegularExpression {
 
 	private void addStates(AutomataBuilder build, Automata aut,
 			int lastID) throws InvalidStateException {
+		build.addState(aut.initialState().stateID() + lastID + "");
 		for (AutomataState state : aut.getStates()) {
 			build.addState(state.stateID() + lastID + "");
 		}
 	}
+
 
 
 	/*

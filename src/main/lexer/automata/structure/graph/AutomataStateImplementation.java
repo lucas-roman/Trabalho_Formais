@@ -55,7 +55,7 @@ class AutomataStateImplementation implements AutomataState {
 	@Override
 	public boolean process(String string, int index) {
 		if (isLastCharacterOfWord(string, index)) {
-			return _decisionType.decide();
+			return epslonAccept();
 		}
 		return processRestOfWordByEpslonClosure(string, index);
 	}
