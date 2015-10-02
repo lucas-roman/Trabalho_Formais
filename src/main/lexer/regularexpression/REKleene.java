@@ -9,7 +9,7 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -25,7 +25,8 @@ class REKleene extends RegularExpression {
 	public REKleene(RegularExpression regularExpression) {
 		this.regularExpression = regularExpression;
 	}
-	
+
+	@Override
 	public String toString() {
 		return regularExpression + "*";
 	}

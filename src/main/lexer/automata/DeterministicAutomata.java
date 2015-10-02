@@ -3,7 +3,7 @@ package main.lexer.automata;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES

@@ -8,7 +8,7 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -18,7 +18,8 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
  */
 
 class REEmptySet extends RegularExpression {
-	
+
+	@Override
 	public String toString() {
 		return "Â°";
 	}
@@ -32,6 +33,6 @@ class REEmptySet extends RegularExpression {
 		builder.addState("q0");
 		return builder.build();
 	}
-	
+
 
 }

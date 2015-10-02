@@ -3,11 +3,11 @@ package main.lexer.grammar;
 import java.util.HashMap;
 import java.util.Map;
 
-import main.lexer.grammar.exceptions.StartSymbolMissingException;
 import main.lexer.grammar.exceptions.NonTerminalMissingException;
+import main.lexer.grammar.exceptions.StartSymbolMissingException;
 import main.lexer.grammar.exceptions.TerminalMissingException;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES

@@ -2,7 +2,7 @@ package main.lexer.automata.structure.factory;
 
 import main.lexer.automata.structure.AutomataStructure;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES

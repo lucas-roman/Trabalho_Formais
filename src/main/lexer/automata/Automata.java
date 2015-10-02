@@ -7,7 +7,7 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -17,7 +17,7 @@ import main.lexer.automata.structure.graph.AutomataState;
  */
 
 /*
- * This class is used to represent automatas. It should have at least 2 subclasses: deterministic automata and non deterministic automata. Its usage is to 
+ * This class is used to represent automatas. It should have at least 2 subclasses: deterministic automata and non deterministic automata. Its usage is to
  * check whether a given word is part of the language defined by it or not.
  */
 public interface Automata {
@@ -27,16 +27,16 @@ public interface Automata {
 
 	/*Converts a Non Deterministic Automata to a Deterministic Automata. If the automata is already Deterministic, throws a DeterministicException*/
 	Automata convert() throws DeterministicException;
-	
+
 	/*Returns the states of the automata.*/
 	public Set<AutomataState> getStates();
-	
+
 	/*Returns the initial state of the automata.*/
 	public AutomataState initialState();
-	
+
 	/*Returns the accept state of the automata.*/
 	public Set<AutomataState> acceptStates();
-	
+
 	/*Returns size of the automata.*/
 	public int size();
 	

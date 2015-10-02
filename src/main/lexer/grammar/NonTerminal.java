@@ -3,7 +3,7 @@ package main.lexer.grammar;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -15,7 +15,7 @@ import java.util.List;
 public class NonTerminal implements GrammarSymbol {
 
 	private String value;
-	
+
 	private List<RegularProduction> transitions = new ArrayList<>();
 
 	public NonTerminal(String c) {
@@ -35,15 +35,15 @@ public class NonTerminal implements GrammarSymbol {
 		RegularProduction rp = new RegularProduction(symbol1);
 		transitions.add(rp);
 	}
-	
+
 	public void addProduction(Terminal symbol1) {
 		RegularProduction rp = new RegularProduction(symbol1);
 		transitions.add(rp);
 	}
-	 
+
 	public void addProduction(Terminal term, NonTerminal symbol1) {
 		RegularProduction rp = new RegularProduction(term, symbol1);
 		transitions.add(rp);
 	}
-	
+
 }

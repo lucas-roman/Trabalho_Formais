@@ -14,7 +14,7 @@ import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.factory.AutomataStructureFactory;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
