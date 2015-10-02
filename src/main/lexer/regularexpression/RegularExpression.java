@@ -44,12 +44,21 @@ public abstract class RegularExpression {
 	// Concatenates this regular expression with another regular expression
 	// this.other
 	public RegularExpression concatenate(RegularExpression other) {
+		if(other instanceof REEmptyString) {
+			return this;
+		}
+		if(other instanceof REEmptySet) {
+			return other;
+		}
 		return new REConcatenation(this, other);
 	}
 
 	// Returns the union of this regular expression with the other regular
 	// expression this | other
 	public RegularExpression alternation(RegularExpression other) {
+		if(other instanceof REEmptySet) {
+			return this;
+		}
 		return new REAlternation(this, other);
 	}
 

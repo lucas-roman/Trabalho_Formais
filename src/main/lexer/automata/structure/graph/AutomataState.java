@@ -7,11 +7,11 @@ import main.lexer.automata.exceptions.NonDeterministicException;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 /*
@@ -45,6 +45,8 @@ public interface AutomataState extends GraphUnit {
 	 * @param sets set os states to calculate the epsolon closure.
 	 */
 	void epslonClosure(Set<AutomataState> sets);
+	
+	Set<AutomataState> epslonTransitions();
 
 	/*
 	 * Returns all the states reachable by the epslon closure by the character.
@@ -60,7 +62,7 @@ public interface AutomataState extends GraphUnit {
 	/*
 	 * Get all possible transitions (by letter) from this state.
 	 */
-	public Set<Entry<Character, Set<AutomataState>>> getTransitions();
+	public Iterable<Entry<Character, Set<AutomataState>>> getTransitions();
 
 	/*
 	 * Returns true if any state of the epslon closure accepts.
