@@ -1,16 +1,11 @@
 package main.lexer.regularexpression;
 
-import java.util.Map.Entry;
-import java.util.Set;
-
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
-import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.generalizednondeterministic.GeneralizedFiniteAutomataStructure;
-import main.lexer.automata.structure.graph.AutomataState;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
