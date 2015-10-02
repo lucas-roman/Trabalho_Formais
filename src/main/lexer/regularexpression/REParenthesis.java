@@ -1,3 +1,4 @@
+
 package main.lexer.regularexpression;
 
 import main.lexer.automata.Automata;
@@ -15,25 +16,26 @@ import main.lexer.automata.exceptions.MissingStateException;
  * Copyright © 2015
  */
 
-public class REPositive extends RegularExpression {
+class REParenthesis extends RegularExpression {
 
 	private RegularExpression regularExpression;
 
-	public REPositive(RegularExpression regularExpression) {
+	public REParenthesis(RegularExpression regularExpression) {
 		this.regularExpression = regularExpression;
 	}
 
 	@Override
 	public String toString() {
-		return regularExpression + "+";
+		return "(" + regularExpression + ")";
 	}
 
+
+	//Override to forward to its child.
 	@Override
-	public Automata createAutomata() throws MissingStateException,
-			InvalidStateException, InitialStateMissingException,
+	public Automata createAutomata() throws InvalidStateException,
+			MissingStateException, InitialStateMissingException,
 			IllegalAutomataException {
-		RegularExpression intermediate = regularExpression.concatenate(regularExpression.kleene());
-		return intermediate.createAutomata();
+		return regularExpression.createAutomata();
 	}
 
 }

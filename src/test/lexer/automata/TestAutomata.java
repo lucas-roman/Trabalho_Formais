@@ -1,6 +1,5 @@
 package test.lexer.automata;
 
-import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.DeterministicAutomata;
 import main.lexer.automata.exceptions.DeterministicException;
@@ -12,11 +11,7 @@ import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -56,7 +51,7 @@ public class TestAutomata {
 		deterministicBuilder.markAcceptState("q3");
 		deterministicAutomata = deterministicBuilder.build();
 	}
-	
+
 	@Before
 	public void initNonDeterministic() throws InvalidStateException,
 			MissingStateException, OverrideInitialStateException,
@@ -103,7 +98,7 @@ public class TestAutomata {
 		Assert.assertTrue(deterministicAutomata.accepts(""));
 	}
 
-	
+
 
 	@Test
 	public void testAccept() {
@@ -119,7 +114,7 @@ public class TestAutomata {
 		Assert.assertFalse(nonDeterministicAutomata.accepts("abababaaab"));
 		Assert.assertFalse(nonDeterministicAutomata.accepts("bababaaaaba"));
 	}
-	
+
 	@Test
 	public void testNonDeterministicToDeterministic() throws DeterministicException {
 		Automata det = nonDeterministicAutomata.convert();
@@ -136,12 +131,12 @@ public class TestAutomata {
 		Assert.assertFalse(det.accepts("abababaaab"));
 		Assert.assertFalse(det.accepts("bababaaaaba"));
 	}
-	
+
 	@Test(expected=DeterministicException.class)
 	public void testFailDeterministicToDeterministicConvert() throws DeterministicException {
 		deterministicAutomata.convert();
 	}
-	
+
 	@Test
 	public void testSize() throws InitialStateMissingException,
 			IllegalAutomataException, MissingStateException,

@@ -10,6 +10,7 @@ import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException
 
 public class StringToRE {
 
+<<<<<<< HEAD
 	/*
 	 * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORMï¿½TICA
 	 * E ESTATï¿½STICA LINGUAGENS FORMAIS E COMPILADORES
@@ -198,6 +199,20 @@ public class StringToRE {
 
 	private static boolean isOperator(char c) {
 		return operatorPrecedence.containsKey(c);
+=======
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright © 2015
+ */
+
+	public static RegularExpression stringToRE(String input) {
+		//TODO, implement String parser, create RE tree and generate output.
+		return null;
+>>>>>>> refs/remotes/origin/master
 	}
 
 }

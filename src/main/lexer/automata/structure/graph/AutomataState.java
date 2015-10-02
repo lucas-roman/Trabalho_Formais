@@ -5,7 +5,7 @@ import java.util.Set;
 
 import main.lexer.automata.exceptions.NonDeterministicException;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
