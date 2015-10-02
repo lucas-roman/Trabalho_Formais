@@ -19,11 +19,8 @@ import main.lexer.grammar.exceptions.TerminalMissingException;
 public class RegularGrammarBuilder {
 
 	private Map<String, NonTerminal> nonTermMap = new HashMap<>();
-
 	private Map<Character, Terminal> termMap = new HashMap<>();
-
 	private NonTerminal startSymbol;
-
 	private boolean emptyWord = false;
 
 	public RegularGrammar createGrammar() throws StartSymbolMissingException {

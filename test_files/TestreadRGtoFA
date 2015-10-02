@@ -1,0 +1,8 @@
+INITIALSYMBOL
+S
+END
+TRANSITIONS
+S=a|b|aA|bB
+A=aA|bA|a
+B=aB|bB|b
+END
