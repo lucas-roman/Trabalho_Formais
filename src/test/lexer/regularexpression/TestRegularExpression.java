@@ -174,8 +174,8 @@ public class TestRegularExpression {
 	public void testStringToRe() throws MissingStateException,
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException, IllegalRegularExpressionException {
-		String stringToRE1 = "aab*(ab)?";
-		String stringToRE2 = "ab*";
+		String stringToRE2 = "aab*(ab)?";
+		String stringToRE1 = "ab*";
 		RegularExpression re = StringToRE.stringToRE(stringToRE1);
 		Assert.assertTrue(re.createAutomata().accepts("ab"));
 		Assert.assertTrue(re.createAutomata().accepts("abb"));
@@ -190,6 +190,16 @@ public class TestRegularExpression {
 		Assert.assertFalse(re.createAutomata().accepts(""));
 		Assert.assertFalse(re.createAutomata().accepts("aaabb"));
 		Assert.assertFalse(re.createAutomata().accepts("aaabbab"));
+		String stringToRe3 = "ab*c|d";
+		re = StringToRE.stringToRE(stringToRe3);
+		Assert.assertTrue(re.createAutomata().accepts("ac"));
+		Assert.assertTrue(re.createAutomata().accepts("abc"));
+		Assert.assertTrue(re.createAutomata().accepts("abbbbbbbc"));
+		Assert.assertTrue(re.createAutomata().accepts("d"));
+		Assert.assertFalse(re.createAutomata().accepts(""));
+		Assert.assertFalse(re.createAutomata().accepts("abcd"));
+		Assert.assertFalse(re.createAutomata().accepts("dd"));
+		
 	}
 
 }

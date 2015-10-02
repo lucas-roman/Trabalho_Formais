@@ -1,10 +1,10 @@
 package main.lexer.regularexpression;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
-
-import javax.management.OperationsException;
 
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
@@ -34,18 +34,70 @@ public class StringToRE {
 		String modifiedInput = insertConcatenationPoints(input);
 		modifiedInput = reverseInversedUnaryOperatores(modifiedInput);
 		String reversePol = reversePolishNotation(modifiedInput);
-		return null;
+		Stack<RegularExpression> resultStack = new Stack<>();
+		for (int i = 0; i < reversePol.length(); i++) {
+			if (isLiteral(reversePol.charAt(i))) {
+				resultStack.push(RegularExpression
+						.createRegularExpression(reversePol.charAt(i)));
+			} else if (reversePol.charAt(i) == '*') {
+				if (resultStack.isEmpty()) {
+					throw new IllegalRegularExpressionException();
+				}
+				RegularExpression re = resultStack.pop();
+				RegularExpression toPush = re.kleene();
+				resultStack.push(toPush);
+			} else if (reversePol.charAt(i) == '+') {
+				if (resultStack.isEmpty()) {
+					throw new IllegalRegularExpressionException();
+				}
+				RegularExpression re = resultStack.pop();
+				RegularExpression toPush = re.positive();
+				resultStack.push(toPush);
+			} else if (reversePol.charAt(i) == '?') {
+				if (resultStack.isEmpty()) {
+					throw new IllegalRegularExpressionException();
+				}
+				RegularExpression re = resultStack.pop();
+				RegularExpression toPush = re.interrogation();
+				resultStack.push(toPush);
+			} else if (reversePol.charAt(i) == '.') {
+				if (resultStack.isEmpty()) {
+					throw new IllegalRegularExpressionException();
+				}
+				RegularExpression rhs = resultStack.pop();
+				if (resultStack.isEmpty()) {
+					throw new IllegalRegularExpressionException();
+				}
+				RegularExpression lhs = resultStack.pop();
+				RegularExpression toPush = lhs.concatenate(rhs);
+				resultStack.push(toPush);
+			} else if (reversePol.charAt(i) == '|') {
+				if (resultStack.isEmpty()) {
+					throw new IllegalRegularExpressionException();
+				}
+				RegularExpression rhs = resultStack.pop();
+				if (resultStack.isEmpty()) {
+					throw new IllegalRegularExpressionException();
+				}
+				RegularExpression lhs = resultStack.pop();
+				RegularExpression toPush = lhs.alternation(rhs);
+				resultStack.push(toPush);
+			}
+		}
+		return resultStack.pop();
 	}
 
-	private static String reverseInversedUnaryOperatores(String modifiedInput) throws IllegalRegularExpressionException {
+	private static String reverseInversedUnaryOperatores(String modifiedInput)
+			throws IllegalRegularExpressionException {
 		String result = "";
 		char previousChar = 0;
-		for(int i = 0; i < modifiedInput.length(); i++) {
-			if(unary(modifiedInput.charAt(i))) {
-				if(previousChar == ')') {
+		for (int i = 0; i < modifiedInput.length(); i++) {
+			if (unary(modifiedInput.charAt(i))) {
+				if (previousChar == ')') {
 					int j = i;
 					try {
-						for(; modifiedInput.charAt(j) != '('; j--);
+						for (; modifiedInput.charAt(j) != '('; j--)
+							;
 					} catch (IndexOutOfBoundsException ex) {
 						throw new IllegalRegularExpressionException();
 					}
@@ -53,15 +105,13 @@ public class StringToRE {
 					partResult += modifiedInput.charAt(i);
 					partResult += result.substring(j, i);
 					result = partResult;
-				}
-				else {
+				} else {
 					String partResult = result.substring(0, i - 1);
 					partResult += modifiedInput.charAt(i);
 					partResult += modifiedInput.charAt(i - 1);
 					result = partResult;
 				}
-			}
-			else {
+			} else {
 				result += modifiedInput.charAt(i);
 			}
 			previousChar = modifiedInput.charAt(i);
@@ -77,9 +127,9 @@ public class StringToRE {
 		char previousCharacter = 0;
 		String result = "";
 		for (char c : input.toCharArray()) {
-			if (isLiteral(c)) {
-				if (isLiteral(previousCharacter)) {
-					result += ".";
+			if ((isLiteral(c) || c == '(')) {
+				if(unary(previousCharacter) || previousCharacter == ')' || isLiteral(previousCharacter)) {
+					result += '.';
 				}
 			}
 			result += c;
@@ -131,7 +181,6 @@ public class StringToRE {
 			}
 			result += operationStack.pop();
 		}
-		System.out.println(result);
 		return result;
 	}
 
