@@ -44,6 +44,9 @@ public class StringToRE {
 				RegularExpression re = resultStack.pop();
 				RegularExpression toPush = re.kleene();
 				resultStack.push(toPush);
+			} else if(reversePol.charAt(i) == '´') {
+				resultStack.push(RegularExpression
+						.createRegularExpression('\0'));
 			} else if (reversePol.charAt(i) == '+') {
 				if (resultStack.isEmpty()) {
 					throw new IllegalRegularExpressionException();
@@ -125,8 +128,10 @@ public class StringToRE {
 		char previousCharacter = 0;
 		String result = "";
 		for (char c : input.toCharArray()) {
-			if ((isLiteral(c) || c == '(')) {
-				if(unary(previousCharacter) || previousCharacter == ')' || isLiteral(previousCharacter)) {
+			if ((isLiteral(c) || c == '(' || c == '´')) {
+				if (unary(previousCharacter) || previousCharacter == ')'
+						|| isLiteral(previousCharacter)
+						|| previousCharacter == '´') {
 					result += '.';
 				}
 			}
@@ -147,7 +152,7 @@ public class StringToRE {
 		String result = "";
 		for (char c : input.toCharArray()) {
 			// Is operator
-			if (isLiteral(c)) {
+			if (isLiteral(c) || c == '´') {
 				result += c;
 			} else if (isOperator(c)) {
 				while (!operationStack.isEmpty()

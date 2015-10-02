@@ -28,7 +28,7 @@ class REKleene extends RegularExpression {
 
 	@Override
 	public String toString() {
-		return regularExpression + "*";
+			return "(" + regularExpression + ")*";
 	}
 
 	@Override

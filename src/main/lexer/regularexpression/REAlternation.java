@@ -10,12 +10,11 @@ import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
+ * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
+ * 
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
+ * @author RODRIGO PEDRO MARQUES Copyright � 2015
  */
 
 class REAlternation extends RegularExpression {
@@ -31,29 +30,30 @@ class REAlternation extends RegularExpression {
 
 	@Override
 	public String toString() {
-		return leftChild + "|" + rightChild;
+		return "(" + leftChild + "|" + rightChild + ")";
 	}
 
 	@Override
-	public Automata createAutomata() throws MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException {
+	public Automata createAutomata() throws MissingStateException,
+			InvalidStateException, InitialStateMissingException,
+			IllegalAutomataException {
 		Automata leftChildAutomata = leftChild.createAutomata();
 		Automata rightChildAutomata = rightChild.createAutomata();
-		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
+		AutomataBuilder builder = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
 		builder.addState("0");
 		leftChildAutomata.decomposeAutomataIntoBuilder(builder);
 		rightChildAutomata.decomposeAutomataIntoBuilder(builder);
 		int size1 = leftChildAutomata.size();
-		for(AutomataState acceptState : leftChildAutomata.acceptStates()) {
+		for (AutomataState acceptState : leftChildAutomata.acceptStates()) {
 			builder.markAcceptState(1 + acceptState.stateID() + "");
 		}
-		for(AutomataState acceptState : rightChildAutomata.acceptStates()) {
+		for (AutomataState acceptState : rightChildAutomata.acceptStates()) {
 			builder.markAcceptState(size1 + acceptState.stateID() + 1 + "");
 		}
 		builder.addEmptyTransition("0", "1");
 		builder.addEmptyTransition("0", size1 + 1 + "");
 		return builder.build();
 	}
-
-
 
 }

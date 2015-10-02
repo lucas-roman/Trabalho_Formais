@@ -10,12 +10,11 @@ import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
+ * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
+ * 
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
+ * @author RODRIGO PEDRO MARQUES Copyright � 2015
  */
 
 class REConcatenation extends RegularExpression {
@@ -32,9 +31,8 @@ class REConcatenation extends RegularExpression {
 
 	@Override
 	public String toString() {
-		return "" + leftChild + rightChild;
+		return "(" + leftChild + rightChild + ")";
 	}
-
 
 	@Override
 	public Automata createAutomata() throws InvalidStateException,
@@ -42,7 +40,8 @@ class REConcatenation extends RegularExpression {
 			IllegalAutomataException {
 		Automata leftChildAutomata = leftChild.createAutomata();
 		Automata rightChildAutomata = rightChild.createAutomata();
-		AutomataBuilder build = new AutomataBuilder(new AutomataStructureGraphFactory());
+		AutomataBuilder build = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
 		leftChildAutomata.decomposeAutomataIntoBuilder(build);
 		rightChildAutomata.decomposeAutomataIntoBuilder(build);
 		int aut1Size = leftChildAutomata.size();
@@ -55,8 +54,5 @@ class REConcatenation extends RegularExpression {
 		}
 		return build.build();
 	}
-
-
-
 
 }

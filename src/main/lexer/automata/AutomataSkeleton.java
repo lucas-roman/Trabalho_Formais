@@ -72,7 +72,7 @@ public abstract class AutomataSkeleton implements Automata {
 			result += "\n";
 			result += "Epslon : ";
 			result += "\n";
-			for(AutomataState stateByEpslon : state.epslonClosure()) {
+			for(AutomataState stateByEpslon : state.epslonTransitions()) {
 				if(stateByEpslon != state) {
 					result += stateByEpslon + "\n";
 				}

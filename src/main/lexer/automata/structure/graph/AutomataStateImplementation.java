@@ -11,11 +11,11 @@ import main.lexer.automata.exceptions.NonDeterministicException;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 /*
@@ -142,7 +142,8 @@ class AutomataStateImplementation implements AutomataState {
 	}
 
 	@Override
-	public Set<Entry<Character, Set<AutomataState>>> getTransitions() {
+	public Iterable<Entry<Character,  Set<AutomataState>>> getTransitions() {
+		Iterable<Set<AutomataState>> retSet = nextStates.values();
 		return nextStates.entrySet();
 	}
 
@@ -195,6 +196,10 @@ class AutomataStateImplementation implements AutomataState {
 	@Override
 	public int stateID() {
 		return name;
+	}
+
+	public Set<AutomataState> epslonTransitions() {
+		return statesByEpslon;
 	}
 
 
