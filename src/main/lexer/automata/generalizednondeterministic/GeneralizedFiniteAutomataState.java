@@ -53,4 +53,11 @@ public class GeneralizedFiniteAutomataState implements GeneralizedFiniteAutomata
 		
 	}
 
+
+	public RegularExpression regularExpressionToState(
+			GeneralizedFiniteAutomataState acceptState) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

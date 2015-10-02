@@ -1,5 +1,6 @@
 package test.lexer.grammar;
 
+import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
@@ -14,13 +15,17 @@ import main.lexer.grammar.exceptions.SameProductionException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
 import main.lexer.grammar.exceptions.TerminalMissingException;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 public class TestGrammar {

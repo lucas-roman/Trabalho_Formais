@@ -9,18 +9,18 @@ import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
+import main.lexer.automata.generalizednondeterministic.GeneralizedFiniteAutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
+ * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
+ * 
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
+ * @author RODRIGO PEDRO MARQUES Copyright � 2015
  */
 
-//Defines basic structure of a regular expression
+// Defines basic structure of a regular expression
 public abstract class RegularExpression {
 
 	/*
@@ -62,13 +62,13 @@ public abstract class RegularExpression {
 	public RegularExpression kleene() {
 		return new REKleene(this);
 	}
-	
+
 	// Returns RE? -> (RE | Epslon)
 	public RegularExpression interrogation() {
 		return new REInterrogation(this);
 	}
-	
-	//Returns RE+  ->  RERE*
+
+	// Returns RE+ -> RERE*
 	public RegularExpression positive() {
 		return new REPositive(this);
 	}
@@ -77,8 +77,13 @@ public abstract class RegularExpression {
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException;
 
-
-
+	public static RegularExpression convertAutomataToRegularExpression(
+			Automata aut) throws InvalidStateException, MissingStateException,
+			InitialStateMissingException, IllegalAutomataException {
+		GeneralizedFiniteAutomataStructure converter = new GeneralizedFiniteAutomataStructure(
+				aut);
+		return converter.convertToRegularExpression();
+	}
 
 	/*
 	 * String representation

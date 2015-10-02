@@ -22,12 +22,14 @@ public class GeneralizedFiniteAutomataStructure {
 
 	private Map<AutomataState, GeneralizedFiniteAutomataState> stateMap;
 
+	private GeneralizedFiniteAutomataState acceptState;
+
 	public void removeRandomState() {
 		for (Entry<AutomataState, GeneralizedFiniteAutomataState> keyVal : stateMap
 				.entrySet()) {
 			if (!keyVal.getValue().accepts()
 					&& keyVal.getValue() != initialState) {
-				// Remove here
+				// Remove algorithm here...
 			}
 		}
 	}
@@ -76,7 +78,14 @@ public class GeneralizedFiniteAutomataStructure {
 		}
 		for (AutomataState acceptState : newAutomata.acceptStates()) {
 			stateMap.get(acceptState).markAsAccept();
+			this.acceptState = stateMap.get(acceptState);
 		}
+	}
+	
+	
+	public RegularExpression convertToRegularExpression() {
+		//Implement body of algorithm here...
+		return initialState.regularExpressionToState(acceptState);
 	}
 
 }
