@@ -4,7 +4,7 @@ import main.lexer.automata.Automata;
 import main.lexer.grammar.RegularGrammar;
 import main.lexer.regularexpression.RegularExpression;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -14,8 +14,8 @@ import main.lexer.regularexpression.RegularExpression;
  */
 
 public class CommandLineMain {
-	
-	
+
+
 	/*
 	 * Argumentos :
 	 * 0 -> Tipo que vai converter de
@@ -23,8 +23,8 @@ public class CommandLineMain {
 	 * 2 -> Input file
 	 * 3 -> Output file
 	 */
-	
-	
+
+
 	/*
 	 * Outro TODO : criar arquivos pra ler de teste e uma String teste para comparar com o output. Ler output e comparar com o teste. Deve ser feito dentro do
 	 * pacote test.model.commandline
@@ -75,7 +75,7 @@ public class CommandLineMain {
 
 	private static void writeOutputFile(RegularExpression re, String args) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private static RegularExpression readAutomataByRegularExpression(String string) {
@@ -85,7 +85,7 @@ public class CommandLineMain {
 
 	private static void writeOutputFile(RegularGrammar gr, String args) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private static RegularGrammar readAutomataByGrammar(String string) {
@@ -95,13 +95,13 @@ public class CommandLineMain {
 
 	private static void writeOutputFile(Automata automata, String args) {
 		// TODO Aqui o automato deve ir para uma string de saída.
-		
+
 	}
 
 	private static Automata readRegularExpression(String string) {
 		// TODO ler arquivo de expressão regular aqui. CUIDADO: expressão regular deve gerar uma árvore de expressão de acordo com
 		// precedência de operadores. Por isso, estou pensando em criar uma classe que lê uma String e cria uma expressão regular dentro do pacote
-		//de expressão regular. (classe StringToRE). 
+		//de expressão regular. (classe StringToRE).
 		return null;
 	}
 
@@ -110,5 +110,5 @@ public class CommandLineMain {
 		//para adicionar e pegar os símbolos não terminais e terminais. Exemplos estão no teste
 		return null;
 	}
-	
+
 }

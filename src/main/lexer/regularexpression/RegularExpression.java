@@ -11,7 +11,7 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -67,12 +67,12 @@ public abstract class RegularExpression {
 	public RegularExpression parenthesis() {
 		return new REParenthesis(this);
 	}
-	
+
 	// Returns RE? -> (RE | Epslon)
 	public RegularExpression interrogation() {
 		return new REInterrogation(this);
 	}
-	
+
 	//Returns RE+  ->  RERE*
 	public RegularExpression positive() {
 		return new REPositive(this);

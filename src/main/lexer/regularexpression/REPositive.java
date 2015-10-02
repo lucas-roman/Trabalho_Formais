@@ -6,7 +6,7 @@ import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -22,7 +22,8 @@ public class REPositive extends RegularExpression {
 	public REPositive(RegularExpression regularExpression) {
 		this.regularExpression = regularExpression;
 	}
-	
+
+	@Override
 	public String toString() {
 		return regularExpression + "+";
 	}

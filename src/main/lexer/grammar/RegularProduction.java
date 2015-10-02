@@ -1,6 +1,6 @@
 package main.lexer.grammar;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -41,7 +41,8 @@ public class RegularProduction {
 	public boolean lastProduction() {
 		return nonTerminal == null;
 	}
-	
+
+	@Override
 	public String toString() {
 		String result = "";
 		if(terminal != null) {

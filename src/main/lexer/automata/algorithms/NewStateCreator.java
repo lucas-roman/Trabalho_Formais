@@ -7,7 +7,7 @@ import java.util.Set;
 
 import main.lexer.automata.structure.graph.AutomataState;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES

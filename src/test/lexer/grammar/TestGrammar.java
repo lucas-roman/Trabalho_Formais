@@ -1,6 +1,5 @@
 package test.lexer.grammar;
 
-import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
@@ -10,16 +9,12 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.grammar.RegularGrammar;
 import main.lexer.grammar.RegularGrammarBuilder;
+import main.lexer.grammar.exceptions.NonTerminalMissingException;
 import main.lexer.grammar.exceptions.SameProductionException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
-import main.lexer.grammar.exceptions.NonTerminalMissingException;
 import main.lexer.grammar.exceptions.TerminalMissingException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES

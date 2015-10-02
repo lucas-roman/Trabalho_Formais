@@ -9,7 +9,7 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -28,7 +28,8 @@ class REAlternation extends RegularExpression {
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
 	}
-	
+
+	@Override
 	public String toString() {
 		return leftChild + "|" + rightChild;
 	}

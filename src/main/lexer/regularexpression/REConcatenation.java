@@ -9,7 +9,7 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -30,11 +30,13 @@ class REConcatenation extends RegularExpression {
 		this.rightChild = rightChild;
 	}
 
+	@Override
 	public String toString() {
 		return "" + leftChild + rightChild;
 	}
 
 
+	@Override
 	public Automata createAutomata() throws InvalidStateException,
 			MissingStateException, InitialStateMissingException,
 			IllegalAutomataException {
@@ -53,8 +55,8 @@ class REConcatenation extends RegularExpression {
 		}
 		return build.build();
 	}
-	
-		
+
+
 
 
 }

@@ -6,7 +6,7 @@ import java.util.Set;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -19,38 +19,40 @@ import main.lexer.automata.structure.graph.AutomataState;
  * This class represents part of the structure of an automata.
  */
 public abstract class AutomataSkeleton implements Automata {
-	
+
 
 	protected AutomataStructure stateImpl;
-	
+
 	public AutomataSkeleton(AutomataStructure stateManager) {
 		stateImpl = stateManager;
 	}
-	
+
+	@Override
 	public AutomataState initialState() {
 		return stateImpl.automataInitialState();
 	}
-	
+
 	@Override
 	public boolean accepts(String string) {
 		return stateImpl.check(string);
 	}
-	
+
 	@Override
 	public Set<AutomataState> getStates() {
 		return stateImpl.states();
 	}
-	
+
 	@Override
 	public Set<AutomataState> acceptStates() {
 		return stateImpl.acceptStates();
 	}
-	
+
 	@Override
 	public int size() {
 		return getStates().size();
 	}
-	
+
+	@Override
 	public String toString() {
 		String result ="States : ";
 		for(AutomataState state : getStates()) {
@@ -80,7 +82,7 @@ public abstract class AutomataSkeleton implements Automata {
 			result += state + "\n";
 		}
 		return result;
-		
+
 	}
 
 }

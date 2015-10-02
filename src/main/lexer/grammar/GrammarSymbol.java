@@ -1,6 +1,6 @@
 package main.lexer.grammar;
 
-/*
+/**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
  * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
  * LINGUAGENS FORMAIS E COMPILADORES
@@ -9,7 +9,7 @@ package main.lexer.grammar;
  * Copyright © 2015
  */
 
-public interface GrammarSymbol {	
+public interface GrammarSymbol {
 	public String getSymbolValue();
 
 }
