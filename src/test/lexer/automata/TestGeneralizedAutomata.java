@@ -1,5 +1,6 @@
 package test.lexer.automata;
 
+import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
@@ -8,6 +9,7 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.generalizednondeterministic.GeneralizedFiniteAutomataStructure;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
+import main.lexer.regularexpression.RegularExpression;
 
 import org.junit.Test;
 
@@ -35,6 +37,20 @@ public class TestGeneralizedAutomata {
 		deterministicBuilder.markAcceptState("q3");
 		Automata deterministicAutomata = deterministicBuilder.build();
 		GeneralizedFiniteAutomataStructure test = new GeneralizedFiniteAutomataStructure(deterministicAutomata);
+		RegularExpression re = test.convertToRegularExpression();
+		Automata back = re.createAutomata();
+		Assert.assertTrue(back.accepts("abba"));
+		Assert.assertTrue(back.accepts("baabbababbab"));
+		Assert.assertTrue(back.accepts("a"));
+		Assert.assertTrue(back.accepts("b"));
+		Assert.assertTrue(back.accepts("aa"));
+		Assert.assertTrue(back.accepts("bb"));
+		Assert.assertFalse(back.accepts("ab"));
+		Assert.assertFalse(back.accepts("ba"));
+		Assert.assertFalse(back.accepts("abababaaab"));
+		Assert.assertFalse(back.accepts("bababaaaaba"));
+		Assert.assertTrue(back.accepts(""));
+		System.out.println(re);
 	}
 
 }

@@ -7,12 +7,11 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
- * LINGUAGENS FORMAIS E COMPILADORES
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORMï¿½TICA E
+ * ESTATï¿½STICA LINGUAGENS FORMAIS E COMPILADORES
+ * 
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * @author RODRIGO PEDRO MARQUES Copyright ï¿½ 2015
  */
 
 public class REPositive extends RegularExpression {
@@ -25,14 +24,15 @@ public class REPositive extends RegularExpression {
 
 	@Override
 	public String toString() {
-		return regularExpression + "+";
+		return "(" + regularExpression + ")+";
 	}
 
 	@Override
 	public Automata createAutomata() throws MissingStateException,
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException {
-		RegularExpression intermediate = regularExpression.concatenate(regularExpression.kleene());
+		RegularExpression intermediate = regularExpression
+				.concatenate(regularExpression.kleene());
 		return intermediate.createAutomata();
 	}
 

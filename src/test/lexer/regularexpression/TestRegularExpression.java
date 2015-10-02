@@ -24,9 +24,9 @@ import org.junit.Test;
 
 public class TestRegularExpression {
 
-	private String regularExpressionValue1 = "a|b*dª";
+	private String regularExpressionValue1 = "(((a|b))*d)";
 
-	private String regularExpressionValue2 = "°";
+	private String regularExpressionValue2 = "";
 
 	private RegularExpression rea = RegularExpression
 			.createRegularExpression('a');
@@ -127,6 +127,35 @@ public class TestRegularExpression {
 		Automata aut = re.createAutomata();
 		Assert.assertTrue(aut.accepts(""));
 		Assert.assertFalse(aut.accepts("a"));
+		re = re.concatenate(RegularExpression.createRegularExpression('a'));
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("a"));
+		Assert.assertFalse(aut.accepts(""));
+		Assert.assertFalse(aut.accepts("aa"));
+		re = RegularExpression.createRegularExpression('a');
+		re = re.concatenate(RegularExpression.createRegularExpression('\0'));
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("a"));
+		Assert.assertFalse(aut.accepts(""));
+		Assert.assertFalse(aut.accepts("aa"));
+		re = RegularExpression.createRegularExpression('\0');
+		re = re.alternation(RegularExpression.createRegularExpression('a'));
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("a"));
+		Assert.assertTrue(aut.accepts(""));
+		Assert.assertFalse(aut.accepts("aa"));
+		re = RegularExpression.createRegularExpression('a');
+		re = re.alternation(RegularExpression.createRegularExpression('\0'));
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("a"));
+		Assert.assertTrue(aut.accepts(""));
+		Assert.assertFalse(aut.accepts("aa"));
+		re = RegularExpression.createRegularExpression('\0');
+		re = re.kleene();
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts(""));
+		Assert.assertFalse(aut.accepts("a"));
+		
 	}
 
 
@@ -200,6 +229,17 @@ public class TestRegularExpression {
 		Assert.assertFalse(re.createAutomata().accepts("01"));
 		Assert.assertFalse(re.createAutomata().accepts("00"));
 		
+	}
+	
+	@Test
+	public void testStringToREEpslon() throws IllegalRegularExpressionException, MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException {
+		String stringToRE = "a(a|´)b´";
+		RegularExpression re = StringToRE.stringToRE(stringToRE);
+		Automata test = re.createAutomata();
+		Assert.assertTrue(test.accepts("aab"));
+		Assert.assertTrue(test.accepts("ab"));
+		Assert.assertFalse(test.accepts("abb"));
+		Assert.assertFalse(test.accepts(""));
 	}
 
 }

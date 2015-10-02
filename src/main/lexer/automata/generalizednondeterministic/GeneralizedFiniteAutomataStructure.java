@@ -27,10 +27,16 @@ public class GeneralizedFiniteAutomataStructure {
 	public void removeRandomState() {
 		for (Entry<AutomataState, GeneralizedFiniteAutomataState> keyVal : stateMap
 				.entrySet()) {
+			int i = 1;
 			if (!keyVal.getValue().accepts()
 					&& keyVal.getValue() != initialState) {
 				// Remove algorithm here...
+				GeneralizedFiniteAutomataState stateToBeRemoved = stateMap.remove(keyVal.getKey());
+				stateToBeRemoved.updateReferences();
+				i++;
+				return;
 			}
+			assert(i == 1);
 		}
 	}
 
@@ -46,6 +52,7 @@ public class GeneralizedFiniteAutomataStructure {
 		}
 		AutomataBuilder builder = new AutomataBuilder(
 				new AutomataStructureGraphFactory());
+		builder.addState("0");
 		result.decomposeAutomataIntoBuilder(builder);
 		builder.addEmptyTransition("0", "1");
 		builder.addState(builder.currentID() + "");
@@ -69,11 +76,12 @@ public class GeneralizedFiniteAutomataStructure {
 							RegularExpression.createRegularExpression(trans
 									.getKey()), stateMap.get(transStateValue));
 				}
-				for (AutomataState epslonState : state.epslonClosure()) {
-					stateMap.get(state).addStateBy(
-							RegularExpression.createRegularExpression('\0'),
-							stateMap.get(epslonState));
-				}
+				
+			}
+			for (AutomataState epslonState : state.epslonTransitions()) {
+				stateMap.get(state).addStateBy(
+						RegularExpression.createRegularExpression('\0'),
+						stateMap.get(epslonState));
 			}
 		}
 		for (AutomataState acceptState : newAutomata.acceptStates()) {
@@ -83,8 +91,18 @@ public class GeneralizedFiniteAutomataStructure {
 	}
 	
 	
+	private int size() {
+		return stateMap.size();
+	}
+	
+	
 	public RegularExpression convertToRegularExpression() {
-		//Implement body of algorithm here...
+		while(size() > 2) {
+			removeRandomState();
+		}
+		
+		assert(stateMap.containsValue(initialState));
+		assert(stateMap.containsValue(acceptState));
 		return initialState.regularExpressionToState(acceptState);
 	}
 

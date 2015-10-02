@@ -9,30 +9,51 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
- * LINGUAGENS FORMAIS E COMPILADORES
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORMï¿½TICA E
+ * ESTATï¿½STICA LINGUAGENS FORMAIS E COMPILADORES
+ * 
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * @author RODRIGO PEDRO MARQUES Copyright ï¿½ 2015
  */
 
 class REEmptySet extends RegularExpression {
 
 	@Override
 	public String toString() {
-		return "Â°";
+		return "";
 	}
-
 
 	@Override
 	public Automata createAutomata() throws MissingStateException,
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException {
-		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
+		AutomataBuilder builder = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
 		builder.addState("q0");
 		return builder.build();
 	}
 
+	 
+	@Override
+	public RegularExpression kleene() {
+		return RegularExpression.createRegularExpression('\0');
+	}
 
+	@Override
+	public RegularExpression concatenate(RegularExpression other) {
+		return this;
+	}
+
+	@Override
+	public RegularExpression interrogation() {
+		return RegularExpression.createRegularExpression('\0');
+	}
+
+	public RegularExpression positive() {
+		return this;
+	}
+
+	public RegularExpression alternation(RegularExpression other) {
+		return other;
+	}
 }

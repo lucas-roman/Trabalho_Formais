@@ -1,5 +1,6 @@
 package test.lexer.automata.factory;
 
+import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.DeterministicAutomata;
 import main.lexer.automata.NonDeterministicAutomata;
@@ -11,13 +12,17 @@ import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 public class TestAutomataBuilder {
