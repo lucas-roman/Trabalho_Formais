@@ -24,7 +24,7 @@ import org.junit.Test;
 
 public class TestRegularExpression {
 
-	private String regularExpressionValue1 = "(a|b)*(dª)";
+	private String regularExpressionValue1 = "a|b*dª";
 
 	private String regularExpressionValue2 = "°";
 
@@ -41,8 +41,8 @@ public class TestRegularExpression {
 
 	@Test
 	public void testStringValue() {
-		RegularExpression val1 = rea.alternation(reb).parenthesis().kleene()
-				.concatenate(red.concatenate(reEmptyWord).parenthesis());
+		RegularExpression val1 = rea.alternation(reb).kleene()
+				.concatenate(red.concatenate(reEmptyWord));
 		Assert.assertEquals(regularExpressionValue1, val1.toString());
 		Assert.assertEquals(regularExpressionValue2, reEmpty.toString());
 	}
@@ -129,19 +129,6 @@ public class TestRegularExpression {
 		Assert.assertFalse(aut.accepts("a"));
 	}
 
-	@Test
-	public void testParenthesisRegularExceptionAutomata()
-			throws InvalidStateException, MissingStateException,
-			InitialStateMissingException, IllegalAutomataException,
-			OverrideInitialStateException {
-		RegularExpression re = RegularExpression.createRegularExpression('a')
-				.parenthesis();
-		Automata aut = re.createAutomata();
-		Assert.assertFalse(aut.accepts(""));
-		Assert.assertTrue(aut.accepts("a"));
-		Assert.assertFalse(aut.accepts("aa"));
-		Assert.assertFalse(aut.accepts("b"));
-	}
 
 	@Test
 	public void testInterrogationRegularExpression()

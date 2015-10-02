@@ -3,16 +3,19 @@ package main.lexer.automata;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import main.lexer.automata.exceptions.InvalidStateException;
+import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
 
 /*
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 /*
@@ -82,5 +85,49 @@ public abstract class AutomataSkeleton implements Automata {
 		return result;
 		
 	}
+	
+	public void decomposeAutomataIntoBuilder(AutomataBuilder builder)
+			throws InvalidStateException {
+		int index = builder.currentID();
+		addStates(builder, index);
+		addTransitions(builder, index);
+	}
+
+	private void addTransitions(AutomataBuilder builder, int lastID) throws InvalidStateException {
+		for (AutomataState state : getStates()) {
+			for(Entry<Character, Set<AutomataState>> keyPair : state.getTransitions()) {
+				for(AutomataState other : keyPair.getValue()) {
+					try {
+						builder.addTransition(state.stateID() + lastID + "",
+								other.stateID() + lastID + "", keyPair.getKey());
+					} catch (MissingStateException e) {
+						// All states already added. Safe to ignore.
+					}
+				}
+			}
+			for (AutomataState epslonReachable : state.epslonClosure()) {
+				// Ignore empty transitions to same state
+				if (epslonReachable != state) {
+					try {
+						builder.addEmptyTransition(state.stateID() + lastID
+								+ "", epslonReachable.stateID() + lastID + "");
+					} catch (MissingStateException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+
+	}
+
+
+	private void addStates(AutomataBuilder build, 
+			int lastID) throws InvalidStateException {
+		build.addState(initialState().stateID() + lastID + "");
+		for (AutomataState state : getStates()) {
+			build.addState(state.stateID() + lastID + "");
+		}
+	}
+
 
 }

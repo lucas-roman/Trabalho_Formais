@@ -11,11 +11,11 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 /*
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 class REAlternation extends RegularExpression {
@@ -39,8 +39,8 @@ class REAlternation extends RegularExpression {
 		Automata rightChildAutomata = rightChild.createAutomata();
 		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		builder.addState("0");
-		decomposeAutomataIntoBuilder(builder, leftChildAutomata);
-		decomposeAutomataIntoBuilder(builder, rightChildAutomata);
+		leftChildAutomata.decomposeAutomataIntoBuilder(builder);
+		rightChildAutomata.decomposeAutomataIntoBuilder(builder);
 		int size1 = leftChildAutomata.size();
 		for(AutomataState acceptState : leftChildAutomata.acceptStates()) {
 			builder.markAcceptState(1 + acceptState.stateID() + "");

@@ -3,15 +3,17 @@ package main.lexer.automata;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.DeterministicException;
+import main.lexer.automata.exceptions.InvalidStateException;
+import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 
 /*
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 /*
@@ -37,4 +39,8 @@ public interface Automata {
 	
 	/*Returns size of the automata.*/
 	public int size();
+	
+	public void decomposeAutomataIntoBuilder(AutomataBuilder builder) throws InvalidStateException;
+	
+	
 }

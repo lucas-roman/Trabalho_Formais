@@ -11,11 +11,11 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 /*
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 class REKleene extends RegularExpression {
@@ -37,7 +37,7 @@ class REKleene extends RegularExpression {
 		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		builder.addState("0");
 		Automata aut = regularExpression.createAutomata();
-		decomposeAutomataIntoBuilder(builder, aut);
+		aut.decomposeAutomataIntoBuilder(builder);
 		builder.markAcceptState("0");
 		builder.addEmptyTransition("0", "1");
 		for(AutomataState acceptState : aut.acceptStates()) {

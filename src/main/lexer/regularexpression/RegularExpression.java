@@ -13,11 +13,11 @@ import main.lexer.automata.structure.graph.AutomataState;
 
 /*
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 //Defines basic structure of a regular expression
@@ -62,11 +62,6 @@ public abstract class RegularExpression {
 	public RegularExpression kleene() {
 		return new REKleene(this);
 	}
-
-	// Be this regular expression RE, returns (RE)
-	public RegularExpression parenthesis() {
-		return new REParenthesis(this);
-	}
 	
 	// Returns RE? -> (RE | Epslon)
 	public RegularExpression interrogation() {
@@ -82,50 +77,6 @@ public abstract class RegularExpression {
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException;
 
-	// Adds automata to builder.
-	void decomposeAutomataIntoBuilder(AutomataBuilder builder, Automata automata)
-			throws InvalidStateException {
-		int index = builder.currentID();
-		addStates(builder, automata, index);
-		addTransitions(builder, automata, index);
-	}
-
-	private void addTransitions(AutomataBuilder builder,
-			Automata aut2, int lastID) throws InvalidStateException {
-		for (AutomataState state : aut2.getStates()) {
-			for(Entry<Character, Set<AutomataState>> keyPair : state.getTransitions()) {
-				for(AutomataState other : keyPair.getValue()) {
-					try {
-						builder.addTransition(state.stateID() + lastID + "",
-								other.stateID() + lastID + "", keyPair.getKey());
-					} catch (MissingStateException e) {
-						// All states already added. Safe to ignore.
-					}
-				}
-			}
-			for (AutomataState epslonReachable : state.epslonClosure()) {
-				// Ignore empty transitions to same state
-				if (epslonReachable != state) {
-					try {
-						builder.addEmptyTransition(state.stateID() + lastID
-								+ "", epslonReachable.stateID() + lastID + "");
-					} catch (MissingStateException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-
-	}
-
-
-	private void addStates(AutomataBuilder build, Automata aut,
-			int lastID) throws InvalidStateException {
-		build.addState(aut.initialState().stateID() + lastID + "");
-		for (AutomataState state : aut.getStates()) {
-			build.addState(state.stateID() + lastID + "");
-		}
-	}
 
 
 

@@ -1,0 +1,22 @@
+package main.lexer.automata.generalizednondeterministic;
+
+
+public interface GeneralizedFiniteAutomataStateInterface {
+
+
+
+
+	/*
+	 * Checks if this state is an acceptable state.
+	 */
+	public boolean accepts();
+	
+	public void updateReferences();
+	
+	/*
+	 * Returns the ID of the state.
+	 */
+	public int stateID();
+	
+	
+}
