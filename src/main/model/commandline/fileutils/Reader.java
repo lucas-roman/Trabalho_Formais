@@ -11,10 +11,12 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
+import main.lexer.grammar.NonTerminal;
 import main.lexer.grammar.RegularGrammar;
 import main.lexer.grammar.RegularGrammarBuilder;
 import main.lexer.grammar.exceptions.NonTerminalMissingException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
+import main.lexer.grammar.exceptions.TerminalMissingException;
 import main.lexer.regularexpression.RegularExpression;
 import main.lexer.regularexpression.StringToRE;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
@@ -196,33 +198,87 @@ public class Reader {
 	public RegularGrammar readRegularGrammar(File file)
 			throws IllegalStartOfText, IllegalTextStructure,
 			IllegalOrderOfTextStructure, StartSymbolMissingException,
-			NonTerminalMissingException {
+			NonTerminalMissingException, TerminalMissingException {
 		File aux_file = file;
 		try {
 			this.scan = new Scanner(aux_file);
 			String aux = this.scan.nextLine();
-
+			String checker = aux.trim();
+			while (checker.length() == 0) {
+				aux = this.scan.nextLine();
+				checker = aux.trim();
+			}
 			if (aux.equals("INITIALSYMBOL")) {
 				aux = this.scan.nextLine();
 				this.regularBuilder.addNonTerminal(aux);
 				regularBuilder.markStartSymbol(regularBuilder
 						.getNonTerminalOf(aux));
-				this.scan.nextLine();
+				aux = this.scan.nextLine();
+				checker = aux.trim();
+				while (checker.length() == 0) {
+					aux = this.scan.nextLine();
+					checker = aux.trim();
+				}
 				if (aux.equals("END")) {
-					aux = this.scan.next();
+					aux = this.scan.nextLine();
 				} else {
 					throw new IllegalTextStructure();
 				}
 			} else {
 				throw new IllegalStartOfText();
 			}
-			if (aux.equals("TRANSITIONS")) {
-				boolean end = false;
-				while (!end) {
-
+			checker = aux.trim();
+			while (checker.length() == 0) {
+				aux = this.scan.nextLine();
+				checker = aux.trim();
+			}
+			if (aux.equals("SYMBOLS")) {
+				aux = scan.nextLine();
+				while (!aux.equals("END")) {
+					if (!scan.hasNextLine()) {
+						throw new IllegalOrderOfTextStructure();
+					}
+					regularBuilder.addNonTerminal(aux);
+					aux = scan.nextLine();
 				}
 			} else {
 				throw new IllegalOrderOfTextStructure();
+			}
+			aux = scan.nextLine();
+			checker = aux.trim();
+			while (checker.length() == 0) {
+				aux = this.scan.nextLine();
+				checker = aux.trim();
+			}
+			if (aux.equals("TRANSITIONS")) {
+				aux = scan.nextLine();
+				while (!aux.equals("END")) {
+					if (!scan.hasNextLine()) {
+						throw new IllegalOrderOfTextStructure();
+					}
+					String[] separate = aux.split("=");
+					if (separate.length < 2) {
+						throw new IllegalOrderOfTextStructure();
+					}
+					NonTerminal head = regularBuilder
+							.getNonTerminalOf(separate[0]);
+					String restOf = separate[1];
+					for (String prod : restOf.split("\\|")) {
+						prod = prod.trim();
+						if (prod.length() == 1) {
+							regularBuilder.addTerminal(prod.charAt(0));
+							regularBuilder.addProduction(head, regularBuilder
+									.getTerminalOf(prod.charAt(0)));
+						} else {
+							regularBuilder.addTerminal(prod.charAt(0));
+							String nT = prod.substring(1);
+							regularBuilder.addProduction(head, regularBuilder
+									.getTerminalOf(prod.charAt(0)),
+									regularBuilder.getNonTerminalOf(nT));
+						}
+					}
+					aux = scan.nextLine();
+				}
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Error: File not found! Try again.");

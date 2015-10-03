@@ -6,10 +6,12 @@ import java.io.UnsupportedEncodingException;
 
 import junit.framework.Assert;
 import main.lexer.automata.Automata;
+import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.grammar.RegularGrammar;
 import main.lexer.grammar.RegularGrammarBuilder;
 import main.lexer.grammar.exceptions.NonTerminalMissingException;
@@ -22,6 +24,7 @@ import main.model.commandline.fileutils.Reader;
 import main.model.commandline.fileutils.Writer;
 import main.model.commandline.fileutils.exceptions.IllegalOrderOfTextStructure;
 import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
+import main.model.commandline.fileutils.exceptions.IllegalTextStructure;
 
 import org.junit.Test;
 
@@ -54,19 +57,25 @@ public class TestReadWrite {
 		Assert.assertTrue(comp.accepts("ab"));
 		Assert.assertFalse(comp.accepts(""));
 		Assert.assertFalse(comp.accepts("c"));
-		RegularExpression tst = read.readRegularExpression(new File("rexprtest.Out"));
+		RegularExpression tst = read.readRegularExpression(new File(
+				"rexprtest.Out"));
 		comp = tst.createAutomata();
 		Assert.assertTrue(comp.accepts("abbbb"));
 		Assert.assertTrue(comp.accepts("aa"));
 		Assert.assertTrue(comp.accepts("ab"));
 		Assert.assertFalse(comp.accepts(""));
 		Assert.assertFalse(comp.accepts("c"));
-		
+
 	}
-	
+
 	@Test
 	public void testWriteGrammar() throws NonTerminalMissingException,
-			TerminalMissingException, StartSymbolMissingException, FileNotFoundException {
+			TerminalMissingException, StartSymbolMissingException,
+			FileNotFoundException, IllegalStartOfText, IllegalTextStructure,
+			IllegalOrderOfTextStructure, MissingStateException,
+			OverrideInitialStateException, InvalidStateException,
+			InitialStateMissingException, IllegalAutomataException,
+			DeterministicException {
 		RegularGrammarBuilder builder = new RegularGrammarBuilder();
 		builder.addTerminal('a');
 		builder.addTerminal('b');
@@ -96,8 +105,37 @@ public class TestReadWrite {
 				builder.getTerminalOf('a'), builder.getNonTerminalOf("B"));
 		builder.markStartSymbol(builder.getNonTerminalOf("S"));
 		RegularGrammar grammar = builder.createGrammar();
+		Automata result = grammar.createAutomata().convert();
+		Assert.assertTrue(result.accepts(""));
+		Assert.assertTrue(result.accepts("a"));
+		Assert.assertTrue(result.accepts("b"));
+		Assert.assertTrue(result.accepts("abba"));
+		Assert.assertTrue(result.accepts("baabbababbab"));
+		Assert.assertTrue(result.accepts("aa"));
+		Assert.assertTrue(result.accepts("bb"));
+		Assert.assertFalse(result.accepts("ab"));
+		Assert.assertFalse(result.accepts("ba"));
+		Assert.assertFalse(result.accepts("abababaaab"));
+		Assert.assertFalse(result.accepts("bababaaaaba"));
+
+		
 		Writer writer = new Writer("grammTest.Out");
 		writer.writeGrammar(grammar);
+		Reader readTest = new Reader();
+		RegularGrammar toTest = readTest.readRegularGrammar(new File(
+				"grammTest.Out"));
+		result = toTest.createAutomata().convert();
+		Assert.assertTrue(result.accepts(""));
+		Assert.assertTrue(result.accepts("a"));
+		Assert.assertTrue(result.accepts("b"));
+		Assert.assertTrue(result.accepts("abba"));
+		Assert.assertTrue(result.accepts("baabbababbab"));
+		Assert.assertTrue(result.accepts("aa"));
+		Assert.assertTrue(result.accepts("bb"));
+		Assert.assertFalse(result.accepts("ab"));
+		Assert.assertFalse(result.accepts("ba"));
+		Assert.assertFalse(result.accepts("abababaaab"));
+		Assert.assertFalse(result.accepts("bababaaaaba"));
 	}
 
 }

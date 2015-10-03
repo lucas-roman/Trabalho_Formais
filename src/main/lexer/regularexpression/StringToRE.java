@@ -11,9 +11,9 @@ public class StringToRE {
 	/*
 	 * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA
 	 * E ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
-	 *
+	 * 
 	 * @author LUCAS FINGER ROMAN
-	 *
+	 * 
 	 * @author RODRIGO PEDRO MARQUES Copyright � 2015
 	 */
 
@@ -27,7 +27,8 @@ public class StringToRE {
 		operatorPrecedence.put('|', 0);
 	}
 
-	public static RegularExpression stringToRE(String input) throws IllegalRegularExpressionException {
+	public static RegularExpression stringToRE(String input)
+			throws IllegalRegularExpressionException {
 		String modifiedInput = insertConcatenationPoints(input);
 		modifiedInput = reverseInversedUnaryOperatores(modifiedInput);
 		String reversePol = reversePolishNotation(modifiedInput);

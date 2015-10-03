@@ -87,6 +87,11 @@ public class Writer {
 		pw.println("INITIALSYMBOL");
 		pw.println(grammar.initSymbol().getSymbolValue());
 		pw.println("END");
+		pw.println("SYMBOLS");
+		for (NonTerminal t : grammar.nonTerminalSymbols()) {
+			pw.println(t.getSymbolValue());
+		}
+		pw.println("END");
 		pw.println("TRANSITIONS");
 		for (NonTerminal t : grammar.nonTerminalSymbols()) {
 			pw.print(t.getSymbolValue());

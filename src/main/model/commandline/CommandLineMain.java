@@ -10,15 +10,18 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.grammar.RegularGrammar;
 import main.lexer.grammar.exceptions.NonTerminalMissingException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
+import main.lexer.grammar.exceptions.TerminalMissingException;
 import main.lexer.regularexpression.RegularExpression;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 import main.model.commandline.fileutils.Reader;
 import main.model.commandline.fileutils.Writer;
 import main.model.commandline.fileutils.exceptions.IllegalOrderOfTextStructure;
 import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
+import main.model.commandline.fileutils.exceptions.IllegalTextStructure;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
@@ -156,6 +159,65 @@ public class CommandLineMain {
 				System.exit(1);
 			} catch (UnsupportedEncodingException e) {
 				System.err.println("Unsupported encoding.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			}
+		}
+		else if(type.equals("grtoaf")) {
+			try {
+				RegularGrammar inpu = reader.readRegularGrammar(new File(in));
+				Automata aut = inpu.createAutomata();
+				writer.writeAutomata(aut);
+			} catch (InvalidStateException e) {
+				System.err.println("Attempted to mark a missing state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalStartOfText e) {
+				System.err.println("Bad format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalOrderOfTextStructure e) {
+				System.err.println("Bad format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (MissingStateException e) {
+				System.err.println("State missing.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (InitialStateMissingException e) {
+				System.err.println("Invalid automata. No initial state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalAutomataException e) {
+				System.err.println("Illegal automata. Unknown.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (NonTerminalMissingException e) {
+				System.err.println("Illegal grammar. Non terminal missing.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (StartSymbolMissingException e) {
+				System.err.println("Illegal grammar. Missing start symbol.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (FileNotFoundException e) {
+				System.err.println("File not found.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("Unsupported encoding.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (OverrideInitialStateException e) {
+				System.err.println("Initial state overriden.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalTextStructure e) {
+				System.err.println("Bad format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (TerminalMissingException e) {
+				System.err.println("Bad grammar.");
 				System.err.println("Aborting...");
 				System.exit(1);
 			}

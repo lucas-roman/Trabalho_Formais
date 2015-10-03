@@ -1,8 +1,13 @@
 INITIALSYMBOL
 S
 END
+SYMBOLS
+B
+A
+S
+END
 TRANSITIONS
 B=bB|b|aB
-S=a|aA|b|bB
 A=aA|bA|a
+S=a|aA|b|bB
 END
