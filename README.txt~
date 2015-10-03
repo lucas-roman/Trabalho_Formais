@@ -49,7 +49,6 @@ citado. Os comandos existentes são:
 	. "ertoaf": 	Transforma uma ER para AF.
 	. "afndtoaf": 	Transforma um AFND para AF.
 	. "aftogr":		Transforma um AF para GR.
-	. "grtoaf":		Transforma uma GR para AF.
 
 	OBS: Usar os comandos sem aspas e pontuações.
 	
