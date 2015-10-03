@@ -95,6 +95,7 @@ public class CommandLineMain {
 				System.err.println("Aborting...");
 				System.exit(1);
 			} catch (MissingStateException e) {
+				e.printStackTrace();
 				System.err.println("State missing.");
 				System.err.println("Aborting...");
 				System.exit(1);
@@ -264,6 +265,11 @@ public class CommandLineMain {
 				System.err.println("Aborting...");
 				System.exit(1);
 			}
+		}
+		else {
+			System.err.println("Unknown command of " + type + ". Valid commands : ertoaf aftoer grtoaf aftogr afndtoaf.");
+			System.err.println("Aborting...");
+			System.exit(1);
 		}
 	}
 

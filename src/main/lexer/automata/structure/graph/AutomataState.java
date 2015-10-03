@@ -62,7 +62,7 @@ public interface AutomataState extends GraphUnit {
 	/*
 	 * Get all possible transitions (by letter) from this state.
 	 */
-	public Iterable<Entry<Character, Set<AutomataState>>> getTransitions();
+	public Set<Entry<Character, Set<AutomataState>>> getTransitions();
 
 	/*
 	 * Returns true if any state of the epslon closure accepts.

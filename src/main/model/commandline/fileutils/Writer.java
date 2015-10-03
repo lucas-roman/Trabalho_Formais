@@ -100,7 +100,7 @@ public class Writer {
 			for (RegularProduction p : t.getProductions()) {
 				partial += p + "|";
 			}
-			String toPut = partial = partial.substring(0, partial.length() - 2);
+			String toPut = partial = partial.substring(0, partial.length() - 1);
 			pw.println(toPut);
 		}
 		pw.println("END");

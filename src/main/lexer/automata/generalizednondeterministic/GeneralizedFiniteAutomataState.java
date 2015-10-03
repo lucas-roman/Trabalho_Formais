@@ -83,8 +83,15 @@ public class GeneralizedFiniteAutomataState implements GeneralizedFiniteAutomata
 
 	public void addStateBy(RegularExpression re, GeneralizedFiniteAutomataState other) {
 		if (other != this) {
-			nextStates.put(other, re);
-			other.predecessors.add(this);
+			if(nextStates.containsKey(other)) {
+				RegularExpression toRem = nextStates.remove(other);
+				RegularExpression newRE = toRem.alternation(re);
+				nextStates.put(other, newRE);
+			}
+			else {
+				nextStates.put(other, re);
+				other.predecessors.add(this);
+		    }
 		}
 		else {
 			selfTransition = re;
@@ -94,6 +101,7 @@ public class GeneralizedFiniteAutomataState implements GeneralizedFiniteAutomata
 	public void markAsAccept() {
 		accepts = true;
 	}
+	
 
 	public RegularExpression regularExpressionToState(
 			GeneralizedFiniteAutomataState acceptState) {

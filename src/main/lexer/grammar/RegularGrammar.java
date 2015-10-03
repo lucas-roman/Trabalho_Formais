@@ -88,7 +88,8 @@ public class RegularGrammar {
 	private static void addStatesToGrammar(Automata result,
 			RegularGrammarBuilder builder) throws NonTerminalMissingException {
 		for (AutomataState state : result.getStates()) {
-			builder.addNonTerminal(state.toString());
+			if(state.getTransitions().size() != 0)
+				builder.addNonTerminal(state.toString());
 		}
 		if (result.initialState().epslonAccept()) {
 			builder.addEmptyWord();
@@ -122,10 +123,11 @@ public class RegularGrammar {
 				} catch (TerminalMissingException e) {
 					term = builder.addTerminal(keyVal.getKey());
 				}
-				builder.addProduction(
+				if(nextState.getTransitions().size() != 0)
+					builder.addProduction(
 						builder.getNonTerminalOf(current.toString()), term,
 						builder.getNonTerminalOf(nextState.toString()));
-				if (!visited.contains(nextState)) {
+				if (!visited.contains(nextState) && nextState.getTransitions().size() != 0) {
 					addProduction(builder, nextState, visited);
 				}
 

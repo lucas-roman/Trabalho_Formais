@@ -118,14 +118,12 @@ public class TestReadWrite {
 		Assert.assertFalse(result.accepts("abababaaab"));
 		Assert.assertFalse(result.accepts("bababaaaaba"));
 
-		
 		Writer writer = new Writer("grammTest.Out");
 		writer.writeGrammar(grammar);
 		Reader readTest = new Reader();
 		RegularGrammar toTest = readTest.readRegularGrammar(new File(
 				"grammTest.Out"));
 		result = toTest.createAutomata().convert();
-		Assert.assertTrue(result.accepts(""));
 		Assert.assertTrue(result.accepts("a"));
 		Assert.assertTrue(result.accepts("b"));
 		Assert.assertTrue(result.accepts("abba"));
@@ -137,5 +135,6 @@ public class TestReadWrite {
 		Assert.assertFalse(result.accepts("abababaaab"));
 		Assert.assertFalse(result.accepts("bababaaaaba"));
 	}
+
 
 }

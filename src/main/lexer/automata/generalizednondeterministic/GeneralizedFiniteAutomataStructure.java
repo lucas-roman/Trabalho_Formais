@@ -31,12 +31,13 @@ public class GeneralizedFiniteAutomataStructure {
 			if (!keyVal.getValue().accepts()
 					&& keyVal.getValue() != initialState) {
 				// Remove algorithm here...
-				GeneralizedFiniteAutomataState stateToBeRemoved = stateMap.remove(keyVal.getKey());
+				GeneralizedFiniteAutomataState stateToBeRemoved = stateMap
+						.remove(keyVal.getKey());
 				stateToBeRemoved.updateReferences();
 				i++;
 				return;
 			}
-			assert(i == 1);
+			assert (i == 1);
 		}
 	}
 
@@ -72,11 +73,12 @@ public class GeneralizedFiniteAutomataStructure {
 			for (Entry<Character, Set<AutomataState>> trans : state
 					.getTransitions()) {
 				for (AutomataState transStateValue : trans.getValue()) {
+
 					stateMap.get(state).addStateBy(
 							RegularExpression.createRegularExpression(trans
 									.getKey()), stateMap.get(transStateValue));
 				}
-				
+
 			}
 			for (AutomataState epslonState : state.epslonTransitions()) {
 				stateMap.get(state).addStateBy(
@@ -89,20 +91,18 @@ public class GeneralizedFiniteAutomataStructure {
 			this.acceptState = stateMap.get(acceptState);
 		}
 	}
-	
-	
+
 	private int size() {
 		return stateMap.size();
 	}
-	
-	
+
 	public RegularExpression convertToRegularExpression() {
-		while(size() > 2) {
+		while (size() > 2) {
 			removeRandomState();
 		}
-		
-		assert(stateMap.containsValue(initialState));
-		assert(stateMap.containsValue(acceptState));
+
+		assert (stateMap.containsValue(initialState));
+		assert (stateMap.containsValue(acceptState));
 		return initialState.regularExpressionToState(acceptState);
 	}
 

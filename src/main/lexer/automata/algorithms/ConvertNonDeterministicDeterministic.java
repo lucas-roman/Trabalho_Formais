@@ -18,11 +18,11 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 
@@ -72,7 +72,9 @@ public class ConvertNonDeterministicDeterministic {
 				}
 			}
 		} catch (InvalidStateException e) {
+			e.printStackTrace();
 		} catch (MissingStateException e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -9,11 +9,11 @@ import main.lexer.automata.structure.AutomataStructure;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 
@@ -39,6 +39,7 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 			return converter.convert();
 		} catch (InitialStateMissingException | MissingStateException
 				| IllegalAutomataException e) {
+			e.printStackTrace();
 			return this;
 		}
 	}

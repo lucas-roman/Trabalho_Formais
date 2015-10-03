@@ -1,2 +1,2 @@
 REGULAREXPRESSION
-((a(b)*)(a|b))
+aabcd(a|h)

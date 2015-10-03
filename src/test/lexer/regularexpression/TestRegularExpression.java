@@ -2,6 +2,7 @@ package test.lexer.regularexpression;
 
 import junit.framework.Assert;
 import main.lexer.automata.Automata;
+import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
@@ -189,40 +190,51 @@ public class TestRegularExpression {
 	@Test
 	public void testStringToRe() throws MissingStateException,
 			InvalidStateException, InitialStateMissingException,
-			IllegalAutomataException, IllegalRegularExpressionException {
+			IllegalAutomataException, IllegalRegularExpressionException, DeterministicException {
 		String stringToRE2 = "aab*(ab)?";
 		String stringToRE1 = "ab*";
 		RegularExpression re = StringToRE.stringToRE(stringToRE1);
-		Assert.assertTrue(re.createAutomata().accepts("ab"));
-		Assert.assertTrue(re.createAutomata().accepts("abb"));
-		Assert.assertTrue(re.createAutomata().accepts("abbbb"));
-		Assert.assertFalse(re.createAutomata().accepts(""));
-		Assert.assertFalse(re.createAutomata().accepts("abab"));
+		Automata test = re.createAutomata().convert();
+		Assert.assertTrue(test.accepts("ab"));
+		Assert.assertTrue(test.accepts("abb"));
+		Assert.assertTrue(test.accepts("abbbb"));
+		Assert.assertFalse(test.accepts(""));
+		Assert.assertFalse(test.accepts("abab"));
 		re = StringToRE.stringToRE(stringToRE2);
-		Assert.assertTrue(re.createAutomata().accepts("aabbbbb"));
-		Assert.assertTrue(re.createAutomata().accepts("aabbbbab"));
-		Assert.assertTrue(re.createAutomata().accepts("aaab"));
-		Assert.assertTrue(re.createAutomata().accepts("aa"));
-		Assert.assertFalse(re.createAutomata().accepts(""));
-		Assert.assertFalse(re.createAutomata().accepts("aaabb"));
-		Assert.assertFalse(re.createAutomata().accepts("aaabbab"));
+		test = re.createAutomata().convert();
+		Assert.assertTrue(test.accepts("aabbbbb"));
+		Assert.assertTrue(test.accepts("aabbbbab"));
+		Assert.assertTrue(test.accepts("aaab"));
+		Assert.assertTrue(test.accepts("aa"));
+		Assert.assertFalse(test.accepts(""));
+		Assert.assertFalse(test.accepts("aaabb"));
+		Assert.assertFalse(test.accepts("aaabbab"));
 		String stringToRe3 = "ab*c|d";
 		re = StringToRE.stringToRE(stringToRe3);
-		Assert.assertTrue(re.createAutomata().accepts("ac"));
-		Assert.assertTrue(re.createAutomata().accepts("abc"));
-		Assert.assertTrue(re.createAutomata().accepts("abbbbbbbc"));
-		Assert.assertTrue(re.createAutomata().accepts("d"));
-		Assert.assertFalse(re.createAutomata().accepts(""));
-		Assert.assertFalse(re.createAutomata().accepts("abcd"));
-		Assert.assertFalse(re.createAutomata().accepts("dd"));
+		test = re.createAutomata().convert();
+		Assert.assertTrue(test.accepts("ac"));
+		Assert.assertTrue(test.accepts("abc"));
+		Assert.assertTrue(test.accepts("abbbbbbbc"));
+		Assert.assertTrue(test.accepts("d"));
+		Assert.assertFalse(test.accepts(""));
+		Assert.assertFalse(test.accepts("abcd"));
+		Assert.assertFalse(test.accepts("dd"));
 		
 	}
 	
 	@Test
-	public void testStringToREEpslon() throws IllegalRegularExpressionException, MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException {
+	public void testStringToREEpslon()
+			throws IllegalRegularExpressionException, MissingStateException,
+			InvalidStateException, InitialStateMissingException,
+			IllegalAutomataException, DeterministicException {
 		String stringToRE = "a(a|´)b´";
 		RegularExpression re = StringToRE.stringToRE(stringToRE);
 		Automata test = re.createAutomata();
+		Assert.assertTrue(test.accepts("aab"));
+		Assert.assertTrue(test.accepts("ab"));
+		Assert.assertFalse(test.accepts("abb"));
+		Assert.assertFalse(test.accepts(""));
+		test =test.convert();
 		Assert.assertTrue(test.accepts("aab"));
 		Assert.assertTrue(test.accepts("ab"));
 		Assert.assertFalse(test.accepts("abb"));

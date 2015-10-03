@@ -99,7 +99,9 @@ class AutomataStateImplementation implements AutomataState {
 	public Set<AutomataState> nextStateOfEpslonClosure(char c) {
 		Set<AutomataState> returnSet = new HashSet<>();
 		for (AutomataState aut : epslonClosure()) {
-			returnSet.addAll(aut.nextState(c));
+			for(AutomataState epslonReachableFromNext : aut.nextState(c)) {
+				returnSet.addAll(epslonReachableFromNext.epslonClosure());
+			}
 		}
 		return returnSet;
 	}
@@ -142,8 +144,8 @@ class AutomataStateImplementation implements AutomataState {
 	}
 
 	@Override
-	public Iterable<Entry<Character,  Set<AutomataState>>> getTransitions() {
-		Iterable<Set<AutomataState>> retSet = nextStates.values();
+	public Set<Entry<Character,  Set<AutomataState>>> getTransitions() {
+		Set<Set<AutomataState>> retSet = new HashSet<>(nextStates.values());
 		return nextStates.entrySet();
 	}
 
