@@ -100,8 +100,8 @@ public class Writer {
 			for (RegularProduction p : t.getProductions()) {
 				partial += p + "|";
 			}
-			partial = partial.substring(0, partial.length() - 1);
-			pw.println(partial);
+			String toPut = partial = partial.substring(0, partial.length() - 2);
+			pw.println(toPut);
 		}
 		pw.println("END");
 		pw.close();
