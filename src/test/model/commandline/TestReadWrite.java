@@ -5,12 +5,16 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 
 import junit.framework.Assert;
-
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.grammar.RegularGrammar;
+import main.lexer.grammar.RegularGrammarBuilder;
+import main.lexer.grammar.exceptions.NonTerminalMissingException;
+import main.lexer.grammar.exceptions.StartSymbolMissingException;
+import main.lexer.grammar.exceptions.TerminalMissingException;
 import main.lexer.regularexpression.RegularExpression;
 import main.lexer.regularexpression.StringToRE;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
@@ -59,6 +63,42 @@ public class TestReadWrite {
 		Assert.assertFalse(comp.accepts(""));
 		Assert.assertFalse(comp.accepts("c"));
 		
+	}
+	
+	@Test
+	public void testWriteGrammar() throws NonTerminalMissingException,
+			TerminalMissingException, StartSymbolMissingException, FileNotFoundException {
+		RegularGrammarBuilder builder = new RegularGrammarBuilder();
+		builder.addTerminal('a');
+		builder.addTerminal('b');
+		builder.addNonTerminal("S");
+		builder.addNonTerminal("A");
+		builder.addNonTerminal("B");
+		builder.addProduction(builder.getNonTerminalOf("S"),
+				builder.getTerminalOf('a'));
+		builder.addEmptyWord();
+		builder.addProduction(builder.getNonTerminalOf("S"),
+				builder.getTerminalOf('a'), builder.getNonTerminalOf("A"));
+		builder.addProduction(builder.getNonTerminalOf("S"),
+				builder.getTerminalOf('b'));
+		builder.addProduction(builder.getNonTerminalOf("S"),
+				builder.getTerminalOf('b'), builder.getNonTerminalOf("B"));
+		builder.addProduction(builder.getNonTerminalOf("A"),
+				builder.getTerminalOf('a'), builder.getNonTerminalOf("A"));
+		builder.addProduction(builder.getNonTerminalOf("A"),
+				builder.getTerminalOf('b'), builder.getNonTerminalOf("A"));
+		builder.addProduction(builder.getNonTerminalOf("A"),
+				builder.getTerminalOf('a'));
+		builder.addProduction(builder.getNonTerminalOf("B"),
+				builder.getTerminalOf('b'), builder.getNonTerminalOf("B"));
+		builder.addProduction(builder.getNonTerminalOf("B"),
+				builder.getTerminalOf('b'));
+		builder.addProduction(builder.getNonTerminalOf("B"),
+				builder.getTerminalOf('a'), builder.getNonTerminalOf("B"));
+		builder.markStartSymbol(builder.getNonTerminalOf("S"));
+		RegularGrammar grammar = builder.createGrammar();
+		Writer writer = new Writer("grammTest.Out");
+		writer.writeGrammar(grammar);
 	}
 
 }

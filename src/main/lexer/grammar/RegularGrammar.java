@@ -21,11 +21,11 @@ import main.lexer.grammar.exceptions.TerminalMissingException;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 public class RegularGrammar {
@@ -189,6 +189,14 @@ public class RegularGrammar {
 
 	void emptyWordEnable(boolean emptyWord) {
 		this.emptyWord = emptyWord;
+	}
+
+	public NonTerminal initSymbol() {
+		return startSymbol;
+	}
+
+	public Iterable<NonTerminal> nonTerminalSymbols() {
+		return nonTerminalSymbols;
 	}
 
 }

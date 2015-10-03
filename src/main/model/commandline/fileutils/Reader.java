@@ -76,7 +76,6 @@ public class Reader {
 					while (!end) {
 						aux.trim();
 						automataBuilder.addState(aux);
-						System.out.println("state : " + aux);
 						aux = this.scan.nextLine();
 						if (aux.equals("END")) {
 							end = true;
@@ -101,7 +100,6 @@ public class Reader {
 					aux = this.scan.nextLine();
 					while (!end) {
 						aux.trim();
-						System.out.println("accept : " + aux);
 						this.automataBuilder.markAcceptState(aux);
 						aux = this.scan.nextLine();
 						if (aux.equals("END")) {
@@ -140,8 +138,6 @@ public class Reader {
 							trans = details[2].charAt(0);
 							this.automataBuilder.addTransition(from, to, trans);
 						} else {
-							System.out.println("from " + from);
-							System.out.println("to " + to);
 							this.automataBuilder.addEmptyTransition(from, to);
 						}
 
@@ -158,7 +154,6 @@ public class Reader {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("Error: File not found! Try again.");
 			e.printStackTrace();
 		}
 		this.scan.close();

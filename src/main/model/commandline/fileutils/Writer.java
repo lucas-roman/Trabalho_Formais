@@ -8,6 +8,9 @@ import java.util.Set;
 
 import main.lexer.automata.Automata;
 import main.lexer.automata.structure.graph.AutomataState;
+import main.lexer.grammar.NonTerminal;
+import main.lexer.grammar.RegularGrammar;
+import main.lexer.grammar.RegularProduction;
 import main.lexer.regularexpression.RegularExpression;
 
 /**
@@ -76,6 +79,26 @@ public class Writer {
 			}
 		}
 		pw.print("END");
+		pw.close();
+	}
+	
+	public void writeGrammar(RegularGrammar grammar) throws FileNotFoundException {
+		pw = new PrintWriter(fileName);
+		pw.println("INITIALSYMBOL");
+		pw.println(grammar.initSymbol().getSymbolValue());
+		pw.println("END");
+		pw.println("TRANSITIONS");
+		for (NonTerminal t : grammar.nonTerminalSymbols()) {
+			pw.print(t.getSymbolValue());
+			pw.print("=");
+			String partial = "";
+			for (RegularProduction p : t.getProductions()) {
+				partial += p + "|";
+			}
+			partial = partial.substring(0, partial.length() - 1);
+			pw.println(partial);
+		}
+		pw.println("END");
 		pw.close();
 	}
 }
