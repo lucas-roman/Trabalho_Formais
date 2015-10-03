@@ -10,6 +10,9 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.grammar.RegularGrammar;
+import main.lexer.grammar.exceptions.NonTerminalMissingException;
+import main.lexer.grammar.exceptions.StartSymbolMissingException;
 import main.lexer.regularexpression.RegularExpression;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 import main.model.commandline.fileutils.Reader;
@@ -28,20 +31,6 @@ import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
 
 public class CommandLineMain {
 
-
-	/*
-	 * Argumentos :
-	 * 0 -> Tipo que vai converter de
-	 * 1 -> Tipo que vai converter para
-	 * 2 -> Input file
-	 * 3 -> Output file
-	 */
-
-
-	/*
-	 * Outro TODO : criar arquivos pra ler de teste e uma String teste para comparar com o output. Ler output e comparar com o teste. Deve ser feito dentro do
-	 * pacote test.model.commandline
-	 */
 
 	public static void main(String[] args) {
 		if(args.length < 3) {
@@ -167,6 +156,49 @@ public class CommandLineMain {
 				System.exit(1);
 			} catch (UnsupportedEncodingException e) {
 				System.err.println("Unsupported encoding.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			}
+		}
+		else if(type.equals("aftogr")) {
+			try {
+				Automata inpu = reader.readAutomata(new File(in));
+				RegularGrammar gr = RegularGrammar.convertAutomataToGrammar(inpu);
+				writer.writeGrammar(gr);
+			} catch (InvalidStateException e) {
+				System.err.println("Attempted to mark a missing state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalStartOfText e) {
+				System.err.println("Bad format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalOrderOfTextStructure e) {
+				System.err.println("Bad format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (MissingStateException e) {
+				System.err.println("State missing.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (InitialStateMissingException e) {
+				System.err.println("Invalid automata. No initial state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalAutomataException e) {
+				System.err.println("Illegal automata. Unknown.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (NonTerminalMissingException e) {
+				System.err.println("Illegal grammar. Non terminal missing.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (StartSymbolMissingException e) {
+				System.err.println("Illegal grammar. Missing start symbol.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (FileNotFoundException e) {
+				System.err.println("File not found.");
 				System.err.println("Aborting...");
 				System.exit(1);
 			}

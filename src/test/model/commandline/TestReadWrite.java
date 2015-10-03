@@ -33,7 +33,6 @@ import org.junit.Test;
  * @author RODRIGO PEDRO MARQUES Copyright � 2015
  */
 
-// TODO : implementar tudo
 public class TestReadWrite {
 
 	@Test
