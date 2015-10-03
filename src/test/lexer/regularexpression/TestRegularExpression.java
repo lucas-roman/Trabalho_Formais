@@ -215,19 +215,6 @@ public class TestRegularExpression {
 		Assert.assertFalse(re.createAutomata().accepts(""));
 		Assert.assertFalse(re.createAutomata().accepts("abcd"));
 		Assert.assertFalse(re.createAutomata().accepts("dd"));
-		re = StringToRE.stringToRE("((1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*)|(0|1|2|3|4|5|6|7|8|9)");
-		Assert.assertTrue(re.createAutomata().accepts("0"));
-		Assert.assertTrue(re.createAutomata().accepts("3"));
-		Assert.assertTrue(re.createAutomata().accepts("10"));
-		Assert.assertTrue(re.createAutomata().accepts("14"));
-		Assert.assertTrue(re.createAutomata().accepts("54"));
-		Assert.assertTrue(re.createAutomata().accepts("4532"));
-		Assert.assertTrue(re.createAutomata().accepts("23940823"));
-		Assert.assertTrue(re.createAutomata().accepts("111"));
-		Assert.assertFalse(re.createAutomata().accepts("abbbbbbbc"));
-		Assert.assertFalse(re.createAutomata().accepts(""));
-		Assert.assertFalse(re.createAutomata().accepts("01"));
-		Assert.assertFalse(re.createAutomata().accepts("00"));
 		
 	}
 	

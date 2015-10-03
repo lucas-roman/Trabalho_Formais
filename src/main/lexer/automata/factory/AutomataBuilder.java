@@ -74,7 +74,8 @@ public class AutomataBuilder {
 	 * Adds a state to the automata to be built. If the state is invalid, throws
 	 * an InvalidStateException
 	 */
-	public AutomataBuilder addState(String stateName) throws InvalidStateException {
+	public AutomataBuilder addState(String stateName)
+			throws InvalidStateException {
 		if (!stateId.containsKey(stateName)) {
 			stateId.put(stateName, id);
 			id++;
@@ -113,7 +114,8 @@ public class AutomataBuilder {
 	 * Adds a transition from state from to state to. If any state is missing,
 	 * throws a MissingStateException.
 	 */
-	public void addEmptyTransition(String from, String to) throws MissingStateException {
+	public void addEmptyTransition(String from, String to)
+			throws MissingStateException {
 		if (!stateId.containsKey(from) || !stateId.containsKey(to)) {
 			throw new MissingStateException();
 		}

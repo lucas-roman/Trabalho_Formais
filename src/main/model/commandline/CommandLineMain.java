@@ -1,16 +1,29 @@
 package main.model.commandline;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+
 import main.lexer.automata.Automata;
-import main.lexer.grammar.RegularGrammar;
+import main.lexer.automata.exceptions.DeterministicException;
+import main.lexer.automata.exceptions.IllegalAutomataException;
+import main.lexer.automata.exceptions.InitialStateMissingException;
+import main.lexer.automata.exceptions.InvalidStateException;
+import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.regularexpression.RegularExpression;
+import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
+import main.model.commandline.fileutils.Reader;
+import main.model.commandline.fileutils.Writer;
+import main.model.commandline.fileutils.exceptions.IllegalOrderOfTextStructure;
+import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
+ * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
+ * Copyright � 2015
  */
 
 public class CommandLineMain {
@@ -31,84 +44,134 @@ public class CommandLineMain {
 	 */
 
 	public static void main(String[] args) {
-		//TODO primeiro argumento : tipo de arquivo. Segundo argumento : o arquivo pra ler.
-		//Se for chamado pra gramática
-		if(args[0].equals("grammar")) {
-			if(args[1].equals("automata")) {
-				Automata aut = readGrammar(args[2]);
-				writeOutputFile(aut, args[3]);
-			}
-			else {
-				//Erro
-				System.exit(1);
-			}
-		}
-		else if (args[0].equals("rexr")) {
-			if(args[1].equals("automata")) {
-				Automata aut = readRegularExpression(args[2]);
-				writeOutputFile(aut, args[3]);
-			}
-			else {
-				//Erro
-				System.exit(1);
-			}
-		}
-		else if (args[0].equals("automata")) {
-			if(args[1].equals("grammar")) {
-				RegularGrammar gr = readAutomataByGrammar(args[2]);
-				writeOutputFile(gr, args[3]);
-			}
-			else if(args[1].equals("rexr")) {
-				RegularExpression re = readAutomataByRegularExpression(args[2]);
-				writeOutputFile(re, args[3]);
-			}
-			else {
-				//Erro
-				System.exit(1);
-			}
-		}
-		else {
-			//Erro
+		if(args.length < 3) {
+			System.err.println("Invalid number of arguments. Expecting 3, was " + args.length + ".");
+			System.err.println("Aborting...");
 			System.exit(1);
 		}
+		String type = args[0];
+		String in = args[1];
+		String out = args[2];
+		Reader reader = new Reader();
+		Writer writer = new Writer(out);
+		if(type.equals("aftoer")) {
+			try {
+				Automata af = reader.readAutomata(new File(in));
+				RegularExpression re = RegularExpression.convertAutomataToRegularExpression(af);
+				writer.writeRegularExpression(re);
+			} catch (InvalidStateException e) {
+				System.err.println("Attempted to mark a missing state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalStartOfText e) {
+				System.err.println("Illegal start of text. Expected STATES.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalOrderOfTextStructure e) {
+				System.err.println("Bad text format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (MissingStateException e) {
+				System.err.println("State missing.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (InitialStateMissingException e) {
+				System.err.println("Invalid automata. No initial state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalAutomataException e) {
+				System.err.println("Illegal automata. Unknown.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("Unsupported encoding.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (FileNotFoundException e) {
+				System.err.println("File not found.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			}
+		}
+		else if(type.equals("ertoaf")) {
+			try {
+				RegularExpression re = reader.readRegularExpression(new File(in));
+				Automata toWrite = re.createAutomata();
+				writer.writeAutomata(toWrite);
+			} catch (IllegalStartOfText | IllegalRegularExpressionException e) {
+				System.err.println("Bad format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (MissingStateException e) {
+				System.err.println("State missing.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (InvalidStateException e) {
+				System.err.println("Attempted to mark a missing state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (InitialStateMissingException e) {
+				System.err.println("Invalid automata. No initial state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalAutomataException e) {
+				System.err.println("Illegal automata. Unknown.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (FileNotFoundException e) {
+				System.err.println("File not found.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("Unsupported encoding.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			}
+		}
+		else if(type.equals("afndtoaf")) {
+			try {
+				Automata inpu = reader.readAutomata(new File(in));
+				Automata outp = inpu.convert();
+				writer.writeAutomata(outp);
+			} catch (InvalidStateException e) {
+				System.err.println("Attempted to mark a missing state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalStartOfText e) {
+				System.err.println("Bad format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalOrderOfTextStructure e) {
+				System.err.println("Bad format.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (MissingStateException e) {
+				System.err.println("State missing.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (InitialStateMissingException e) {
+				System.err.println("Invalid automata. No initial state.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (IllegalAutomataException e) {
+				System.err.println("Illegal automata. Unknown.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (DeterministicException e) {
+				System.err.println("Bad type. Automata was already deterministic.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (FileNotFoundException e) {
+				System.err.println("File not found.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			} catch (UnsupportedEncodingException e) {
+				System.err.println("Unsupported encoding.");
+				System.err.println("Aborting...");
+				System.exit(1);
+			}
+		}
 	}
 
-	private static void writeOutputFile(RegularExpression re, String args) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static RegularExpression readAutomataByRegularExpression(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private static void writeOutputFile(RegularGrammar gr, String args) {
-		// TODO Auto-generated method stub
-
-	}
-
-	private static RegularGrammar readAutomataByGrammar(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	private static void writeOutputFile(Automata automata, String args) {
-		// TODO Aqui o automato deve ir para uma string de saída.
-
-	}
-
-	private static Automata readRegularExpression(String string) {
-		// TODO ler arquivo de expressão regular aqui. CUIDADO: expressão regular deve gerar uma árvore de expressão de acordo com
-		// precedência de operadores. Por isso, estou pensando em criar uma classe que lê uma String e cria uma expressão regular dentro do pacote
-		//de expressão regular. (classe StringToRE).
-		return null;
-	}
-
-	private static Automata readGrammar(String string) {
-		//TODO ler arquivo de gramática aqui. Precisa ser implementado aqui o jeito de ler um arquivo e criar a gramática. Usar o RegularGrammarBuilder
-		//para adicionar e pegar os símbolos não terminais e terminais. Exemplos estão no teste
-		return null;
-	}
 
 }
