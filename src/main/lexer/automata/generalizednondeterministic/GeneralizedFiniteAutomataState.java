@@ -8,28 +8,32 @@ import java.util.Set;
 
 import main.lexer.regularexpression.RegularExpression;
 
-public class GeneralizedFiniteAutomataState implements
-		GeneralizedFiniteAutomataStateInterface {
+public class GeneralizedFiniteAutomataState implements GeneralizedFiniteAutomataStateInterface {
 
+	/*
+	 * Attributes of this class
+	 */
 	private RegularExpression selfTransition;
-
 	Map<GeneralizedFiniteAutomataState, RegularExpression> nextStates = new HashMap<>();
-
 	Set<GeneralizedFiniteAutomataState> predecessors = new HashSet<>();
-
 	private int stateID;
-
 	private boolean accepts = false;
 
 	public GeneralizedFiniteAutomataState(int stateID) {
 		this.stateID = stateID;
 	}
 
+	/*
+	 * Checks if this state is an acceptable state.
+	 */
 	@Override
 	public boolean accepts() {
 		return accepts;
 	}
 
+	/*
+	 * Returns the ID of the state.
+	 */
 	@Override
 	public int stateID() {
 		return stateID;
@@ -39,8 +43,7 @@ public class GeneralizedFiniteAutomataState implements
 	public void updateReferences() {
 		for (GeneralizedFiniteAutomataState pred : predecessors) {
 			RegularExpression predToThis = pred.nextStates.get(this);
-			for (Entry<GeneralizedFiniteAutomataState, RegularExpression> keyVal : nextStates
-					.entrySet()) {
+			for (Entry<GeneralizedFiniteAutomataState, RegularExpression> keyVal : nextStates.entrySet()) {
 				RegularExpression nextStateReg = keyVal.getValue();
 				GeneralizedFiniteAutomataState nextState = keyVal.getKey();
 				RegularExpression toAdd;
@@ -74,12 +77,11 @@ public class GeneralizedFiniteAutomataState implements
 		for (GeneralizedFiniteAutomataState next : iterSet) {
 			next.predecessors.remove(this);
 		}
-		
+
 
 	}
 
-	public void addStateBy(RegularExpression re,
-			GeneralizedFiniteAutomataState other) {
+	public void addStateBy(RegularExpression re, GeneralizedFiniteAutomataState other) {
 		if (other != this) {
 			nextStates.put(other, re);
 			other.predecessors.add(this);
