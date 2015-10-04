@@ -58,7 +58,7 @@ public class GeneralizedFiniteAutomataStructure {
 		builder.addEmptyTransition("0", "1");
 		builder.addState(builder.currentID() + "");
 		int lstStatID = builder.currentID() - 1;
-		for (AutomataState acceptState : aut.acceptStates()) {
+		for (AutomataState acceptState : result.acceptStates()) {
 			builder.addEmptyTransition(acceptState.stateID() + 1 + "",
 					lstStatID + "");
 		}
