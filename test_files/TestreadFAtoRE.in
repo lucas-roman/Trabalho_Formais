@@ -1,0 +1,22 @@
+STATES
+q0
+q1
+q2
+q3
+q4
+END
+FINALSTATES
+q4
+q2
+END
+TRANSITIONS
+q0 q1 a
+q0 q2 b
+q1 q1 a
+q1 q4 b
+q2 q3 a
+q2 q1 b
+q3 q2 a
+q3 q4 b
+q4 q4 b
+END
