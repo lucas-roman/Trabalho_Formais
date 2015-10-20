@@ -35,17 +35,8 @@ class REKleene extends RegularExpression {
 	public Automata createAutomata() throws MissingStateException,
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException {
-		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
-		builder.addState("0");
 		Automata aut = regularExpression.createAutomata();
-		aut.decomposeAutomataIntoBuilder(builder);
-		builder.markAcceptState("0");
-		builder.addEmptyTransition("0", "1");
-		for(AutomataState acceptState : aut.acceptStates()) {
-			builder.markAcceptState(acceptState.stateID() + 1 + "");
-			builder.addEmptyTransition(acceptState.stateID() + 1 + "", "1");
-		}
-		return builder.build();
+		return aut.kleene();
 	}
 
 

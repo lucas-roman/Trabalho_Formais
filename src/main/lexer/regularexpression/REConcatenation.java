@@ -40,19 +40,7 @@ class REConcatenation extends RegularExpression {
 			IllegalAutomataException {
 		Automata leftChildAutomata = leftChild.createAutomata();
 		Automata rightChildAutomata = rightChild.createAutomata();
-		AutomataBuilder build = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
-		leftChildAutomata.decomposeAutomataIntoBuilder(build);
-		rightChildAutomata.decomposeAutomataIntoBuilder(build);
-		int aut1Size = leftChildAutomata.size();
-		for (AutomataState acceptState : leftChildAutomata.acceptStates()) {
-			build.addEmptyTransition(acceptState.stateID() + "",
-					rightChildAutomata.initialState().stateID() + aut1Size + "");
-		}
-		for (AutomataState acceptState : rightChildAutomata.acceptStates()) {
-			build.markAcceptState(acceptState.stateID() + aut1Size + "");
-		}
-		return build.build();
+		return leftChildAutomata.concatenate(rightChildAutomata);
 	}
 
 }
