@@ -3,26 +3,27 @@ package main.lexer.automata;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import main.lexer.automata.exceptions.IllegalAutomataException;
+import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
+import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
+ * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
+ * 
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
+ * @author RODRIGO PEDRO MARQUES Copyright � 2015
  */
 
 /*
  * This class represents part of the structure of an automata.
  */
 public abstract class AutomataSkeleton implements Automata {
-
 
 	protected AutomataStructure stateImpl;
 
@@ -57,23 +58,24 @@ public abstract class AutomataSkeleton implements Automata {
 
 	@Override
 	public String toString() {
-		String result ="States : ";
-		for(AutomataState state : getStates()) {
+		String result = "States : ";
+		for (AutomataState state : getStates()) {
 			result += "\n";
 			result += "ID -> ";
 			result += state + "\n";
 			result += "Transitions : ";
 			result += "\n";
-			for(Entry<Character, Set<AutomataState>> trans : state.getTransitions()) {
-				for(AutomataState transState : trans.getValue()) {
+			for (Entry<Character, Set<AutomataState>> trans : state
+					.getTransitions()) {
+				for (AutomataState transState : trans.getValue()) {
 					result += trans.getKey() + " -> " + transState + "\n";
 				}
 			}
 			result += "\n";
 			result += "Epslon : ";
 			result += "\n";
-			for(AutomataState stateByEpslon : state.epslonTransitions()) {
-				if(stateByEpslon != state) {
+			for (AutomataState stateByEpslon : state.epslonTransitions()) {
+				if (stateByEpslon != state) {
 					result += stateByEpslon + "\n";
 				}
 			}
@@ -81,13 +83,70 @@ public abstract class AutomataSkeleton implements Automata {
 		result += "\n";
 		result += "Accept state : ";
 		result += "\n";
-		for(AutomataState state : acceptStates()) {
+		for (AutomataState state : acceptStates()) {
 			result += state + "\n";
 		}
 		return result;
 
 	}
-	
+
+	@Override
+	public Automata union(Automata other) throws InvalidStateException,
+			MissingStateException, InitialStateMissingException,
+			IllegalAutomataException {
+		AutomataBuilder builder = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
+		builder.addState("0");
+		decomposeAutomataIntoBuilder(builder);
+		other.decomposeAutomataIntoBuilder(builder);
+		int size1 = size();
+		for (AutomataState acceptState : acceptStates()) {
+			builder.markAcceptState(1 + acceptState.stateID() + "");
+		}
+		for (AutomataState acceptState : other.acceptStates()) {
+			builder.markAcceptState(size1 + acceptState.stateID() + 1 + "");
+		}
+		builder.addEmptyTransition("0", "1");
+		builder.addEmptyTransition("0", size1 + 1 + "");
+		return builder.build();
+	}
+
+	@Override
+	public Automata concatenate(Automata other) throws InvalidStateException,
+			MissingStateException, InitialStateMissingException,
+			IllegalAutomataException {
+		AutomataBuilder build = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
+		decomposeAutomataIntoBuilder(build);
+		other.decomposeAutomataIntoBuilder(build);
+		int aut1Size = size();
+		for (AutomataState acceptState : acceptStates()) {
+			build.addEmptyTransition(acceptState.stateID() + "", other
+					.initialState().stateID() + aut1Size + "");
+		}
+		for (AutomataState acceptState : other.acceptStates()) {
+			build.markAcceptState(acceptState.stateID() + aut1Size + "");
+		}
+		return build.build();
+	}
+
+	@Override
+	public Automata kleene() throws InvalidStateException,
+			MissingStateException, InitialStateMissingException,
+			IllegalAutomataException {
+		AutomataBuilder builder = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
+		builder.addState("0");
+		decomposeAutomataIntoBuilder(builder);
+		builder.markAcceptState("0");
+		builder.addEmptyTransition("0", "1");
+		for (AutomataState acceptState : acceptStates()) {
+			builder.markAcceptState(acceptState.stateID() + 1 + "");
+			builder.addEmptyTransition(acceptState.stateID() + 1 + "", "1");
+		}
+		return builder.build();
+	}
+
 	public void decomposeAutomataIntoBuilder(AutomataBuilder builder)
 			throws InvalidStateException {
 		int index = builder.currentID();
@@ -95,10 +154,12 @@ public abstract class AutomataSkeleton implements Automata {
 		addTransitions(builder, index);
 	}
 
-	private void addTransitions(AutomataBuilder builder, int lastID) throws InvalidStateException {
+	private void addTransitions(AutomataBuilder builder, int lastID)
+			throws InvalidStateException {
 		for (AutomataState state : getStates()) {
-			for(Entry<Character, Set<AutomataState>> keyPair : state.getTransitions()) {
-				for(AutomataState other : keyPair.getValue()) {
+			for (Entry<Character, Set<AutomataState>> keyPair : state
+					.getTransitions()) {
+				for (AutomataState other : keyPair.getValue()) {
 					try {
 						builder.addTransition(state.stateID() + lastID + "",
 								other.stateID() + lastID + "", keyPair.getKey());
@@ -122,14 +183,12 @@ public abstract class AutomataSkeleton implements Automata {
 
 	}
 
-
-	private void addStates(AutomataBuilder build, 
-			int lastID) throws InvalidStateException {
+	private void addStates(AutomataBuilder build, int lastID)
+			throws InvalidStateException {
 		build.addState(initialState().stateID() + lastID + "");
 		for (AutomataState state : getStates()) {
 			build.addState(state.stateID() + lastID + "");
 		}
 	}
-
 
 }

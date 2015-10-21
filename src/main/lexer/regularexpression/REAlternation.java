@@ -39,21 +39,7 @@ class REAlternation extends RegularExpression {
 			IllegalAutomataException {
 		Automata leftChildAutomata = leftChild.createAutomata();
 		Automata rightChildAutomata = rightChild.createAutomata();
-		AutomataBuilder builder = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
-		builder.addState("0");
-		leftChildAutomata.decomposeAutomataIntoBuilder(builder);
-		rightChildAutomata.decomposeAutomataIntoBuilder(builder);
-		int size1 = leftChildAutomata.size();
-		for (AutomataState acceptState : leftChildAutomata.acceptStates()) {
-			builder.markAcceptState(1 + acceptState.stateID() + "");
-		}
-		for (AutomataState acceptState : rightChildAutomata.acceptStates()) {
-			builder.markAcceptState(size1 + acceptState.stateID() + 1 + "");
-		}
-		builder.addEmptyTransition("0", "1");
-		builder.addEmptyTransition("0", size1 + 1 + "");
-		return builder.build();
+		return leftChildAutomata.union(rightChildAutomata);
 	}
 
 }
