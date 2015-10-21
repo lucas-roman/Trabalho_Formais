@@ -1,7 +1,9 @@
 package main.lexer.regularexpression;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
@@ -16,15 +18,32 @@ public class StringToRE {
 	 * 
 	 * @author RODRIGO PEDRO MARQUES Copyright � 2015
 	 */
+	
+	/*
+	 * I guess this is actually the worst, hardest to maintain class ever written by mankind...
+	 * Jesus
+	 */
 
 	private static Map<Character, Integer> operatorPrecedence = new HashMap<>();
 
+	private static final char EMPTY_STRING = '^';
+
+	private static final char KLEENE = '*';
+
+	private static final char POSITIVE = '+';
+
+	private static final char ALTERNATION = '|';
+
+	private static final char CONCATENATION = '.';
+
+	private static final char INTERROGATION = '?';
+
 	static {
-		operatorPrecedence.put('*', 2);
-		operatorPrecedence.put('+', 2);
-		operatorPrecedence.put('?', 2);
-		operatorPrecedence.put('.', 1);
-		operatorPrecedence.put('|', 0);
+		operatorPrecedence.put(KLEENE, 2);
+		operatorPrecedence.put(POSITIVE, 2);
+		operatorPrecedence.put(INTERROGATION, 2);
+		operatorPrecedence.put(CONCATENATION, 1);
+		operatorPrecedence.put(ALTERNATION, 0);
 	}
 
 	public static RegularExpression stringToRE(String input)
@@ -44,7 +63,7 @@ public class StringToRE {
 				RegularExpression re = resultStack.pop();
 				RegularExpression toPush = re.kleene();
 				resultStack.push(toPush);
-			} else if(reversePol.charAt(i) == '´') {
+			} else if (reversePol.charAt(i) == '´') {
 				resultStack.push(RegularExpression
 						.createRegularExpression('\0'));
 			} else if (reversePol.charAt(i) == '+') {
@@ -84,15 +103,41 @@ public class StringToRE {
 				RegularExpression toPush = lhs.alternation(rhs);
 				resultStack.push(toPush);
 			}
+			else if (reversePol.charAt(i) == '\\') {
+				if(i == reversePol.length()) {
+					throw new IllegalRegularExpressionException();
+				}
+				char lookAhead = reversePol.charAt(i + 1);
+				resultStack.push(RegularExpression.createRegularExpression(lookAhead));
+				i++;
+			}
+		}
+		if(resultStack.size() > 1) {
+			throw new IllegalRegularExpressionException();
 		}
 		return resultStack.pop();
+	}
+
+	private static boolean notReserved(char c) {
+		Set<Character> reserved = new HashSet<>();
+		reserved.addAll(operatorPrecedence.keySet());
+		reserved.add('\\');
+		reserved.add('^');
+		return false;
 	}
 
 	private static String reverseInversedUnaryOperatores(String modifiedInput)
 			throws IllegalRegularExpressionException {
 		String result = "";
 		char previousChar = 0;
+		boolean reverseOnSlash = false;
 		for (int i = 0; i < modifiedInput.length(); i++) {
+			if(previousChar == '\\' && modifiedInput.charAt(i) == '\\' && !reverseOnSlash) {
+				reverseOnSlash = true;
+			}
+			else if(previousChar == '\\' && modifiedInput.charAt(i) == '\\' && reverseOnSlash) {
+				reverseOnSlash = false;
+			}
 			if (unary(modifiedInput.charAt(i))) {
 				if (previousChar == ')') {
 					int j = i;
@@ -106,11 +151,23 @@ public class StringToRE {
 					partResult += modifiedInput.charAt(i);
 					partResult += result.substring(j, i);
 					result = partResult;
-				} else {
+				} 
+				else if(previousChar != '\\'){
 					String partResult = result.substring(0, i - 1);
 					partResult += modifiedInput.charAt(i);
 					partResult += modifiedInput.charAt(i - 1);
 					result = partResult;
+				}
+				else if(previousChar == '\\' && reverseOnSlash) {
+					String partResult = result.substring(0, i - 2);
+					partResult += modifiedInput.charAt(i);
+					partResult += modifiedInput.charAt(i - 1);
+					partResult += modifiedInput.charAt(i - 2);
+					result = partResult;
+					reverseOnSlash = false;
+				}
+				else {
+					result += modifiedInput.charAt(i);
 				}
 			} else {
 				result += modifiedInput.charAt(i);
@@ -127,12 +184,37 @@ public class StringToRE {
 	private static String insertConcatenationPoints(String input) {
 		char previousCharacter = 0;
 		String result = "";
+		boolean alternated = false;
 		for (char c : input.toCharArray()) {
-			if ((isLiteral(c) || c == '(' || c == '´')) {
+			if (previousCharacter != 0 && c == '\\' && previousCharacter != '\\') {
 				if (unary(previousCharacter) || previousCharacter == ')'
 						|| isLiteral(previousCharacter)
 						|| previousCharacter == '´') {
 					result += '.';
+				}
+			}
+			else if(c == '\\' && previousCharacter == '\\' && !alternated) {
+				alternated = true;
+			}
+			else if(c == '\\' && previousCharacter == '\\' && alternated) {
+				alternated = false;
+				result += ".";
+			}
+			else if((isLiteral(c) || c == '(' || c == '´') && alternated) {
+				result += ".";
+				alternated = false;
+			}
+			else {
+				alternated = false;
+			}
+			if (previousCharacter != '\\') {
+
+				if ((isLiteral(c) || c == '(' || c == '´')) {
+					if (unary(previousCharacter) || previousCharacter == ')'
+							|| isLiteral(previousCharacter)
+							|| previousCharacter == '´') {
+						result += '.';
+					}
 				}
 			}
 			result += c;
@@ -152,7 +234,7 @@ public class StringToRE {
 		String result = "";
 		for (char c : input.toCharArray()) {
 			// Is operator
-			if (isLiteral(c) || c == '´') {
+			if (isLiteral(c) || c == '´' || c == '\\') {
 				result += c;
 			} else if (isOperator(c)) {
 				while (!operationStack.isEmpty()
