@@ -26,8 +26,6 @@ public class StringToRE {
 
 	private static Map<Character, Integer> operatorPrecedence = new HashMap<>();
 
-	private static final char EMPTY_STRING = '^';
-
 	private static final char KLEENE = '*';
 
 	private static final char POSITIVE = '+';
@@ -118,13 +116,6 @@ public class StringToRE {
 		return resultStack.pop();
 	}
 
-	private static boolean notReserved(char c) {
-		Set<Character> reserved = new HashSet<>();
-		reserved.addAll(operatorPrecedence.keySet());
-		reserved.add('\\');
-		reserved.add('^');
-		return false;
-	}
 
 	private static String reverseInversedUnaryOperatores(String modifiedInput)
 			throws IllegalRegularExpressionException {
@@ -132,10 +123,10 @@ public class StringToRE {
 		char previousChar = 0;
 		boolean reverseOnSlash = false;
 		for (int i = 0; i < modifiedInput.length(); i++) {
-			if(previousChar == '\\' && modifiedInput.charAt(i) == '\\' && !reverseOnSlash) {
+			if(modifiedInput.charAt(i) == '\\' && !reverseOnSlash) {
 				reverseOnSlash = true;
 			}
-			else if(previousChar == '\\' && modifiedInput.charAt(i) == '\\' && reverseOnSlash) {
+			else if(modifiedInput.charAt(i) == '\\' && reverseOnSlash) {
 				reverseOnSlash = false;
 			}
 			if (unary(modifiedInput.charAt(i))) {
@@ -152,19 +143,19 @@ public class StringToRE {
 					partResult += result.substring(j, i);
 					result = partResult;
 				} 
+				else if(previousChar != '\\' && reverseOnSlash) {
+					String partResult = result.substring(0, i - 2);
+					partResult += modifiedInput.charAt(i);
+					partResult += modifiedInput.charAt(i - 2);
+					partResult += modifiedInput.charAt(i - 1);
+					result = partResult;
+					reverseOnSlash = false;
+				}
 				else if(previousChar != '\\'){
 					String partResult = result.substring(0, i - 1);
 					partResult += modifiedInput.charAt(i);
 					partResult += modifiedInput.charAt(i - 1);
 					result = partResult;
-				}
-				else if(previousChar == '\\' && reverseOnSlash) {
-					String partResult = result.substring(0, i - 2);
-					partResult += modifiedInput.charAt(i);
-					partResult += modifiedInput.charAt(i - 1);
-					partResult += modifiedInput.charAt(i - 2);
-					result = partResult;
-					reverseOnSlash = false;
 				}
 				else {
 					result += modifiedInput.charAt(i);
@@ -184,35 +175,33 @@ public class StringToRE {
 	private static String insertConcatenationPoints(String input) {
 		char previousCharacter = 0;
 		String result = "";
-		boolean alternated = false;
+		boolean wasValid = false;
+		boolean escape = false;
 		for (char c : input.toCharArray()) {
-			if (previousCharacter != 0 && c == '\\' && previousCharacter != '\\') {
-				if (unary(previousCharacter) || previousCharacter == ')'
-						|| isLiteral(previousCharacter)
-						|| previousCharacter == '´') {
-					result += '.';
-				}
+			if(c == '\\' && !escape) {
+				escape = true;
 			}
-			else if(c == '\\' && previousCharacter == '\\' && !alternated) {
-				alternated = true;
+			else if(c == '\\'  && escape) {
+				wasValid = true;
+				escape = false;
 			}
-			else if(c == '\\' && previousCharacter == '\\' && alternated) {
-				alternated = false;
-				result += ".";
-			}
-			else if((isLiteral(c) || c == '(' || c == '´') && alternated) {
-				result += ".";
-				alternated = false;
+			else if (c != '\\' && escape) {
+				wasValid = true;
+				escape = false;
 			}
 			else {
-				alternated = false;
+				escape = false;
 			}
 			if (previousCharacter != '\\') {
 
-				if ((isLiteral(c) || c == '(' || c == '´')) {
+				if ((isLiteral(c) || c == '(' || c == '´' || c == '\\')) {
 					if (unary(previousCharacter) || previousCharacter == ')'
 							|| isLiteral(previousCharacter)
 							|| previousCharacter == '´') {
+						result += '.';
+					}
+					else if(wasValid) {
+						wasValid = false;
 						result += '.';
 					}
 				}
@@ -232,9 +221,21 @@ public class StringToRE {
 		final Stack<Character> operationStack = new Stack<>();
 		// Parse each char individually
 		String result = "";
+		boolean escaped = false;
 		for (char c : input.toCharArray()) {
-			// Is operator
-			if (isLiteral(c) || c == '´' || c == '\\') {
+			if(c == '\\' && !escaped) {
+				escaped = true;
+				result += c;
+			}
+			else if (c == '\\' && escaped) {
+				escaped = false;
+				result += c;
+			}
+			else if (c != '\\' && escaped) {
+				escaped = false;
+				result += c;
+			}
+			else if (isLiteral(c) || c == '´') {
 				result += c;
 			} else if (isOperator(c)) {
 				while (!operationStack.isEmpty()

@@ -260,6 +260,22 @@ public class TestRegularExpression {
 		Assert.assertTrue(aut.accepts("??????"));
 		Assert.assertFalse(aut.accepts("??????a"));
 		Assert.assertFalse(aut.accepts("a"));
+		stringToRE = "\\\\";
+		re = StringToRE.stringToRE(stringToRE);
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("\\"));
+		Assert.assertFalse(aut.accepts("\\\\"));
+		Assert.assertFalse(aut.accepts(""));
+		stringToRE = "\\[(((1|2|3|4|5|6|7|8|9)+(0|1|2|3|4|5|6|7|8|9)*)|0)\\]";
+		re = StringToRE.stringToRE(stringToRE);
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("[0]"));
+		Assert.assertTrue(aut.accepts("[3214]"));
+		Assert.assertTrue(aut.accepts("[9]"));
+		Assert.assertFalse(aut.accepts("[]"));
+		Assert.assertFalse(aut.accepts("[00]"));
+		Assert.assertFalse(aut.accepts("[01]"));
+		Assert.assertFalse(aut.accepts(""));
 	}
 
 }
