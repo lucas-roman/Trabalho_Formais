@@ -15,12 +15,11 @@ import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException
 import org.junit.Test;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
+ * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
+ * 
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
+ * @author RODRIGO PEDRO MARQUES Copyright � 2015
  */
 
 public class TestRegularExpression {
@@ -156,9 +155,8 @@ public class TestRegularExpression {
 		aut = re.createAutomata();
 		Assert.assertTrue(aut.accepts(""));
 		Assert.assertFalse(aut.accepts("a"));
-		
-	}
 
+	}
 
 	@Test
 	public void testInterrogationRegularExpression()
@@ -190,7 +188,8 @@ public class TestRegularExpression {
 	@Test
 	public void testStringToRe() throws MissingStateException,
 			InvalidStateException, InitialStateMissingException,
-			IllegalAutomataException, IllegalRegularExpressionException, DeterministicException {
+			IllegalAutomataException, IllegalRegularExpressionException,
+			DeterministicException {
 		String stringToRE2 = "aab*(ab)?";
 		String stringToRE1 = "ab*";
 		RegularExpression re = StringToRE.stringToRE(stringToRE1);
@@ -219,9 +218,9 @@ public class TestRegularExpression {
 		Assert.assertFalse(test.accepts(""));
 		Assert.assertFalse(test.accepts("abcd"));
 		Assert.assertFalse(test.accepts("dd"));
-		
+
 	}
-	
+
 	@Test
 	public void testStringToREEpslon()
 			throws IllegalRegularExpressionException, MissingStateException,
@@ -234,11 +233,49 @@ public class TestRegularExpression {
 		Assert.assertTrue(test.accepts("ab"));
 		Assert.assertFalse(test.accepts("abb"));
 		Assert.assertFalse(test.accepts(""));
-		test =test.convert();
+		test = test.convert();
 		Assert.assertTrue(test.accepts("aab"));
 		Assert.assertTrue(test.accepts("ab"));
 		Assert.assertFalse(test.accepts("abb"));
 		Assert.assertFalse(test.accepts(""));
+	}
+
+	@Test
+	public void testSlash() throws IllegalRegularExpressionException,
+			MissingStateException, InvalidStateException,
+			InitialStateMissingException, IllegalAutomataException {
+		String stringToRE = "a\\?a";
+		RegularExpression re = StringToRE.stringToRE(stringToRE);
+		Automata aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("a?a"));
+		Assert.assertFalse(aut.accepts("a?aa"));
+		Assert.assertFalse(aut.accepts("a?"));
+		Assert.assertFalse(aut.accepts(""));
+		stringToRE = "\\?*";
+		re = StringToRE.stringToRE(stringToRE);
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts(""));
+		Assert.assertTrue(aut.accepts("?"));
+		Assert.assertTrue(aut.accepts("??"));
+		Assert.assertTrue(aut.accepts("??????"));
+		Assert.assertFalse(aut.accepts("??????a"));
+		Assert.assertFalse(aut.accepts("a"));
+		stringToRE = "\\\\";
+		re = StringToRE.stringToRE(stringToRE);
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("\\"));
+		Assert.assertFalse(aut.accepts("\\\\"));
+		Assert.assertFalse(aut.accepts(""));
+		stringToRE = "\\[(((1|2|3|4|5|6|7|8|9)+(0|1|2|3|4|5|6|7|8|9)*)|0)\\]";
+		re = StringToRE.stringToRE(stringToRE);
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("[0]"));
+		Assert.assertTrue(aut.accepts("[3214]"));
+		Assert.assertTrue(aut.accepts("[9]"));
+		Assert.assertFalse(aut.accepts("[]"));
+		Assert.assertFalse(aut.accepts("[00]"));
+		Assert.assertFalse(aut.accepts("[01]"));
+		Assert.assertFalse(aut.accepts(""));
 	}
 
 }

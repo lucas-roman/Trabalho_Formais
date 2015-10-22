@@ -1,59 +1,14 @@
 KEYWORD
 program|end|if|else|while|and|or|not|true|false|read|write
 
-VAR
+TYPE
 int|string|double|char
 
 SYMBOL
 =|>|<|+|-|*|/
 
-#Scratch
-E	-> TE'
-E'	-> +TE'|-TE'|Vazio
-T	-> FT'
-T'	-> *FT'|/FT'|Vazio
-F	-> (E) | id
+ID
+(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\_)(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\_|0|1|2|3|4|5|6|7|8|9)*
 
-/* Palavras Reservadas */
-
-TOKEN: {
-	< PROGRAM:	"program"	>
-|	< END:		"end"		>
-|	< IF:		"if"		>
-|	< ELSE:		"else"		>
-|	< WHILE:	"while"		>
-|	< AND:		"and"		>
-|	< OR:		"or"		>
-|	< NOT:		"not"		>
-|	< TRUE:		"true"		>
-| 	< FALSE:	"false"		>
-| 	< READ:		"read"		>
-|	< WRITE:	"write"		>
-|	< INT:		"int"		>
-|	< STRING:	"string"	>
-|	< DOUBLE:	"double"	>
-| 	< CHAR:		"char"		>
-}
-
-/* Operadores */
-
-TOKEN: {
-	< ASSIGN:	"="	>
-|	< GT:		">" >
-|	< LT:		"<" >
-|	< PLUS:		"+"	>
-|	< MINUS:	"-" >
-|	< MULT:		"*"	>
-|	< DIV:		"/"	>
-}
-
-/* Special Symbols */
-TOKEN: {
-	< LEFTPAREN:	"("	>
-|	< RIGHTPAREN:	")"	>
-|	< LEFTBRACE:	"{"	>
-|	< RIGHTBRACE:	"}"	>
-|	< LEFTBRACKET:	"["	>
-|	< RIGHTBRACKET:	"]" >
-|	< COMMA:		","	>
-}
+ARRAY
+(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\_)(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\_|0|1|2|3|4|5|6|7|8|9)*(\[((0|((1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*))|(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\_)(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\_|0|1|2|3|4|5|6|7|8|9)*)\])+
