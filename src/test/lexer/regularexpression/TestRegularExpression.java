@@ -28,6 +28,8 @@ public class TestRegularExpression {
 
 	private String regularExpressionValue2 = "";
 
+	private String arrREG = "(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\\_)(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\\_|0|1|2|3|4|5|6|7|8|9)*(\\[((0|((1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*))|(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\\_)(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z|\\_|0|1|2|3|4|5|6|7|8|9)*)\\])+";
+
 	private RegularExpression rea = RegularExpression
 			.createRegularExpression('a');
 	private RegularExpression reb = RegularExpression
@@ -243,7 +245,7 @@ public class TestRegularExpression {
 	@Test
 	public void testSlash() throws IllegalRegularExpressionException,
 			MissingStateException, InvalidStateException,
-			InitialStateMissingException, IllegalAutomataException {
+			InitialStateMissingException, IllegalAutomataException, DeterministicException {
 		String stringToRE = "a\\?a";
 		RegularExpression re = StringToRE.stringToRE(stringToRE);
 		Automata aut = re.createAutomata();
@@ -276,6 +278,19 @@ public class TestRegularExpression {
 		Assert.assertFalse(aut.accepts("[00]"));
 		Assert.assertFalse(aut.accepts("[01]"));
 		Assert.assertFalse(aut.accepts(""));
+		re = StringToRE.stringToRE(arrREG);
+		aut = re.createAutomata();
+		aut = aut.convert();
+		Assert.assertTrue(aut.accepts("iD[3]"));
+		Assert.assertTrue(aut.accepts("_abacate[i]"));
+		Assert.assertTrue(aut.accepts("_ABACATE3[abacate]"));
+		Assert.assertTrue(aut.accepts("x[_id]"));
+		Assert.assertTrue(aut.accepts("jao[pao]"));
+		Assert.assertFalse(aut.accepts("jao[]"));
+		Assert.assertFalse(aut.accepts("jao[00]"));
+		Assert.assertFalse(aut.accepts("jao[0abacate]"));
+		Assert.assertFalse(aut.accepts("0[casd]"));
+		Assert.assertFalse(aut.accepts("0jaoao[9]"));
 	}
 
 }

@@ -204,6 +204,10 @@ public class StringToRE {
 						wasValid = false;
 						result += '.';
 					}
+					
+				}
+				if(wasValid) {
+					wasValid = false;
 				}
 			}
 			result += c;
