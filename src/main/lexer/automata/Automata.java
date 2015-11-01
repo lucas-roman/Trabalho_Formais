@@ -47,18 +47,27 @@ public interface Automata {
 	/* Returns size of the automata. */
 	public int size();
 
+	/* Decomposes the automata into a Builder*/
 	public void decomposeAutomataIntoBuilder(AutomataBuilder builder)
 			throws InvalidStateException;
 
+	/* Returns an automata which recognizes the union of the language recognized by this automata and the
+	 * language recognized by other */
 	Automata union(Automata other) throws InvalidStateException,
 			MissingStateException, InitialStateMissingException,
 			IllegalAutomataException;
 
+	/* Returns an automata which recognizes the concatenation of the language recognized by this automata and the
+	 * language recognized by other */
 	Automata concatenate(Automata other) throws InvalidStateException,
 			MissingStateException, InitialStateMissingException,
 			IllegalAutomataException;
 
+	/* Returns an automata which recognizes the kleene star of the language recognized by this automata */
 	Automata kleene() throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException;
+	
+	/* Returns this automata minimized*/
+	Automata minimize();
 
 }

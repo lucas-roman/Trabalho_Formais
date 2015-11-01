@@ -146,6 +146,11 @@ public abstract class AutomataSkeleton implements Automata {
 		}
 		return builder.build();
 	}
+	
+	public Automata minimize() {
+		//TODO
+		return this;
+	}
 
 	public void decomposeAutomataIntoBuilder(AutomataBuilder builder)
 			throws InvalidStateException {
