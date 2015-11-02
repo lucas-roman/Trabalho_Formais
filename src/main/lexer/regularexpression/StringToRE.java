@@ -13,12 +13,12 @@ public class StringToRE {
 	/*
 	 * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA
 	 * E ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
-	 * 
+	 *
 	 * @author LUCAS FINGER ROMAN
-	 * 
+	 *
 	 * @author RODRIGO PEDRO MARQUES Copyright � 2015
 	 */
-	
+
 	/*
 	 * I guess this is actually the worst, hardest to maintain class ever written by mankind...
 	 * Jesus
@@ -27,13 +27,9 @@ public class StringToRE {
 	private static Map<Character, Integer> operatorPrecedence = new HashMap<>();
 
 	private static final char KLEENE = '*';
-
 	private static final char POSITIVE = '+';
-
 	private static final char ALTERNATION = '|';
-
 	private static final char CONCATENATION = '.';
-
 	private static final char INTERROGATION = '?';
 
 	static {
@@ -44,8 +40,7 @@ public class StringToRE {
 		operatorPrecedence.put(ALTERNATION, 0);
 	}
 
-	public static RegularExpression stringToRE(String input)
-			throws IllegalRegularExpressionException {
+	public static RegularExpression stringToRE(String input) throws IllegalRegularExpressionException {
 		String modifiedInput = insertConcatenationPoints(input);
 		modifiedInput = reverseInversedUnaryOperatores(modifiedInput);
 		String reversePol = reversePolishNotation(modifiedInput);
@@ -116,9 +111,7 @@ public class StringToRE {
 		return resultStack.pop();
 	}
 
-
-	private static String reverseInversedUnaryOperatores(String modifiedInput)
-			throws IllegalRegularExpressionException {
+	private static String reverseInversedUnaryOperatores(String modifiedInput) throws IllegalRegularExpressionException {
 		String result = "";
 		char previousChar = 0;
 		boolean reverseOnSlash = false;
@@ -142,7 +135,7 @@ public class StringToRE {
 					partResult += modifiedInput.charAt(i);
 					partResult += result.substring(j, i);
 					result = partResult;
-				} 
+				}
 				else if(previousChar != '\\' && reverseOnSlash) {
 					String partResult = result.substring(0, i - 2);
 					partResult += modifiedInput.charAt(i);
@@ -204,7 +197,7 @@ public class StringToRE {
 						wasValid = false;
 						result += '.';
 					}
-					
+
 				}
 				if(wasValid) {
 					wasValid = false;
