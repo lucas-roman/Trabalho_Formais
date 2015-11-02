@@ -8,6 +8,7 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
@@ -171,10 +172,6 @@ public abstract class AutomataSkeleton implements Automata {
 			}
 		}
 		return returnSet;
-	}
-
-	public Automata minimize() {
-		return new MinimizeComputer(this).compute();
 	}
 
 	public void decomposeAutomataIntoBuilder(AutomataBuilder builder)

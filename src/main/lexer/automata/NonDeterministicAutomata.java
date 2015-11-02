@@ -5,6 +5,7 @@ import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 
 /**
@@ -42,5 +43,17 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 			e.printStackTrace();
 			return this;
 		}
+	}
+	
+	public Automata minimize()  {
+		Automata deterministic;
+		try {
+			deterministic = convert();
+		} catch (DeterministicException e) {
+			//shouldn't get here
+			e.printStackTrace();
+			deterministic = this;
+		}
+		return deterministic.minimize();
 	}
 }

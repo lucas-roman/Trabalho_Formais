@@ -1,15 +1,16 @@
 package main.lexer.automata;
 
 import main.lexer.automata.exceptions.DeterministicException;
+import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 
@@ -27,6 +28,16 @@ public class DeterministicAutomata extends AutomataSkeleton{
 	@Override
 	public Automata convert() throws DeterministicException {
 		throw new DeterministicException();
+	}
+	
+	public Automata minimize()  {
+		try {
+			return new MinimizeComputer(this).compute();
+		} catch (NonDeterministicException e) {
+			//Shouldn't get here.
+			e.printStackTrace();
+			return this;
+		}
 	}
 
 
