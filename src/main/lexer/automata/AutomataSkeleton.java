@@ -1,5 +1,6 @@
 package main.lexer.automata;
 
+import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -7,6 +8,7 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
@@ -26,6 +28,8 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 public abstract class AutomataSkeleton implements Automata {
 
 	protected AutomataStructure stateImpl;
+
+	private Set<Character> charTrans;
 
 	public AutomataSkeleton(AutomataStructure stateManager) {
 		stateImpl = stateManager;
@@ -90,6 +94,19 @@ public abstract class AutomataSkeleton implements Automata {
 
 	}
 
+	public Set<Character> charForTransitions() {
+		if (charTrans == null) {
+			charTrans = new HashSet<>();
+			for (AutomataState state : getStates()) {
+				for (Entry<Character, Set<AutomataState>> trans : state
+						.getTransitions()) {
+					charTrans.add(trans.getKey());
+				}
+			}
+		}
+		return charTrans;
+	}
+
 	@Override
 	public Automata union(Automata other) throws InvalidStateException,
 			MissingStateException, InitialStateMissingException,
@@ -146,10 +163,15 @@ public abstract class AutomataSkeleton implements Automata {
 		}
 		return builder.build();
 	}
-	
-	public Automata minimize() {
-		//TODO
-		return this;
+
+	public Set<AutomataState> notAcceptStates() {
+		Set<AutomataState> returnSet = new HashSet<>();
+		for (AutomataState state : getStates()) {
+			if (!acceptStates().contains(state)) {
+				returnSet.add(state);
+			}
+		}
+		return returnSet;
 	}
 
 	public void decomposeAutomataIntoBuilder(AutomataBuilder builder)

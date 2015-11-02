@@ -7,6 +7,7 @@ import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 
@@ -37,6 +38,11 @@ public interface Automata {
 
 	/* Returns the states of the automata. */
 	public Set<AutomataState> getStates();
+	
+	/* Returns the states of the automata which aren't accept states. */
+	public Set<AutomataState> notAcceptStates();
+	
+	public Set<Character> charForTransitions();
 
 	/* Returns the initial state of the automata. */
 	public AutomataState initialState();
