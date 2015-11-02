@@ -37,6 +37,11 @@ public interface Automata {
 
 	/* Returns the states of the automata. */
 	public Set<AutomataState> getStates();
+	
+	/* Returns the states of the automata which aren't accept states. */
+	public Set<AutomataState> notAcceptStates();
+	
+	public Set<Character> charForTransitions();
 
 	/* Returns the initial state of the automata. */
 	public AutomataState initialState();
