@@ -25,11 +25,11 @@ import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
 import main.model.commandline.fileutils.exceptions.IllegalTextStructure;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORMÁTICA E
- * ESTATÍSTICA LINGUAGENS FORMAIS E COMPILADORES
- * 
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORMÃ�TICA E
+ * ESTATÃ�STICA LINGUAGENS FORMAIS E COMPILADORES
+ *
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES Copyright © 2015
+ * @author RODRIGO PEDRO MARQUES Copyright Â© 2015
  */
 
 public class Reader {
@@ -39,8 +39,7 @@ public class Reader {
 	private RegularGrammarBuilder regularBuilder;
 
 	public Reader() {
-		this.automataBuilder = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
+		this.automataBuilder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		this.regularBuilder = new RegularGrammarBuilder();
 	}
 
@@ -58,10 +57,7 @@ public class Reader {
 		 */
 	}
 
-	public Automata readAutomata(File file) throws InvalidStateException,
-			IllegalStartOfText, IllegalOrderOfTextStructure,
-			MissingStateException, InitialStateMissingException,
-			IllegalAutomataException {
+	public Automata readAutomata(File file) throws InvalidStateException, IllegalStartOfText, IllegalOrderOfTextStructure, MissingStateException, InitialStateMissingException,IllegalAutomataException {
 		try {
 			File aux_file = file;
 			this.scan = new Scanner(aux_file);
@@ -162,8 +158,7 @@ public class Reader {
 		return automataBuilder.build();
 	}
 
-	public RegularExpression readRegularExpression(File file)
-			throws IllegalStartOfText, IllegalRegularExpressionException {
+	public RegularExpression readRegularExpression(File file) throws IllegalStartOfText, IllegalRegularExpressionException {
 		File aux_file = file;
 		RegularExpression returnValue = null;
 		try {
@@ -195,10 +190,7 @@ public class Reader {
 		return returnValue;
 	}
 
-	public RegularGrammar readRegularGrammar(File file)
-			throws IllegalStartOfText, IllegalTextStructure,
-			IllegalOrderOfTextStructure, StartSymbolMissingException,
-			NonTerminalMissingException, TerminalMissingException {
+	public RegularGrammar readRegularGrammar(File file) throws IllegalStartOfText, IllegalTextStructure, IllegalOrderOfTextStructure, StartSymbolMissingException, NonTerminalMissingException, TerminalMissingException {
 		File aux_file = file;
 		try {
 			this.scan = new Scanner(aux_file);
@@ -211,8 +203,7 @@ public class Reader {
 			if (aux.equals("INITIALSYMBOL")) {
 				aux = this.scan.nextLine();
 				this.regularBuilder.addNonTerminal(aux);
-				regularBuilder.markStartSymbol(regularBuilder
-						.getNonTerminalOf(aux));
+				regularBuilder.markStartSymbol(regularBuilder.getNonTerminalOf(aux));
 				aux = this.scan.nextLine();
 				checker = aux.trim();
 				while (checker.length() == 0) {
@@ -260,8 +251,7 @@ public class Reader {
 					if (separate.length < 2) {
 						throw new IllegalOrderOfTextStructure();
 					}
-					NonTerminal head = regularBuilder
-							.getNonTerminalOf(separate[0]);
+					NonTerminal head = regularBuilder.getNonTerminalOf(separate[0]);
 					String restOf = separate[1];
 					for (String prod : restOf.split("\\|")) {
 						prod = prod.trim();
@@ -272,9 +262,7 @@ public class Reader {
 						} else {
 							regularBuilder.addTerminal(prod.charAt(0));
 							String nT = prod.substring(1);
-							regularBuilder.addProduction(head, regularBuilder
-									.getTerminalOf(prod.charAt(0)),
-									regularBuilder.getNonTerminalOf(nT));
+							regularBuilder.addProduction(head, regularBuilder.getTerminalOf(prod.charAt(0)),regularBuilder.getNonTerminalOf(nT));
 						}
 					}
 					aux = scan.nextLine();
