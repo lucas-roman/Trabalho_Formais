@@ -25,11 +25,11 @@ import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
 import main.model.commandline.fileutils.exceptions.IllegalTextStructure;
 
 /**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORMÁTICA E
- * ESTATÍSTICA LINGUAGENS FORMAIS E COMPILADORES
- * 
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORMÃ�TICA E
+ * ESTATÃ�STICA LINGUAGENS FORMAIS E COMPILADORES
+ *
  * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES Copyright © 2015
+ * @author RODRIGO PEDRO MARQUES Copyright Â© 2015
  */
 
 public class Reader {
@@ -39,8 +39,7 @@ public class Reader {
 	private RegularGrammarBuilder regularBuilder;
 
 	public Reader() {
-		this.automataBuilder = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
+		this.automataBuilder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		this.regularBuilder = new RegularGrammarBuilder();
 	}
 
