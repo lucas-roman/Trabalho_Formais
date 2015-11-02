@@ -55,6 +55,7 @@ public class LangReader {
 			System.out.println("Error: File not found! Try again.");
 			e.printStackTrace();
 		}
+		this.scan.close();
 		return this.lexemas;
 	}
 
