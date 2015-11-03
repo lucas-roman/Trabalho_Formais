@@ -40,6 +40,11 @@ public class MinimizeComputer {
 	}
 	
 	private void calculateCategories() {
+		while(!lastIterationForCategory());
+	}
+
+	private boolean lastIterationForCategory() {
+		boolean lastIteration = false;
 		for (char character : automata.charForTransitions()) {
 			Set<Set<AutomataState>> newCategories = new HashSet<>();
 			for (Set<AutomataState> set : categories) {
@@ -62,11 +67,15 @@ public class MinimizeComputer {
 				newCategories.addAll(temp.values());
 			}
 			if(newCategories.size() < 1) {
-				break;
+				lastIteration = true;
+			}
+			else {
+				lastIteration = false;
 			}
 			removeFromOldCategories(newCategories);
 			categories.addAll(newCategories);
 		}
+		return lastIteration;
 	}
 	
 	private void removeFromOldCategories(Set<Set<AutomataState>> newCategories) {
