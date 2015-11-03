@@ -44,4 +44,6 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 			return this;
 		}
 	}
+	
+
 }

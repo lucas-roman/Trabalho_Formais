@@ -12,17 +12,31 @@ import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException
 public class Lexema {
 
 	private RegularExpression regularExpression;
+<<<<<<< HEAD
+	private String tag;
+
+	public Lexema(String tag, String regularExpression) throws IllegalRegularExpressionException {
+=======
+
 	private String tag;
 
 	public Lexema(String tag, String regularExpression)
 			throws IllegalRegularExpressionException {
+>>>>>>> minimization
 		this.regularExpression = StringToRE.stringToRE(regularExpression);
 		this.tag = tag;
 	}
 
+<<<<<<< HEAD
+	public Lexema() {
+	}
+
+	public Automata automataForLexema() throws MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException {
+=======
 	public Automata automataForLexema() throws MissingStateException,
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException {
+>>>>>>> minimization
 		return regularExpression.createAutomata();
 	}
 
