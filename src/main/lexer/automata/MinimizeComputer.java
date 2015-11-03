@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.graph.AutomataState;
 
@@ -12,45 +13,39 @@ public class MinimizeComputer {
 
 	private Automata automata;
 
-	private Map<AutomataState, Set<AutomataState>> categories;
-	
+	private Set<Set<AutomataState>> categories;
+
 	public MinimizeComputer(AutomataSkeleton automataSkeleton) {
-		automata = automataSkeleton;
-		categories = new HashMap<>();
+		try {
+			automata = automataSkeleton.convert();
+		} catch (DeterministicException e) {
+			automata = automataSkeleton;
+		}
+		categories = new HashSet<>();
 		addBaseCategories();
 	}
 
 	private void addBaseCategories() {
 		Set<AutomataState> accept = new HashSet<AutomataState>();
 		accept.addAll(automata.acceptStates());
-		for(AutomataState acceptState : automata.acceptStates()) {
-			categories.put(acceptState, accept);
-		}
+		categories.add(accept);
 		Set<AutomataState> notAccept = new HashSet<AutomataState>();
 		notAccept.addAll(automata.notAcceptStates());
-		for(AutomataState state : automata.notAcceptStates()) {
-			categories.put(state, notAccept);
-		}
+		categories.add(notAccept);
+		categories.add(null);
 	}
 
-	public Automata compute() throws NonDeterministicException {
-		for(Set<AutomataState> set : categories.values()) {
-			for(char character : automata.charForTransitions()) {
+	public Automata compute() {
+		for (Set<AutomataState> set : categories) {
+			for (char character : automata.charForTransitions()) {
 				Set<AutomataState> pointed = null;
-				for(AutomataState state : set) {
-					//Should be fixed to deal with dead transitions.
-					AutomataState nextStateByCharacter=null;
-					if(state.nextState(character).size() > 1) {
-						throw new NonDeterministicException();
-					}
-					for(AutomataState magic : state.nextState(character)) {
-						nextStateByCharacter = magic;
-					}
+				Set<AutomataState> temp = new HashSet<>();
+				for (AutomataState state : set) {
 					if(pointed == null) {
-						pointed = categories.get(nextStateByCharacter);
+						pointed = getCategory(getNextStateByCharacter(state, character));
 					}
-					if(categories.get(nextStateByCharacter) != pointed) {
-						//We should create a new category after processing all the states.
+					if(pointed != getCategory(getNextStateByCharacter(state, character))) {
+						
 					}
 				}
 			}
@@ -58,4 +53,21 @@ public class MinimizeComputer {
 		return automata;
 	}
 
+	private AutomataState getNextStateByCharacter(AutomataState state,
+			char character) {
+		if (!state.nextState(character).isEmpty())
+			for (AutomataState magic : state.nextState(character)) {
+				return magic;
+			}
+		return null;
+	}
+
+	private Set<AutomataState> getCategory(AutomataState state) {
+		for (Set<AutomataState> set : categories) {
+			if(set.contains(state)) {
+				return set;
+			}
+		}
+		return null;
+	}
 }

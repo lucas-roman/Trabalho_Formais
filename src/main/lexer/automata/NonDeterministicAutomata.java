@@ -44,16 +44,4 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 			return this;
 		}
 	}
-	
-	public Automata minimize()  {
-		Automata deterministic;
-		try {
-			deterministic = convert();
-		} catch (DeterministicException e) {
-			//shouldn't get here
-			e.printStackTrace();
-			deterministic = this;
-		}
-		return deterministic.minimize();
-	}
 }

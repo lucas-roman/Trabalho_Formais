@@ -30,15 +30,6 @@ public class DeterministicAutomata extends AutomataSkeleton{
 		throw new DeterministicException();
 	}
 	
-	public Automata minimize()  {
-		try {
-			return new MinimizeComputer(this).compute();
-		} catch (NonDeterministicException e) {
-			//Shouldn't get here.
-			e.printStackTrace();
-			return this;
-		}
-	}
 
 
 

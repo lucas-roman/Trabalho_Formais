@@ -31,6 +31,7 @@ public interface AutomataState extends GraphUnit {
 
 	/*
 	 *  Returns all the states which this state can reach by the character c, not counting epslon transitions.
+	 *  If no such transition exists, returns an empty set.
 	 *  @param c character that will help to find all the reacheable states by it.
 	 */
 	Set<AutomataState> nextState(char c);

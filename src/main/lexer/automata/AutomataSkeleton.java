@@ -164,6 +164,10 @@ public abstract class AutomataSkeleton implements Automata {
 		return builder.build();
 	}
 
+	public Automata minimize() {
+		return new MinimizeComputer(this).compute();
+	}
+
 	public Set<AutomataState> notAcceptStates() {
 		Set<AutomataState> returnSet = new HashSet<>();
 		for (AutomataState state : getStates()) {

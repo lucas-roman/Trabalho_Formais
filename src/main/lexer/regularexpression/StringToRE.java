@@ -1,9 +1,7 @@
 package main.lexer.regularexpression;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.Stack;
 
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
