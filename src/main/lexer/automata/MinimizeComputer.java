@@ -35,7 +35,11 @@ public class MinimizeComputer {
 	}
 
 	public Automata compute() {
-		
+		calculateCategories();
+		return automata;
+	}
+	
+	private void calculateCategories() {
 		for (char character : automata.charForTransitions()) {
 			Set<Set<AutomataState>> newCategories = new HashSet<>();
 			for (Set<AutomataState> set : categories) {
@@ -63,8 +67,6 @@ public class MinimizeComputer {
 			removeFromOldCategories(newCategories);
 			categories.addAll(newCategories);
 		}
-		
-		return automata;
 	}
 	
 	private void removeFromOldCategories(Set<Set<AutomataState>> newCategories) {
