@@ -6,7 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.DeterministicException;
+import main.lexer.automata.exceptions.IllegalAutomataException;
+import main.lexer.automata.exceptions.InitialStateMissingException;
+import main.lexer.automata.exceptions.InvalidStateException;
+import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
+import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
 public class MinimizeComputer {
 
@@ -36,7 +42,13 @@ public class MinimizeComputer {
 
 	public Automata compute() {
 		calculateCategories();
-		return automata;
+		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
+		try {
+			return builder.build();
+		} catch (InitialStateMissingException | IllegalAutomataException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	private void calculateCategories() {

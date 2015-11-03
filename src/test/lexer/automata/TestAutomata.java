@@ -171,5 +171,10 @@ public class TestAutomata {
 		aut = builder.build();
 		Assert.assertEquals(aut.getStates().size(), 9);
 	}
+	
+	@Test
+	public void testMinimization() {
+		deterministicAutomata.minimize();
+	}
 
 }
