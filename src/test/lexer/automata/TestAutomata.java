@@ -56,7 +56,7 @@ public class TestAutomata {
 		deterministicBuilder.markAcceptState("q3");
 		deterministicAutomata = deterministicBuilder.build();
 	}
-	
+
 	@Before
 	public void initNonDeterministic() throws InvalidStateException,
 			MissingStateException, OverrideInitialStateException,
@@ -103,8 +103,6 @@ public class TestAutomata {
 		Assert.assertTrue(deterministicAutomata.accepts(""));
 	}
 
-	
-
 	@Test
 	public void testAccept() {
 		Assert.assertTrue(nonDeterministicAutomata.accepts(""));
@@ -119,9 +117,10 @@ public class TestAutomata {
 		Assert.assertFalse(nonDeterministicAutomata.accepts("abababaaab"));
 		Assert.assertFalse(nonDeterministicAutomata.accepts("bababaaaaba"));
 	}
-	
+
 	@Test
-	public void testNonDeterministicToDeterministic() throws DeterministicException {
+	public void testNonDeterministicToDeterministic()
+			throws DeterministicException {
 		Automata det = nonDeterministicAutomata.convert();
 		Assert.assertTrue(det instanceof DeterministicAutomata);
 		Assert.assertTrue(det.accepts(""));
@@ -136,17 +135,19 @@ public class TestAutomata {
 		Assert.assertFalse(det.accepts("abababaaab"));
 		Assert.assertFalse(det.accepts("bababaaaaba"));
 	}
-	
-	@Test(expected=DeterministicException.class)
-	public void testFailDeterministicToDeterministicConvert() throws DeterministicException {
+
+	@Test(expected = DeterministicException.class)
+	public void testFailDeterministicToDeterministicConvert()
+			throws DeterministicException {
 		deterministicAutomata.convert();
 	}
-	
+
 	@Test
 	public void testSize() throws InitialStateMissingException,
 			IllegalAutomataException, MissingStateException,
 			InvalidStateException, OverrideInitialStateException {
-		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
+		AutomataBuilder builder = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
 		builder.addState("q0");
 		builder.addState("q1");
 		builder.addState("q2");
@@ -171,10 +172,32 @@ public class TestAutomata {
 		aut = builder.build();
 		Assert.assertEquals(aut.getStates().size(), 9);
 	}
-	
+
 	@Test
-	public void testMinimization() {
-		deterministicAutomata.minimize();
+	public void testMinimization() throws InvalidStateException,
+			MissingStateException, InitialStateMissingException,
+			IllegalAutomataException {
+		AutomataBuilder builder = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
+		builder.addState("q0");
+		builder.addState("q1");
+		builder.addState("q2");
+		builder.addState("q3");
+		builder.addState("q4");
+		builder.addState("q5");
+		builder.addTransition("q0", "q1", 'a');
+		builder.addTransition("q1", "q2", 'a');
+		builder.addTransition("q2", "q3", 'a');
+		builder.addTransition("q3", "q4", 'a');
+		builder.addTransition("q4", "q5", 'a');
+		builder.addTransition("q5", "q0", 'a');
+		builder.markAcceptState("q0");
+		builder.markAcceptState("q1");
+		builder.markAcceptState("q2");
+		builder.markAcceptState("q3");
+		builder.markAcceptState("q4");
+		builder.markAcceptState("q5");
+		builder.build().minimize();
 	}
 
 }

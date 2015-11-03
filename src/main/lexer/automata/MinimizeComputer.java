@@ -8,8 +8,6 @@ import java.util.Set;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
-import main.lexer.automata.exceptions.InvalidStateException;
-import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
@@ -37,22 +35,32 @@ public class MinimizeComputer {
 		Set<AutomataState> notAccept = new HashSet<AutomataState>();
 		notAccept.addAll(automata.notAcceptStates());
 		categories.add(notAccept);
-		categories.add(null);
+		categories.add(new HashSet<AutomataState>());
 	}
 
 	public Automata compute() {
+		System.out.println(categories.size());
 		calculateCategories();
-		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
-		try {
-			return builder.build();
-		} catch (InitialStateMissingException | IllegalAutomataException e) {
-			e.printStackTrace();
-			return null;
-		}
+		removeEmptyCategory();
+		System.out.println(categories.size());
+		AutomataBuilder builder = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
+		return automata;
 	}
-	
+
+	private void removeEmptyCategory() {
+		Set<AutomataState> empty = new HashSet<>();
+		for (Set<AutomataState> emptyChecker : categories) {
+			if (emptyChecker.isEmpty()) {
+				empty = emptyChecker;
+			}
+		}
+		categories.remove(empty);
+	}
+
 	private void calculateCategories() {
-		while(!lastIterationForCategory());
+		while (!lastIterationForCategory())
+			;
 	}
 
 	private boolean lastIterationForCategory() {
@@ -78,10 +86,9 @@ public class MinimizeComputer {
 				}
 				newCategories.addAll(temp.values());
 			}
-			if(newCategories.size() < 1) {
+			if (newCategories.size() < 1) {
 				lastIteration = true;
-			}
-			else {
+			} else {
 				lastIteration = false;
 			}
 			removeFromOldCategories(newCategories);
@@ -89,10 +96,10 @@ public class MinimizeComputer {
 		}
 		return lastIteration;
 	}
-	
+
 	private void removeFromOldCategories(Set<Set<AutomataState>> newCategories) {
-		for(Set<AutomataState> set : newCategories) {
-			for(AutomataState state : set) {
+		for (Set<AutomataState> set : newCategories) {
+			for (AutomataState state : set) {
 				getCategory(state).remove(state);
 			}
 		}

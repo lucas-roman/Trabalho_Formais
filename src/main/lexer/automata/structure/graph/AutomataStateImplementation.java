@@ -56,6 +56,7 @@ class AutomataStateImplementation implements AutomataState {
 
 	@Override
 	public int countNeighborhood(Set<GraphUnit> visited) {
+		visited.add(this);
 		return new GraphValidator(this, visited).countNeighborhood();
 	}
 
