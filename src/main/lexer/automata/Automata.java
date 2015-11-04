@@ -1,5 +1,6 @@
 package main.lexer.automata;
 
+import java.util.List;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.DeterministicException;
@@ -75,5 +76,7 @@ public interface Automata {
 	
 	/* Returns this automata minimized*/
 	Automata minimize() throws InitialStateMissingException, IllegalAutomataException;
-
+	
+	void addTagOrder(List<String> order);
+	
 }

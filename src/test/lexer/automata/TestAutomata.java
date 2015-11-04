@@ -1,7 +1,7 @@
 package test.lexer.automata;
 
-import java.util.Map.Entry;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Assert;
 import main.lexer.automata.Automata;
@@ -183,7 +183,8 @@ public class TestAutomata {
 	@Test
 	public void testMinimization() throws InvalidStateException,
 			MissingStateException, InitialStateMissingException,
-			IllegalAutomataException, IllegalRegularExpressionException, DeterministicException {
+			IllegalAutomataException, IllegalRegularExpressionException,
+			DeterministicException {
 		String stringToRE2 = "aab*(ab)?";
 		RegularExpression re = StringToRE.stringToRE(stringToRE2);
 		Automata test = re.createAutomata().convert();
@@ -202,6 +203,38 @@ public class TestAutomata {
 		Assert.assertFalse(test.accepts(""));
 		Assert.assertFalse(test.accepts("aaabb"));
 		Assert.assertFalse(test.accepts("aaabbab"));
+	}
+
+	@Test
+	public void testTag() throws IllegalRegularExpressionException,
+			MissingStateException, InvalidStateException,
+			InitialStateMissingException, IllegalAutomataException, DeterministicException {
+		RegularExpression re = StringToRE.stringToRE("if");
+		List<String> order = new ArrayList<String>();
+		order.add(0, "KEYWORD");
+		order.add(1, "ID");
+		Automata aut = re.createAutomata();
+		aut = aut.convert();
+		aut = aut.minimize();
+		for(AutomataState acceptState : aut.acceptStates()) {
+			acceptState.setTag("KEYWORD");
+		}
+		
+		re = StringToRE.stringToRE("(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)+");
+		Automata other = re.createAutomata();
+		Assert.assertTrue(other.accepts("iff"));
+		other = other.convert();
+		other = other.minimize();
+		Assert.assertTrue(other.accepts("iff"));
+		for(AutomataState acceptState : other.acceptStates()) {
+			acceptState.setTag("ID");
+		}
+		aut = aut.union(other);
+		Assert.assertTrue(aut.accepts("iff"));
+		aut = aut.convert();
+		for(AutomataState state : aut.acceptStates()) {
+			System.out.println(state.getTag());
+		}
 	}
 
 }

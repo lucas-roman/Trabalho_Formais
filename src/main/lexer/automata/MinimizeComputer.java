@@ -116,13 +116,7 @@ public class MinimizeComputer {
 	}
 
 	private void removeEmptyCategory() {
-		Set<AutomataState> empty = new HashSet<>();
-		for (Set<AutomataState> emptyChecker : categories) {
-			if (emptyChecker.isEmpty()) {
-				empty = emptyChecker;
-			}
-		}
-		categories.remove(empty);
+		categories.remove(deadStateCategory());
 	}
 
 	private void calculateCategories() {
@@ -131,7 +125,7 @@ public class MinimizeComputer {
 	}
 
 	private boolean lastIterationForCategory() {
-		boolean lastIteration = false;
+		boolean lastIteration = true;
 		for (char character : automata.charForTransitions()) {
 			Set<Set<AutomataState>> newCategories = new HashSet<>();
 			for (Set<AutomataState> set : categories) {
@@ -153,9 +147,7 @@ public class MinimizeComputer {
 				}
 				newCategories.addAll(temp.values());
 			}
-			if (newCategories.size() < 1) {
-				lastIteration = true;
-			} else {
+			if (!(newCategories.size() < 1)) {
 				lastIteration = false;
 			}
 			removeFromOldCategories(newCategories);
@@ -183,7 +175,11 @@ public class MinimizeComputer {
 
 	private Set<AutomataState> getCategoryOfNextState(AutomataState state,
 			char character) {
-		return getCategory(getNextStateByCharacter(state, character));
+		AutomataState nextState = getNextStateByCharacter(state, character);
+		if(nextState != null) {
+			return getCategory(nextState);
+		}
+		return deadStateCategory();
 	}
 
 	private Set<AutomataState> getCategory(AutomataState state,
@@ -198,5 +194,15 @@ public class MinimizeComputer {
 
 	private Set<AutomataState> getCategory(AutomataState state) {
 		return getCategory(state, categories);
+	}
+	
+	private Set<AutomataState> deadStateCategory() {
+		Set<AutomataState> empty = new HashSet<>();
+		for (Set<AutomataState> emptyChecker : categories) {
+			if (emptyChecker.isEmpty()) {
+				empty = emptyChecker;
+			}
+		}
+		return empty;
 	}
 }

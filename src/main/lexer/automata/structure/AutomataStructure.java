@@ -2,11 +2,11 @@ package main.lexer.automata.structure;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 
 
@@ -96,5 +96,8 @@ public interface AutomataStructure {
 	 * Return the accept states.
 	 */
 	public Set<AutomataState> acceptStates();
+
+	
+	public void addTag(Integer stateValue, String tag) throws InvalidStateException;
 
 }

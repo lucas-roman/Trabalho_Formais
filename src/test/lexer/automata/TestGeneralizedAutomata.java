@@ -50,7 +50,6 @@ public class TestGeneralizedAutomata {
 		Assert.assertFalse(back.accepts("abababaaab"));
 		Assert.assertFalse(back.accepts("bababaaaaba"));
 		Assert.assertTrue(back.accepts(""));
-		System.out.println(re);
 	}
 
 }

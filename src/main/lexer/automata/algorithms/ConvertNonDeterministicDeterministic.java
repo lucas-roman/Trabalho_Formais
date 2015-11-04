@@ -1,7 +1,9 @@
 package main.lexer.automata.algorithms;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -36,12 +38,22 @@ public class ConvertNonDeterministicDeterministic {
 	private Map<Set<AutomataState>, String> states;
 	private Set<Set<AutomataState>> statesEvaluated;
 	private AutomataBuilder builder;
+	private List<String> tagOrder = new ArrayList<String>();
 	int id = 1;
 
 	/* Calculates the new automata.
 	 * @param nonDeterministic is the automata that is going to be converted to a deterministic automata.
 	 * */
 	public ConvertNonDeterministicDeterministic(NonDeterministicAutomata nonDeterministic) {
+		init(nonDeterministic);
+	}
+	
+	public ConvertNonDeterministicDeterministic(NonDeterministicAutomata nonDeterministic, List<String> tags) {
+		tagOrder = tags;
+		init(nonDeterministic);
+	}
+
+	private void init(NonDeterministicAutomata nonDeterministic) {
 		this.states = new HashMap<>();
 		this.statesEvaluated = new HashSet<>();
 		builder = new AutomataBuilder(new AutomataStructureGraphFactory());
@@ -56,7 +68,7 @@ public class ConvertNonDeterministicDeterministic {
 	private void calculateStates(Set<AutomataState> state) {
 		try {
 			statesEvaluated.add(state);
-			NewStateCreator calculator = NewStateCreator.create(state);
+			NewStateCreator calculator = new NewStateCreator(state);
 			if (calculator.accepts()) {
 				builder.markAcceptState(states.get(state));
 			}
@@ -84,8 +96,7 @@ public class ConvertNonDeterministicDeterministic {
 	 */
 	private void addStateIfAbsent(Set<AutomataState> state) throws InvalidStateException {
 		if (!states.containsKey(state)) {
-			builder.addState("q" + id);
-			states.put(state, "q" + id);
+			addState(state, id);
 			id++;
 		}
 	}
@@ -96,13 +107,24 @@ public class ConvertNonDeterministicDeterministic {
 	 */
 	private void calculateInitState(Set<AutomataState> state) {
 		try {
-			builder.addState("q0");
-			states.put(state, "q0");
+			addState(state, 0);
 			calculateStates(state);
 		} catch (InvalidStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	private void addState(Set<AutomataState> state, int id) throws InvalidStateException {
+		builder.addState("q" + id);
+		states.put(state, "q" + id);
+		String tag = "";
+		for(AutomataState statesOfSet : state) {
+			if((tagOrder.indexOf(tag) > tagOrder.indexOf(statesOfSet.getTag())) || tag.equals("")) {
+				tag = statesOfSet.getTag();
+			}
+		}
+		builder.addTagToState("q" + id, tag);
 	}
 
 	/* It returns the new deterministic automata.

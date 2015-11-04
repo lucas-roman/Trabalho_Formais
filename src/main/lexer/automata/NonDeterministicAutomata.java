@@ -1,12 +1,17 @@
 package main.lexer.automata;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import main.lexer.automata.algorithms.ConvertNonDeterministicDeterministic;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.MissingStateException;
-import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
+import main.lexer.automata.structure.graph.AutomataState;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
@@ -24,6 +29,10 @@ import main.lexer.automata.structure.AutomataStructure;
  * Should always become a Deterministic Automata.
  */
 public class NonDeterministicAutomata extends AutomataSkeleton {
+	
+	
+	
+	
 	/* Creates a Non Deterministic Automata from the given structure.
 	 * */
 	public NonDeterministicAutomata(AutomataStructure struct)  {
@@ -35,15 +44,23 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 	 * */
 	@Override
 	public Automata convert() throws DeterministicException {
-		ConvertNonDeterministicDeterministic converter = new ConvertNonDeterministicDeterministic(this);
 		try {
-			return converter.convert();
+			return createConverter().convert();
 		} catch (InitialStateMissingException | MissingStateException
 				| IllegalAutomataException e) {
 			e.printStackTrace();
 			return this;
 		}
 	}
+
+	private ConvertNonDeterministicDeterministic createConverter() {
+		if(tagOrder.isEmpty())
+			return new ConvertNonDeterministicDeterministic(this);
+		return new ConvertNonDeterministicDeterministic(this, tagOrder);
+	}
+	
+	
+
 	
 
 }

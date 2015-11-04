@@ -1,15 +1,15 @@
 package main.lexer.automata;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
-import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
@@ -29,13 +29,15 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 public abstract class AutomataSkeleton implements Automata {
 
 	protected AutomataStructure stateImpl;
+	
+	protected List<String> tagOrder = new ArrayList<>();
 
 	private Set<Character> charTrans;
-
+	
 	public AutomataSkeleton(AutomataStructure stateManager) {
 		stateImpl = stateManager;
 	}
-
+	
 	@Override
 	public AutomataState initialState() {
 		return stateImpl.automataInitialState();
@@ -54,6 +56,15 @@ public abstract class AutomataSkeleton implements Automata {
 	@Override
 	public Set<AutomataState> acceptStates() {
 		return stateImpl.acceptStates();
+	}
+	
+	public void addTagOrder(List<String> order) {
+		tagOrder = order;
+		Set<String> stateTags = new HashSet<>();
+		for(AutomataState state : getStates()) {
+			stateTags.add(state.getTag());
+		}
+		tagOrder.retainAll(stateTags);
 	}
 
 	@Override
@@ -124,9 +135,11 @@ public abstract class AutomataSkeleton implements Automata {
 		int size1 = size();
 		for (AutomataState acceptState : acceptStates()) {
 			builder.markAcceptState(1 + acceptState.stateID() + "");
+			builder.addTagToState(1 + acceptState.stateID() + "", acceptState.getTag());
 		}
 		for (AutomataState acceptState : other.acceptStates()) {
 			builder.markAcceptState(size1 + acceptState.stateID() + 1 + "");
+			builder.addTagToState(size1 + acceptState.stateID() + 1 + "", acceptState.getTag());
 		}
 		builder.addEmptyTransition("0", "1");
 		builder.addEmptyTransition("0", size1 + 1 + "");
@@ -145,9 +158,11 @@ public abstract class AutomataSkeleton implements Automata {
 		for (AutomataState acceptState : acceptStates()) {
 			build.addEmptyTransition(acceptState.stateID() + "", other
 					.initialState().stateID() + aut1Size + "");
+			build.addTagToState(acceptState.stateID() + "", acceptState.getTag());
 		}
 		for (AutomataState acceptState : other.acceptStates()) {
 			build.markAcceptState(acceptState.stateID() + aut1Size + "");
+			build.addTagToState(acceptState.stateID() + aut1Size + "", acceptState.getTag());
 		}
 		return build.build();
 	}

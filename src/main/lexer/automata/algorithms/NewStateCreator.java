@@ -1,6 +1,7 @@
 package main.lexer.automata.algorithms;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -28,23 +29,12 @@ class NewStateCreator {
 	private Set<AutomataState> stateSet;
 	private Map<Character, Set<AutomataState>> newStateMap;
 	private boolean accepts;
-	private static Map<Set<AutomataState>, NewStateCreator> instances = new HashMap<>();
 
-	/*
-	 * @param stateSet set to be added to 'this.instances' if is not contained in instances.
-	 * @return set of instances of this class.
-	 */
-	public static NewStateCreator create(Set<AutomataState> stateSet) {
-		if(!instances.containsKey(stateSet)) {
-			instances.put(stateSet, new NewStateCreator(stateSet));
-		}
-		return instances.get(stateSet);
-	}
 
 	/*
 	 * @param stateSet set to calculate the transitions of new states.
 	 */
-	private NewStateCreator(Set<AutomataState> stateSet) {
+	NewStateCreator(Set<AutomataState> stateSet) {
 		this.stateSet = stateSet;
 		newStateMap = new HashMap<>();
 		calculateTransitions();
@@ -80,12 +70,14 @@ class NewStateCreator {
 	private void createTransitionsForState(AutomataState state) {
 		for(Entry<Character, Set<AutomataState>> keyPair : state.getTransitions()) {
 			if(!newStateMap.containsKey(keyPair.getKey())) {
-				newStateMap.put(keyPair.getKey(), state.nextStateOfEpslonClosure(keyPair.getKey()));
+				//newStateMap.put(keyPair.getKey(), state.nextStateOfEpslonClosure(keyPair.getKey()));
+				newStateMap.put(keyPair.getKey(), new HashSet<AutomataState>());
 			}
-			if(state.nextStateOfEpslonClosure(keyPair.getKey()).size() > newStateMap.get(keyPair.getKey()).size()) {
-				newStateMap.remove(keyPair.getKey());
-				newStateMap.put(keyPair.getKey(), state.nextStateOfEpslonClosure(keyPair.getKey()));
-			}
+			//if(state.nextStateOfEpslonClosure(keyPair.getKey()).size() > newStateMap.get(keyPair.getKey()).size()) {
+			//	newStateMap.remove(keyPair.getKey());
+			//	newStateMap.put(keyPair.getKey(), state.nextStateOfEpslonClosure(keyPair.getKey()));
+			//}
+			newStateMap.get(keyPair.getKey()).addAll(state.nextStateOfEpslonClosure(keyPair.getKey()));
 		}
 	}
 

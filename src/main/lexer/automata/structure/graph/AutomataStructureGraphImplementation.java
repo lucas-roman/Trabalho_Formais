@@ -130,4 +130,12 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 		return retSet;
 	}
 
+	@Override
+	public void addTag(Integer stateValue, String tag) throws InvalidStateException {
+		if(!states.containsKey(stateValue)) {
+			throw new InvalidStateException();
+		}
+		states.get(stateValue).setTag(tag);
+	}
+
 }

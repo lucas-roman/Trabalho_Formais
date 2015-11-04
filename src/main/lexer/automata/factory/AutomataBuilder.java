@@ -109,6 +109,14 @@ public class AutomataBuilder {
 		}
 		return new DeterministicAutomata(structure);
 	}
+	
+	public void addTagToState(String state, String tag) throws InvalidStateException {
+		Integer stateValue = stateId.get(state);
+		if(stateValue == null) {
+			throw new InvalidStateException();
+		}
+		structure.addTag(stateValue, tag);
+	}
 
 	/*
 	 * Adds a transition from state from to state to. If any state is missing,
