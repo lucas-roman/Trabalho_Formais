@@ -1,7 +1,9 @@
 package main.lexer.regularexpression;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
@@ -15,6 +17,11 @@ public class StringToRE {
 	 * @author LUCAS FINGER ROMAN
 	 *
 	 * @author RODRIGO PEDRO MARQUES Copyright � 2015
+	 */
+	
+	/*
+	 * I guess this is actually the worst, hardest to maintain class ever written by mankind...
+	 * Jesus
 	 */
 
 	/*
@@ -43,10 +50,10 @@ public class StringToRE {
 		modifiedInput = reverseInversedUnaryOperatores(modifiedInput);
 		String reversePol = reversePolishNotation(modifiedInput);
 		Stack<RegularExpression> resultStack = new Stack<>();
+		
 		for (int i = 0; i < reversePol.length(); i++) {
 			if (isLiteral(reversePol.charAt(i))) {
-				resultStack.push(RegularExpression
-						.createRegularExpression(reversePol.charAt(i)));
+				resultStack.push(RegularExpression.createRegularExpression(reversePol.charAt(i)));
 			} else if (reversePol.charAt(i) == '*') {
 				if (resultStack.isEmpty()) {
 					throw new IllegalRegularExpressionException();
@@ -133,7 +140,11 @@ public class StringToRE {
 					partResult += modifiedInput.charAt(i);
 					partResult += result.substring(j, i);
 					result = partResult;
+<<<<<<< HEAD
 				}
+=======
+				} 
+>>>>>>> origin/Editing_PikachuFiles
 				else if(previousChar != '\\' && reverseOnSlash) {
 					String partResult = result.substring(0, i - 2);
 					partResult += modifiedInput.charAt(i);
@@ -195,10 +206,13 @@ public class StringToRE {
 						wasValid = false;
 						result += '.';
 					}
+<<<<<<< HEAD
 
 				}
 				if(wasValid) {
 					wasValid = false;
+=======
+>>>>>>> origin/Editing_PikachuFiles
 				}
 			}
 			result += c;
@@ -211,8 +225,7 @@ public class StringToRE {
 		return (Character.isLetter(c) || Character.isDigit(c));
 	}
 
-	private static String reversePolishNotation(String input)
-			throws IllegalRegularExpressionException {
+	private static String reversePolishNotation(String input) throws IllegalRegularExpressionException {
 		final Stack<Character> operationStack = new Stack<>();
 		// Parse each char individually
 		String result = "";

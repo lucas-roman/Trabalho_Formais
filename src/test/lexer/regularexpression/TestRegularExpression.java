@@ -252,7 +252,11 @@ public class TestRegularExpression {
 	@Test
 	public void testSlash() throws IllegalRegularExpressionException,
 			MissingStateException, InvalidStateException,
+<<<<<<< HEAD
 			InitialStateMissingException, IllegalAutomataException, DeterministicException {
+=======
+			InitialStateMissingException, IllegalAutomataException {
+>>>>>>> origin/Editing_PikachuFiles
 		String stringToRE = "a\\?a";
 		RegularExpression re = StringToRE.stringToRE(stringToRE);
 		Automata aut = re.createAutomata();
@@ -285,6 +289,7 @@ public class TestRegularExpression {
 		Assert.assertFalse(aut.accepts("[00]"));
 		Assert.assertFalse(aut.accepts("[01]"));
 		Assert.assertFalse(aut.accepts(""));
+<<<<<<< HEAD
 		re = StringToRE.stringToRE(arrREG);
 		aut = re.createAutomata();
 		aut = aut.convert();
@@ -298,6 +303,8 @@ public class TestRegularExpression {
 		Assert.assertFalse(aut.accepts("jao[0abacate]"));
 		Assert.assertFalse(aut.accepts("0[casd]"));
 		Assert.assertFalse(aut.accepts("0jaoao[9]"));
+=======
+>>>>>>> origin/Editing_PikachuFiles
 	}
 
 }
