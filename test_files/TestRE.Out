@@ -1,0 +1,3 @@
+REGULAREXPRESSION
+(((ac)(d|e))|(((ab)(b)*)(c(d|e))))
+END

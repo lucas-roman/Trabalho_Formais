@@ -1,15 +1,16 @@
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMï¿½TICA E ESTATï¿½STICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright ï¿½ 2015
  */
 package main.lexer.model.commandline;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,6 +24,7 @@ public class LangReader {
 	private List<Lexema> lexemas;
 
 	public LangReader(){
+		lexemas = new ArrayList<>();
 	}
 
 	public List<Lexema> readFile (File file) throws IllegalStructureOfText, IllegalRegularExpressionException{
@@ -31,13 +33,28 @@ public class LangReader {
 			this.scan = new Scanner(aux_file);
 			String aux = scan.nextLine();
 			aux.trim();
-			String checker = aux.trim();
 			while(scan.hasNextLine()){
-				while(checker.length() == 0){
+				while(aux.length() == 0){
+					if(!scan.hasNextLine()) {
+						break;
+					}
 					aux = this.scan.nextLine();
-					checker = aux.trim();
+					aux = aux.trim();
 				}
-				if (Character.isUpperCase(aux.charAt(0))){
+				String tag = aux;
+				if(!scan.hasNextLine()) {
+					throw new IllegalStructureOfText();
+				}
+				aux = this.scan.nextLine();
+				aux = aux.trim();
+				String re = aux;
+				lexemas.add(new Lexema(tag, re));
+				if(!scan.hasNextLine()) {
+					break;
+				}
+				aux = scan.nextLine();
+				aux = aux.trim();
+				/*if (Character.isUpperCase(aux.charAt(0))){
 					String tag = aux;
 					aux = this.scan.nextLine();
 					while (checker.length() == 0) {
@@ -50,6 +67,7 @@ public class LangReader {
 				} else {
 					throw new IllegalStructureOfText();
 				}
+				*/
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Error: File not found! Try again.");
