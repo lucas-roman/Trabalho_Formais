@@ -79,4 +79,8 @@ public interface AutomataState extends GraphUnit {
 	 * Returns the ID of the state.
 	 */
 	public int stateID();
+	
+	public void setTag(String tag);
+	
+	public String getTag();
 }

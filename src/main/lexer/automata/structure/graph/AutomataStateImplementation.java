@@ -36,8 +36,10 @@ class AutomataStateImplementation implements AutomataState {
 	private Map<Character, Set<AutomataState>> nextStates;
 	private int name;
 	private DecisionStrategyInterface _decisionType;
+	private String tag;
 
 	AutomataStateImplementation(int name) {
+		tag = "";
 		nextStates = new HashMap<>();
 		statesByEpslon = selectSetType();
 		this.name = name;
@@ -203,6 +205,16 @@ class AutomataStateImplementation implements AutomataState {
 
 	public Set<AutomataState> epslonTransitions() {
 		return statesByEpslon;
+	}
+
+	@Override
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	@Override
+	public String getTag() {
+		return tag;
 	}
 
 
