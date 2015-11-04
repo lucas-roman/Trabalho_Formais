@@ -100,4 +100,6 @@ public interface AutomataStructure {
 	
 	public void addTag(Integer stateValue, String tag) throws InvalidStateException;
 
+	public String tagOf(String input);
+
 }

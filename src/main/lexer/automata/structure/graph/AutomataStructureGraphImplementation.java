@@ -138,4 +138,9 @@ class AutomataStructureGraphImplementation implements AutomataStructure {
 		states.get(stateValue).setTag(tag);
 	}
 
+	@Override
+	public String tagOf(String input) {
+		return initialState.tagOf(input, 0);
+	}
+
 }

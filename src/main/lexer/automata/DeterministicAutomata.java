@@ -30,6 +30,9 @@ public class DeterministicAutomata extends AutomataSkeleton{
 		throw new DeterministicException();
 	}
 	
+	public String tagOfWord(String input) {
+		return stateImpl.tagOf(input);
+	}
 	
 
 

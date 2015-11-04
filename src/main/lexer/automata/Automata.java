@@ -79,4 +79,6 @@ public interface Automata {
 	
 	void addTagOrder(List<String> order);
 	
+	String tagOfWord(String input) throws NonDeterministicException;
+	
 }

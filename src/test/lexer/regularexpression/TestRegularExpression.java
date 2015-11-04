@@ -118,6 +118,13 @@ public class TestRegularExpression {
 		Automata aut = re.createAutomata();
 		Assert.assertFalse(aut.accepts(""));
 		Assert.assertFalse(aut.accepts("a"));
+		re = RegularExpression.createRegularExpression('a');
+		Automata other = re.createAutomata();
+		aut = aut.union(other);
+		Assert.assertFalse(aut.accepts(""));
+		Assert.assertFalse(aut.accepts("aa"));
+		Assert.assertFalse(aut.accepts("b"));
+		Assert.assertTrue(aut.accepts("a"));
 	}
 
 	@Test

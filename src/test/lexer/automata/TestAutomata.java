@@ -231,6 +231,7 @@ public class TestAutomata {
 		}
 		aut = aut.union(other);
 		Assert.assertTrue(aut.accepts("iff"));
+		aut.addTagOrder(order);
 		aut = aut.convert();
 		for(AutomataState state : aut.acceptStates()) {
 			System.out.println(state.getTag());

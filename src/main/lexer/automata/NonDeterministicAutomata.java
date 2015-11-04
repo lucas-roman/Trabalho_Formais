@@ -1,17 +1,12 @@
 package main.lexer.automata;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import main.lexer.automata.algorithms.ConvertNonDeterministicDeterministic;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.MissingStateException;
+import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
-import main.lexer.automata.structure.graph.AutomataState;
 
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
@@ -59,7 +54,10 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 		return new ConvertNonDeterministicDeterministic(this, tagOrder);
 	}
 	
-	
+
+	public String tagOfWord(String input) throws NonDeterministicException {
+		throw new NonDeterministicException();
+	}
 
 	
 

@@ -216,6 +216,22 @@ class AutomataStateImplementation implements AutomataState {
 		return tag;
 	}
 
+	public String tagOf(String input, int i) {
+		if(isLastCharacterOfWord(input, i)) {
+			return this.tag;
+		}
+		AutomataState nextState = null;
+		if(nextState(input.charAt(i)).size() == 0) {
+			return "ERROR";
+		}
+		for(AutomataState magic : nextState(input.charAt(i))) {
+			nextState = magic;
+			break;
+		}
+		i++;
+		return nextState.tagOf(input, i);
+	}
+
 
 
 

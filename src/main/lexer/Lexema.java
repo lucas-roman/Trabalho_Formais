@@ -25,5 +25,9 @@ public class Lexema {
 			IllegalAutomataException {
 		return regularExpression.createAutomata();
 	}
+	
+	public String getTag() {
+		return tag;
+	}
 
 }

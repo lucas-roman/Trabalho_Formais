@@ -87,4 +87,6 @@ public interface AutomataState extends GraphUnit {
 	/* Returns the tag which was set by the method setTag of this state. If no such tag was set, returns an empty String.
 	 */
 	public String getTag();
+	
+	String tagOf(String input, int i);
 }
