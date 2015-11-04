@@ -1,5 +1,8 @@
 package test.lexer.automata;
 
+import java.util.Map.Entry;
+import java.util.Set;
+
 import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.DeterministicAutomata;
@@ -10,7 +13,11 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
+import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
+import main.lexer.regularexpression.RegularExpression;
+import main.lexer.regularexpression.StringToRE;
+import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
 import org.junit.After;
 import org.junit.Before;
@@ -176,28 +183,25 @@ public class TestAutomata {
 	@Test
 	public void testMinimization() throws InvalidStateException,
 			MissingStateException, InitialStateMissingException,
-			IllegalAutomataException {
-		AutomataBuilder builder = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
-		builder.addState("q0");
-		builder.addState("q1");
-		builder.addState("q2");
-		builder.addState("q3");
-		builder.addState("q4");
-		builder.addState("q5");
-		builder.addTransition("q0", "q1", 'a');
-		builder.addTransition("q1", "q2", 'a');
-		builder.addTransition("q2", "q3", 'a');
-		builder.addTransition("q3", "q4", 'a');
-		builder.addTransition("q4", "q5", 'a');
-		builder.addTransition("q5", "q0", 'a');
-		builder.markAcceptState("q0");
-		builder.markAcceptState("q1");
-		builder.markAcceptState("q2");
-		builder.markAcceptState("q3");
-		builder.markAcceptState("q4");
-		builder.markAcceptState("q5");
-		builder.build().minimize();
+			IllegalAutomataException, IllegalRegularExpressionException, DeterministicException {
+		String stringToRE2 = "aab*(ab)?";
+		RegularExpression re = StringToRE.stringToRE(stringToRE2);
+		Automata test = re.createAutomata().convert();
+		Assert.assertTrue(test.accepts("aabbbbb"));
+		Assert.assertTrue(test.accepts("aabbbbab"));
+		Assert.assertTrue(test.accepts("aaab"));
+		Assert.assertTrue(test.accepts("aa"));
+		Assert.assertFalse(test.accepts(""));
+		Assert.assertFalse(test.accepts("aaabb"));
+		Assert.assertFalse(test.accepts("aaabbab"));
+		test = test.minimize();
+		Assert.assertTrue(test.accepts("aabbbbb"));
+		Assert.assertTrue(test.accepts("aabbbbab"));
+		Assert.assertTrue(test.accepts("aaab"));
+		Assert.assertTrue(test.accepts("aa"));
+		Assert.assertFalse(test.accepts(""));
+		Assert.assertFalse(test.accepts("aaabb"));
+		Assert.assertFalse(test.accepts("aaabbab"));
 	}
 
 }

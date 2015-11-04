@@ -61,7 +61,7 @@ public abstract class AutomataSkeleton implements Automata {
 		return getStates().size();
 	}
 	
-	public Automata minimize()  {
+	public Automata minimize() throws InitialStateMissingException, IllegalAutomataException  {
 		return new MinimizeComputer(this).compute();
 	}
 

@@ -74,6 +74,6 @@ public interface Automata {
 			InitialStateMissingException, IllegalAutomataException;
 	
 	/* Returns this automata minimized*/
-	Automata minimize();
+	Automata minimize() throws InitialStateMissingException, IllegalAutomataException;
 
 }

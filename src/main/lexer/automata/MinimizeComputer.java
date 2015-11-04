@@ -3,11 +3,14 @@ package main.lexer.automata;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
+import main.lexer.automata.exceptions.InvalidStateException;
+import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
@@ -38,14 +41,78 @@ public class MinimizeComputer {
 		categories.add(new HashSet<AutomataState>());
 	}
 
-	public Automata compute() {
-		System.out.println(categories.size());
-		calculateCategories();
-		removeEmptyCategory();
-		System.out.println(categories.size());
+	public Automata compute() throws InitialStateMissingException,
+			IllegalAutomataException {
+		try {
+			calculateCategories();
+			removeEmptyCategory();
+			Map<Set<AutomataState>, String> categoryMap = categoryMap();
+			AutomataBuilder builder = createBuilder(categoryMap);
+			addTransitions(builder, categoryMap);
+			return builder.build();
+		} catch (InvalidStateException e) {
+			return null;
+		}
+	}
+
+	private AutomataBuilder createBuilder(
+			Map<Set<AutomataState>, String> categoryMap)
+			throws InvalidStateException {
 		AutomataBuilder builder = new AutomataBuilder(
 				new AutomataStructureGraphFactory());
-		return automata;
+		builder.addState("q0");
+		for (String val : categoryMap.values()) {
+			if (!val.equals("q0")) {
+				builder.addState(val);
+			}
+		}
+		return builder;
+	}
+
+	private void addTransitions(AutomataBuilder builder,
+			Map<Set<AutomataState>, String> categoryMap) {
+		try {
+			for (Entry<Set<AutomataState>, String> entry : categoryMap
+					.entrySet()) {
+				AutomataState state = null;
+				for (AutomataState magic : entry.getKey()) {
+					state = magic;
+					break;
+				}
+				if (state.accepts()) {
+					builder.markAcceptState(entry.getValue());
+				}
+				for (Entry<Character, Set<AutomataState>> transition : state
+						.getTransitions()) {
+					if (transition.getValue().size() > 0) {
+						AutomataState transitionedTo = null;
+						for (AutomataState magic : transition.getValue()) {
+							transitionedTo = magic;
+						}
+						builder.addTransition(entry.getValue(),
+								categoryMap.get(getCategory(transitionedTo)),
+								transition.getKey());
+					}
+				}
+			}
+		} catch (InvalidStateException | MissingStateException e) {
+			// Should not get here...
+			e.printStackTrace();
+		}
+	}
+
+	private Map<Set<AutomataState>, String> categoryMap() {
+		Map<Set<AutomataState>, String> categoryMap = new HashMap<>();
+		int id = 0;
+		categoryMap.put(getCategory(automata.initialState()), "q" + id);
+		id++;
+		for (Set<AutomataState> category : categories) {
+			if (!categoryMap.containsKey(category)) {
+				categoryMap.put(category, "q" + id);
+				id++;
+			}
+		}
+		return categoryMap;
 	}
 
 	private void removeEmptyCategory() {

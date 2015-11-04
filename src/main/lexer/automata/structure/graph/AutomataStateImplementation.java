@@ -148,7 +148,6 @@ class AutomataStateImplementation implements AutomataState {
 
 	@Override
 	public Set<Entry<Character,  Set<AutomataState>>> getTransitions() {
-		Set<Set<AutomataState>> retSet = new HashSet<>(nextStates.values());
 		return nextStates.entrySet();
 	}
 
