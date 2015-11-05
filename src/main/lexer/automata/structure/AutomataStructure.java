@@ -1,15 +1,13 @@
-package main.lexer.automata.structure;
-
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
+ * Copyright c 2015
  */
 
-
+package main.lexer.automata.structure;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.InitialStateMissingException;
@@ -97,7 +95,7 @@ public interface AutomataStructure {
 	 */
 	public Set<AutomataState> acceptStates();
 
-	
+
 	public void addTag(Integer stateValue, String tag) throws InvalidStateException;
 
 	public String tagOf(String input);

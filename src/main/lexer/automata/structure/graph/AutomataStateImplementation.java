@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata.structure.graph;
 
 import java.util.HashMap;
@@ -7,16 +16,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.NonDeterministicException;
-
-
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
- */
 
 /*
  * This class represents a state as a graph unit.
@@ -202,6 +201,7 @@ class AutomataStateImplementation implements AutomataState {
 		return name;
 	}
 
+	@Override
 	public Set<AutomataState> epslonTransitions() {
 		return statesByEpslon;
 	}
@@ -216,6 +216,7 @@ class AutomataStateImplementation implements AutomataState {
 		return tag;
 	}
 
+	@Override
 	public String tagOf(String input, int i) {
 		if(isLastCharacterOfWord(input, i)) {
 			return this.tag;

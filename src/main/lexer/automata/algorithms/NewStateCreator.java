@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata.algorithms;
 
 import java.util.HashMap;
@@ -7,16 +16,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.structure.graph.AutomataState;
-
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
- */
-
 
 /*
  * This class should be used by the convert to calculate the transitions for new states.

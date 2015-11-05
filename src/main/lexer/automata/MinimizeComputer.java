@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata;
 
 import java.util.HashMap;
@@ -6,6 +15,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import main.lexer.automata.Automata;
+import main.lexer.automata.AutomataSkeleton;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
@@ -195,7 +206,7 @@ public class MinimizeComputer {
 	private Set<AutomataState> getCategory(AutomataState state) {
 		return getCategory(state, categories);
 	}
-	
+
 	private Set<AutomataState> deadStateCategory() {
 		Set<AutomataState> empty = new HashSet<>();
 		for (Set<AutomataState> emptyChecker : categories) {

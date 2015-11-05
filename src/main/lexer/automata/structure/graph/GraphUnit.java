@@ -1,19 +1,17 @@
-package main.lexer.automata.structure.graph;
-
-import java.util.Set;
-
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright c 2015
  */
 
+package main.lexer.automata.structure.graph;
 
+import java.util.Set;
 /*
- * This represents a node.
+ * This class represents a node.
  */
 public interface GraphUnit {
 

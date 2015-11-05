@@ -1,19 +1,18 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata.structure.graph;
 
 import java.util.Map.Entry;
 import java.util.Set;
 
 import main.lexer.automata.exceptions.NonDeterministicException;
-
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
- */
-
 /*
  * This is an interface to be implement by the AutomataStateImplementation.
  */
@@ -46,7 +45,7 @@ public interface AutomataState extends GraphUnit {
 	 * @param sets set os states to calculate the epsolon closure.
 	 */
 	void epslonClosure(Set<AutomataState> sets);
-	
+
 	Set<AutomataState> epslonTransitions();
 
 	/*
@@ -79,14 +78,14 @@ public interface AutomataState extends GraphUnit {
 	 * Returns the ID of the state.
 	 */
 	public int stateID();
-	
+
 	/* Sets the tag of the state.
 	 */
 	public void setTag(String tag);
-	
+
 	/* Returns the tag which was set by the method setTag of this state. If no such tag was set, returns an empty String.
 	 */
 	public String getTag();
-	
+
 	String tagOf(String input, int i);
 }

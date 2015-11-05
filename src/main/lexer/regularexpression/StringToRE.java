@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.regularexpression;
 
 import java.util.HashMap;
@@ -9,16 +18,6 @@ import java.util.Stack;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
 public class StringToRE {
-
-	/*
-	 * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA
-	 * E ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
-	 *
-	 * @author LUCAS FINGER ROMAN
-	 *
-	 * @author RODRIGO PEDRO MARQUES Copyright � 2015
-	 */
-	
 	/*
 	 * I guess this is actually the worst, hardest to maintain class ever written by mankind...
 	 * Jesus
@@ -50,7 +49,7 @@ public class StringToRE {
 		modifiedInput = reverseInversedUnaryOperatores(modifiedInput);
 		String reversePol = reversePolishNotation(modifiedInput);
 		Stack<RegularExpression> resultStack = new Stack<>();
-		
+
 		for (int i = 0; i < reversePol.length(); i++) {
 			if (isLiteral(reversePol.charAt(i))) {
 				resultStack.push(RegularExpression.createRegularExpression(reversePol.charAt(i)));

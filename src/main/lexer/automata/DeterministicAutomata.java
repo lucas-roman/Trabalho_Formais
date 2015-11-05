@@ -1,18 +1,16 @@
-package main.lexer.automata;
-
-import main.lexer.automata.exceptions.DeterministicException;
-import main.lexer.automata.exceptions.NonDeterministicException;
-import main.lexer.automata.structure.AutomataStructure;
-
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
+ * Copyright c 2015
  */
 
+package main.lexer.automata;
+
+import main.lexer.automata.exceptions.DeterministicException;
+import main.lexer.automata.structure.AutomataStructure;
 
 /*
  * This class represents an deterministic automata.
@@ -29,11 +27,12 @@ public class DeterministicAutomata extends AutomataSkeleton{
 	public Automata convert() throws DeterministicException {
 		throw new DeterministicException();
 	}
-	
+
+	@Override
 	public String tagOfWord(String input) {
 		return stateImpl.tagOf(input);
 	}
-	
+
 
 
 

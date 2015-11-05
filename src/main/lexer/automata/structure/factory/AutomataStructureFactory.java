@@ -1,16 +1,15 @@
-package main.lexer.automata.structure.factory;
-
-import main.lexer.automata.structure.AutomataStructure;
-
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright c 2015
  */
 
+package main.lexer.automata.structure.factory;
+
+import main.lexer.automata.structure.AutomataStructure;
 /*
  * For each new structure for the automata, there should be a subclass
  * of this one that returns the correct structure.

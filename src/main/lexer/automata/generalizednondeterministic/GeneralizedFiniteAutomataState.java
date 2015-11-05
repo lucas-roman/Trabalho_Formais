@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata.generalizednondeterministic;
 
 import java.util.HashMap;
@@ -9,7 +18,6 @@ import java.util.Set;
 import main.lexer.regularexpression.RegularExpression;
 
 public class GeneralizedFiniteAutomataState implements GeneralizedFiniteAutomataStateInterface {
-
 	/*
 	 * Attributes of this class
 	 */
@@ -101,7 +109,7 @@ public class GeneralizedFiniteAutomataState implements GeneralizedFiniteAutomata
 	public void markAsAccept() {
 		accepts = true;
 	}
-	
+
 
 	public RegularExpression regularExpressionToState(
 			GeneralizedFiniteAutomataState acceptState) {

@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.grammar;
 
 import java.util.Collection;
@@ -18,15 +27,6 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 import main.lexer.grammar.exceptions.NonTerminalMissingException;
 import main.lexer.grammar.exceptions.StartSymbolMissingException;
 import main.lexer.grammar.exceptions.TerminalMissingException;
-
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
- */
 
 public class RegularGrammar {
 

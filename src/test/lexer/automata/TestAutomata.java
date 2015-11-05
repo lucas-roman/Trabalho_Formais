@@ -1,9 +1,17 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package test.lexer.automata;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.DeterministicAutomata;
 import main.lexer.automata.exceptions.DeterministicException;
@@ -18,10 +26,6 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 import main.lexer.regularexpression.RegularExpression;
 import main.lexer.regularexpression.StringToRE;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
 /*
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
@@ -219,7 +223,7 @@ public class TestAutomata {
 		for(AutomataState acceptState : aut.acceptStates()) {
 			acceptState.setTag("KEYWORD");
 		}
-		
+
 		re = StringToRE.stringToRE("(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z)+");
 		Automata other = re.createAutomata();
 		Assert.assertTrue(other.accepts("iff"));

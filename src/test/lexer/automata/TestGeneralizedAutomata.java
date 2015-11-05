@@ -1,6 +1,14 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package test.lexer.automata;
 
-import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
@@ -11,11 +19,9 @@ import main.lexer.automata.generalizednondeterministic.GeneralizedFiniteAutomata
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 import main.lexer.regularexpression.RegularExpression;
 
-import org.junit.Test;
-
 public class TestGeneralizedAutomata {
-	
-	
+
+
 	@Test
 	public void testConstructor() throws InvalidStateException, MissingStateException, InitialStateMissingException, IllegalAutomataException {
 		AutomataBuilder deterministicBuilder = new AutomataBuilder(

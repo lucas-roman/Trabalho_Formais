@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package test.lexer;
 
 import java.io.File;
@@ -5,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import junit.framework.Assert;
 import main.lexer.LanguageBuilder;
 import main.lexer.Lexema;
 import main.lexer.automata.Automata;
@@ -21,8 +29,6 @@ import main.lexer.model.commandline.exceptions.IllegalOrderOfTextStructure;
 import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
-
-import org.junit.Test;
 
 public class TestReader {
 

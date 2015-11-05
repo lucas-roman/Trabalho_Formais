@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata.factory;
 
 import java.util.HashMap;
@@ -13,16 +22,6 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.factory.AutomataStructureFactory;
-
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
- */
-
 
 /*
  * This class should be used to create automatas.
@@ -109,7 +108,7 @@ public class AutomataBuilder {
 		}
 		return new DeterministicAutomata(structure);
 	}
-	
+
 	public void addTagToState(String state, String tag) throws InvalidStateException {
 		Integer stateValue = stateId.get(state);
 		if(stateValue == null) {

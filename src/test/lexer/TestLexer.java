@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package test.lexer;
 
 import java.io.FileNotFoundException;
@@ -14,8 +23,6 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.model.commandline.TokenWriter;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
-
-import org.junit.Test;
 
 public class TestLexer {
 

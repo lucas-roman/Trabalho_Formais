@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata;
 
 import java.util.List;
@@ -11,15 +20,6 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
-
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
- * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
- * 
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES Copyright � 2015
- */
-
 /*
  * This class is used to represent automatas. It should have at least 2
  * subclasses: deterministic automata and non deterministic automata. Its usage
@@ -39,10 +39,10 @@ public interface Automata {
 
 	/* Returns the states of the automata. */
 	public Set<AutomataState> getStates();
-	
+
 	/* Returns the states of the automata which aren't accept states. */
 	public Set<AutomataState> notAcceptStates();
-	
+
 	public Set<Character> charForTransitions();
 
 	/* Returns the initial state of the automata. */
@@ -73,12 +73,12 @@ public interface Automata {
 	/* Returns an automata which recognizes the kleene star of the language recognized by this automata */
 	Automata kleene() throws InvalidStateException, MissingStateException,
 			InitialStateMissingException, IllegalAutomataException;
-	
+
 	/* Returns this automata minimized*/
 	Automata minimize() throws InitialStateMissingException, IllegalAutomataException;
-	
+
 	void addTagOrder(List<String> order);
-	
+
 	String tagOfWord(String input) throws NonDeterministicException;
-	
+
 }

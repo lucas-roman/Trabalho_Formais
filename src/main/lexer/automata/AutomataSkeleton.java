@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata;
 
 import java.util.ArrayList;
@@ -15,29 +24,21 @@ import main.lexer.automata.structure.AutomataStructure;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
- * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
- * 
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES Copyright � 2015
- */
-
 /*
  * This class represents part of the structure of an automata.
  */
 public abstract class AutomataSkeleton implements Automata {
 
 	protected AutomataStructure stateImpl;
-	
+
 	protected List<String> tagOrder = new ArrayList<>();
 
 	private Set<Character> charTrans;
-	
+
 	public AutomataSkeleton(AutomataStructure stateManager) {
 		stateImpl = stateManager;
 	}
-	
+
 	@Override
 	public AutomataState initialState() {
 		return stateImpl.automataInitialState();
@@ -57,7 +58,8 @@ public abstract class AutomataSkeleton implements Automata {
 	public Set<AutomataState> acceptStates() {
 		return stateImpl.acceptStates();
 	}
-	
+
+	@Override
 	public void addTagOrder(List<String> order) {
 		tagOrder = order;
 		Set<String> stateTags = new HashSet<>();
@@ -71,7 +73,8 @@ public abstract class AutomataSkeleton implements Automata {
 	public int size() {
 		return getStates().size();
 	}
-	
+
+	@Override
 	public Automata minimize() throws InitialStateMissingException, IllegalAutomataException  {
 		return new MinimizeComputer(this).compute();
 	}
@@ -110,6 +113,7 @@ public abstract class AutomataSkeleton implements Automata {
 
 	}
 
+	@Override
 	public Set<Character> charForTransitions() {
 		if (charTrans == null) {
 			charTrans = new HashSet<>();
@@ -184,6 +188,7 @@ public abstract class AutomataSkeleton implements Automata {
 		return builder.build();
 	}
 
+	@Override
 	public Set<AutomataState> notAcceptStates() {
 		Set<AutomataState> returnSet = new HashSet<>();
 		for (AutomataState state : getStates()) {
@@ -194,6 +199,7 @@ public abstract class AutomataSkeleton implements Automata {
 		return returnSet;
 	}
 
+	@Override
 	public void decomposeAutomataIntoBuilder(AutomataBuilder builder)
 			throws InvalidStateException {
 		int index = builder.currentID();

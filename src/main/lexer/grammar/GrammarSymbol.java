@@ -1,13 +1,13 @@
-package main.lexer.grammar;
-
 /**
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORMÁTICA E ESTATÍSTICA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
  * LINGUAGENS FORMAIS E COMPILADORES
  * @author LUCAS FINGER ROMAN
  * @author RODRIGO PEDRO MARQUES
- * Copyright © 2015
+ * Copyright c 2015
  */
+
+package main.lexer.grammar;
 
 public interface GrammarSymbol {
 	public String getSymbolValue();

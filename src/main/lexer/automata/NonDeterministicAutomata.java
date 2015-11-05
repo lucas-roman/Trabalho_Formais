@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata;
 
 import main.lexer.automata.algorithms.ConvertNonDeterministicDeterministic;
@@ -8,26 +17,16 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.automata.structure.AutomataStructure;
 
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
- */
-
-
 /*
  * This class represents an non deterministic automata.
  * This is what you get when you convert a grammar, for example.
  * Should always become a Deterministic Automata.
  */
 public class NonDeterministicAutomata extends AutomataSkeleton {
-	
-	
-	
-	
+
+
+
+
 	/* Creates a Non Deterministic Automata from the given structure.
 	 * */
 	public NonDeterministicAutomata(AutomataStructure struct)  {
@@ -53,12 +52,13 @@ public class NonDeterministicAutomata extends AutomataSkeleton {
 			return new ConvertNonDeterministicDeterministic(this);
 		return new ConvertNonDeterministicDeterministic(this, tagOrder);
 	}
-	
 
+
+	@Override
 	public String tagOfWord(String input) throws NonDeterministicException {
 		throw new NonDeterministicException();
 	}
 
-	
+
 
 }

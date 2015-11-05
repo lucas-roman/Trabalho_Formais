@@ -1,6 +1,14 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package test.lexer.automata.factory;
 
-import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.DeterministicAutomata;
 import main.lexer.automata.NonDeterministicAutomata;
@@ -11,20 +19,6 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA
- * INE - DEPARTAMENTO DE INFORM�TICA E ESTAT�STICA
- * LINGUAGENS FORMAIS E COMPILADORES
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES
- * Copyright � 2015
- */
-
 public class TestAutomataBuilder {
 
 	private AutomataBuilder deterministicAutomataBuilder;

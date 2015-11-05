@@ -1,4 +1,15 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package test.lexer.regularexpression;
+
+import org.junit.Test;
 
 import junit.framework.Assert;
 import main.lexer.automata.Automata;
@@ -11,16 +22,6 @@ import main.lexer.automata.exceptions.OverrideInitialStateException;
 import main.lexer.regularexpression.RegularExpression;
 import main.lexer.regularexpression.StringToRE;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
-
-import org.junit.Test;
-
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
- * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
- * 
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES Copyright � 2015
- */
 
 public class TestRegularExpression {
 

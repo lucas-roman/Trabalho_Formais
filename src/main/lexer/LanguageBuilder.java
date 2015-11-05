@@ -1,8 +1,18 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import main.lexer.Lexema;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
@@ -34,7 +44,7 @@ public class LanguageBuilder {
 			try {
 				other = other.convert();
 			} catch (DeterministicException e) {
-			} 
+			}
 			other = other.minimize();
 			for(AutomataState acceptState : other.acceptStates()) {
 				acceptState.setTag(lex.getTag());

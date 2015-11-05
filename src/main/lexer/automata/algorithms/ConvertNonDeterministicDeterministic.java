@@ -1,3 +1,12 @@
+/**
+ * UNIVERSIDADE FEDERAL DE SANTA CATARINA
+ * INE - DEPARTAMENTO DE INFORMATICA E ESTATISTICA
+ * LINGUAGENS FORMAIS E COMPILADORES
+ * @author LUCAS FINGER ROMAN
+ * @author RODRIGO PEDRO MARQUES
+ * Copyright c 2015
+ */
+
 package main.lexer.automata.algorithms;
 
 import java.util.ArrayList;
@@ -18,14 +27,6 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 
-/**
- * UNIVERSIDADE FEDERAL DE SANTA CATARINA INE - DEPARTAMENTO DE INFORM�TICA E
- * ESTAT�STICA LINGUAGENS FORMAIS E COMPILADORES
- * 
- * @author LUCAS FINGER ROMAN
- * @author RODRIGO PEDRO MARQUES Copyright � 2015
- */
-
 /*
  * This class converts a non deterministic automata to a deterministic automata.
  */
@@ -42,7 +43,7 @@ public class ConvertNonDeterministicDeterministic {
 
 	/*
 	 * Calculates the new automata.
-	 * 
+	 *
 	 * @param nonDeterministic is the automata that is going to be converted to
 	 * a deterministic automata.
 	 */
@@ -68,7 +69,7 @@ public class ConvertNonDeterministicDeterministic {
 
 	/*
 	 * It calculates the new states of the new deterministic automata.
-	 * 
+	 *
 	 * @param state Set of state of the nonDeterministicAutomata.
 	 */
 	private void calculateStates(Set<AutomataState> state) {
@@ -100,7 +101,7 @@ public class ConvertNonDeterministicDeterministic {
 
 	/*
 	 * It adds an missing state to the set of states.
-	 * 
+	 *
 	 * @param state Set of states that is going to receive the missing state.
 	 */
 	private void addStateIfAbsent(Set<AutomataState> state)
@@ -114,7 +115,7 @@ public class ConvertNonDeterministicDeterministic {
 	/*
 	 * It creates the initial state of the automata and it adds to the 'states'
 	 * of this class.
-	 * 
+	 *
 	 * @param state Set of states of the nonDeterministicAutomata.
 	 */
 	private void calculateInitState(Set<AutomataState> state) {
