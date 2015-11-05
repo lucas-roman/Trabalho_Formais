@@ -31,7 +31,10 @@ public class LanguageBuilder {
 			order.add(lex.getTag());
 			Automata other = lex.automataForLexema();
 			//Convert and minimize for each lexema
-			other = other.convert(); 
+			try {
+				other = other.convert();
+			} catch (DeterministicException e) {
+			} 
 			other = other.minimize();
 			for(AutomataState acceptState : other.acceptStates()) {
 				acceptState.setTag(lex.getTag());

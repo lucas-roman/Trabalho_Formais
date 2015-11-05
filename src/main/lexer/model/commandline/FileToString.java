@@ -27,8 +27,11 @@ public class FileToString {
 
 			while(scan.hasNextLine()){
 				String[] thisLine = this.scan.nextLine().split(" ");
-				for(String newWord : thisLine)
-					this.returnList.add(newWord);
+				for(String newWord : thisLine) {
+					newWord = newWord.trim();
+					if(newWord.length() > 0)
+						this.returnList.add(newWord);
+				}
 			}
 
 		} catch (FileNotFoundException e) {
