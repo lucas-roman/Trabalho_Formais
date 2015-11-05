@@ -1,0 +1,86 @@
+• MANUAL PARA A LINGUAGEM PIKACHU.ash:
+
+	A linguagem pikachu.ash pode ser encontrada no caminho: /Trabalho_Formais/lang/pikachu.ash.
+	
+	- Todo programa deve ter a seguinte estrutura:
+	
+		program nome_do_programa begin
+		    corpo do programa
+		.
+	
+	O corpo do programa deve conter funcoes que poderao ser chamadas pelo programa.
+	Tudo que nao estiver dentro do corpo de funcao sera considerado como um metodo main.
+	
+	- Funcoes podem ser declaradas da seguinte forma:
+	
+		funct TYPE nome_da_funcao ( param1 , param2 , param3 ) begin
+		    corpo da funcao
+		end
+	
+	- Utilizando as construcoes da linguagem:
+	
+	As palavras begin e end servem para abrir e fechar os blocos respectivamente.
+		if => if ( condicao ) begin
+		          corpo do if
+		      end
+		
+		if else => if ( condicao) begin
+		               corpo do if
+		           else
+		               corpo do else
+		           end
+	
+		for => for ( int ID = NUMBER|ID to NUMBER|ID ) begin
+		           corpo do for
+		       end
+	
+		while => while ( cond ) begin
+		             corpo do while
+		         end
+	
+		read => read ( "filename" ) ;
+	
+		write => write ( "filename" , ID|STRING ) ;
+	
+	- Constantes booleanas:
+		true e false.
+	
+	- Comparacoes booleanas:
+		== <= >= < > not and or != 
+	
+	- Tipos:
+		int, char, bool, float, string.
+		OBS: A implementar: RE que reconheca float.
+			
+	- = => assign
+	
+	- Numeros:
+		0 ou qualquer numero de 1 ou mais digitos que nao comece com 0.
+	
+	- IDs podem ser construidos comecando por _ ou qualquer letra, seguidos 
+	  de letras ou _ ou numeros.
+	
+	- Operadores matematicos:
+		+ - * /
+	
+	- Arrays:
+		Tipos seguidos de 1 ou mais colchetes [].
+		OBS: Arrays em si sao outros tipos.
+	
+	- Sobre as construcoes da linguagem:
+	
+			Os Tokens deverao ser separados por espacos em brancos nessa versao da 
+		linguagem. Por exemplo: funct myFunct(int x) begin deve ser construida assim
+		funct myFunct ( int x ) begin
+		
+		Todo statement, a nao ser aquele que seja . ou seja abertura ou fechamento
+		de bloco (statements declarativos) devem ter um ponto e virgula no final.
+	
+	- Sobre constantes de STRING:
+	
+			Do jeito que os tokens estao sendo passados para o analisador,
+		o programa nao aceita strings com espacos no meio, pois na hora de passar os tokens
+		o INPUT esta quebrando o programa em espacos em branco. Isto sera melhorado mais adiante.
+		Caracteres aceitos em constantes de String: qualquer letrado alfabeto ingles ou _ ou 
+		qualquer numero ou . ou + ou - ou * ou / ou ?.
+		Esses problemas serao corrigidos em versoes futuras.
