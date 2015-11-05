@@ -3,6 +3,7 @@ package main.lexer.model.commandline.main;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Scanner;
 
 import main.lexer.LexicalAnalyzer;
 import main.lexer.LexicalToken;
@@ -12,10 +13,10 @@ import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.model.commandline.TokenWriter;
+import main.lexer.model.commandline.exceptions.IllegalOrderOfTextStructure;
+import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
-import main.model.commandline.fileutils.exceptions.IllegalOrderOfTextStructure;
-import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
 
 public class Main {
 
@@ -38,14 +39,35 @@ public class Main {
 						.println("Printing analyze result to file: analyze.out");
 				TokenWriter writer = new TokenWriter("analyze.out");
 				writer.writeToken(tokens);
+				System.exit(0);
 			} catch (InvalidStateException | IllegalStartOfText
 					| IllegalOrderOfTextStructure | MissingStateException
 					| InitialStateMissingException | IllegalAutomataException e) {
 				System.err.println("Unexpected error. Aborting...");
 				System.exit(1);
 			} catch (FileNotFoundException e) {
-				System.err.println("Couldn't find file. Aborting...");
-				System.exit(1);
+				System.out.println("Couldn't find file lang.aut. Please supply path to language file.");
+				Scanner scan = new Scanner(System.in);
+				try {
+					LexicalAnalyzer analyzer = new LexicalAnalyzer(args[0], scan.nextLine());
+					List<LexicalToken> tokens = analyzer.analyze();
+					System.out
+							.println("Printing analyze result to file: analyze.out");
+					TokenWriter writer = new TokenWriter("analyze.out");
+					writer.writeToken(tokens);
+					System.exit(0);
+				} catch (FileNotFoundException | UnsupportedEncodingException
+						| IllegalStructureOfText
+						| IllegalRegularExpressionException
+						| MissingStateException | InvalidStateException
+						| InitialStateMissingException
+						| IllegalAutomataException | DeterministicException e1) {
+					System.err.println("Unexpected error. Aborting...");
+					System.exit(1);
+				}
+				finally {
+					scan.close();
+				}
 			}
 			break;
 		default:
@@ -60,11 +82,13 @@ public class Main {
 						.println("Printing analyze result to file: analyze.out");
 				TokenWriter writer = new TokenWriter("analyze.out");
 				writer.writeToken(tokens);
-			} catch (FileNotFoundException | UnsupportedEncodingException
+				System.exit(0);
+			} catch (UnsupportedEncodingException
 					| IllegalStructureOfText
 					| IllegalRegularExpressionException | MissingStateException
 					| InvalidStateException | InitialStateMissingException
-					| IllegalAutomataException | DeterministicException e) {
+					| IllegalAutomataException | DeterministicException | FileNotFoundException e) {
+				e.printStackTrace();
 				System.err.println("Unexpected error. Aborting...");
 				System.exit(1);
 			}

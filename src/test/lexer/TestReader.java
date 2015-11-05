@@ -6,7 +6,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import junit.framework.Assert;
-
 import main.lexer.LanguageBuilder;
 import main.lexer.Lexema;
 import main.lexer.automata.Automata;
@@ -17,12 +16,11 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.model.commandline.AutomataIO;
-import main.lexer.model.commandline.FileToString;
 import main.lexer.model.commandline.LangReader;
+import main.lexer.model.commandline.exceptions.IllegalOrderOfTextStructure;
+import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
-import main.model.commandline.fileutils.exceptions.IllegalOrderOfTextStructure;
-import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
 
 import org.junit.Test;
 

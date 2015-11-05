@@ -16,10 +16,10 @@ import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.model.commandline.AutomataIO;
 import main.lexer.model.commandline.FileToString;
 import main.lexer.model.commandline.LangReader;
+import main.lexer.model.commandline.exceptions.IllegalOrderOfTextStructure;
+import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
-import main.model.commandline.fileutils.exceptions.IllegalOrderOfTextStructure;
-import main.model.commandline.fileutils.exceptions.IllegalStartOfText;
 
 public class LexicalAnalyzer {
 
@@ -49,7 +49,7 @@ public class LexicalAnalyzer {
 	public LexicalAnalyzer(String fileName) throws InvalidStateException,
 			IllegalStartOfText, IllegalOrderOfTextStructure,
 			MissingStateException, InitialStateMissingException,
-			IllegalAutomataException {
+			IllegalAutomataException, FileNotFoundException {
 		this.fileContents = new FileToString().readFile(new File(fileName));
 		AutomataIO autIO = new AutomataIO();
 		this.analyzer = autIO.readAutomata(new File("lang.aut"));
