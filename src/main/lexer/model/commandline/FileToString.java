@@ -11,28 +11,24 @@ package main.lexer.model.commandline;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
-class FileToString {
+public class FileToString {
 	private Scanner scan;
-	private Set<String> stringsSet;
+	private List<String> returnList = new ArrayList<>();
 
-	public FileToString(){
 
-	}
-
-	protected Set<String> readFile (File file){
+	public List<String> readFile (File file){
 		File aux_file = file;
 		try{
 			this.scan = new Scanner(aux_file);
 
 			while(scan.hasNextLine()){
-				Scanner aux_scan = new Scanner(this.scan.nextLine());
-				while(aux_scan.hasNext()){
-					String newWord = aux_scan.next();
-					this.stringsSet.add(newWord);
-				}
+				String[] thisLine = this.scan.nextLine().split(" ");
+				for(String newWord : thisLine)
+					this.returnList.add(newWord);
 			}
 
 		} catch (FileNotFoundException e) {
@@ -40,6 +36,6 @@ class FileToString {
 			e.printStackTrace();
 		}
 		this.scan.close();
-		return this.stringsSet;
+		return this.returnList;
 	}
 }

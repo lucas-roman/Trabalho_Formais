@@ -140,11 +140,7 @@ public class StringToRE {
 					partResult += modifiedInput.charAt(i);
 					partResult += result.substring(j, i);
 					result = partResult;
-<<<<<<< HEAD
 				}
-=======
-				} 
->>>>>>> origin/Editing_PikachuFiles
 				else if(previousChar != '\\' && reverseOnSlash) {
 					String partResult = result.substring(0, i - 2);
 					partResult += modifiedInput.charAt(i);
@@ -206,13 +202,10 @@ public class StringToRE {
 						wasValid = false;
 						result += '.';
 					}
-<<<<<<< HEAD
 
 				}
 				if(wasValid) {
 					wasValid = false;
-=======
->>>>>>> origin/Editing_PikachuFiles
 				}
 			}
 			result += c;

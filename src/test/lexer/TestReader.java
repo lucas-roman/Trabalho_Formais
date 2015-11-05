@@ -17,6 +17,7 @@ import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
 import main.lexer.model.commandline.AutomataIO;
+import main.lexer.model.commandline.FileToString;
 import main.lexer.model.commandline.LangReader;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
