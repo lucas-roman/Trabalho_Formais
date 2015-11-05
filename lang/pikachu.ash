@@ -1,5 +1,5 @@
 KEYWORD
-program|end|if|else|while|and|or|not|true|false|read|write
+begin|program|end|if|else|while|and|or|not|true|false|read|write
 
 TYPE
 int|string|double|char
