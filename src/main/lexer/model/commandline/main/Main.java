@@ -65,7 +65,6 @@ public class Main {
 					| IllegalRegularExpressionException | MissingStateException
 					| InvalidStateException | InitialStateMissingException
 					| IllegalAutomataException | DeterministicException e) {
-				e.printStackTrace();
 				System.err.println("Unexpected error. Aborting...");
 				System.exit(1);
 			}
