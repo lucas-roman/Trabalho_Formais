@@ -51,8 +51,8 @@ public class Main {
 		default:
 			System.out.println("Reading language from file : " + args[1]);
 			System.out
-					.println("Writing automata to : lang.aut. To use same language, please");
-			System.out.println("call this program with only one argument.");
+					.println("Writing automata to : lang.aut. To use same language, please call this program with only " +
+							"one argument.");
 			try {
 				LexicalAnalyzer analyzer = new LexicalAnalyzer(args[0], args[1]);
 				List<LexicalToken> tokens = analyzer.analyze();
@@ -70,5 +70,4 @@ public class Main {
 			}
 		}
 	}
-
 }
