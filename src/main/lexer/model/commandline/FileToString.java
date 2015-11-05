@@ -33,6 +33,7 @@ class FileToString {
 					String newWord = aux_scan.next();
 					this.stringsSet.add(newWord);
 				}
+				aux_scan.close();
 			}
 
 		} catch (FileNotFoundException e) {
