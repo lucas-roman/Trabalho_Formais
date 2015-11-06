@@ -55,11 +55,58 @@
 	Os algoritmos são explicados brevemente na interface /Trabalho_Formais/src/main/lexer/automata/Automata.java.
 	
 	A classe principal se encontra em: /Trabalho_Formais/src/main/lexer/model/commandline/main/Main.java.
-	Na classe main foi dada uma breve explicação de como rodar o programa.
 	
 	- Sistemas de TAGS:
-		Explicar aqui.
+		Os estados são marcados com tags. Assim, quando uma palavra for lida pelo autômato, o estado que ele estiver depois de ter a entrada toda lida terá seu tag como a categoria
+                da palavra segundo o autômato. Para implementar isso, foram usados os seguintes conceitos:
+                1 - Na união:
+                    Cada estado de aceitação do autômato resultante terá o mesmo tag que ele tinha antes da união no seu antigo autômato.
+                2 - Na concatenação:
+                    Os estados do autômato à esquerda não recebem tags. Os estados do autômato da direita recebem como tag o valor anterior.
+                3 - No fechamento:
+                    Os estados mantém suas tags.
+                4 - Na conversão de não determinístico para determinístico:
+                    Como cada estado do autômato finito determinístico resultante é igual a um conjunto de estados do autômato finito não determinístico, a tag do novo estado será
+                    igual à tag com maior precedência dentre todas as tags dos estados do autômato não determinístico que está sendo convertido.
+                    Exemplo:
+                        Tag(q3) = IF
+                        Tag(q4) = ID
+                        Tag(q3,q4) = IF, pois na lista de entrada IF tem uma precedência maior que ID.
+                - Lista de entrada:
+                	Definida no arquivo da linguagem da seguinte forma: as expressões regulares que são definidas mais acima no arquivo tem uma precedência maior que as definidas
+                        mais abaixo.
+		Todos os estados que não tiverem são aceitadores receberão a tag ERROR. Se o estado não possui transição pela próxima letra, a tag resultante será ERROR.
 	
+
+- USANDO O PROGRAMA
+
+	Para usar o programa, é necessário chamá-lo pela linha de comando da seguinte forma
+        
+	java -jar AnalisadorLexico.jar 
+
+	O programa aceita 2 argumentos, sendo o primeiro obrigatório e o segundo opcional. São eles:
+
+	1 - O arquivo a ter a estrutura analisada. Se for chamado sozinho, o programa então criará um autômato para reconhecer a linguagem através do arquivo lang.aut
+            Se o arquivo não existir, o programa pedirá que seja entrado o caminho para o arquivo que descreve a linguagem. No caso do trabalho, este arquivo é ./lang/pikachu.ash
+        2 - O arquivo que contém a estrutura da linguagem a ser usada para analisar o fonte.
+
+- CONSTRUINDO A LINGUAGEM
+
+	O arquivo que define a linguagem deve estar organizado da seguinte forma:
+	TAG1
+	EXPRESSÃO REGULAR QUE RECONHECE A TAG1
+	
+	TAG2
+	EXPRESSÃO REGULAR QUE RECONHECE A TAG2
+
+        ...
+
+        TAGN
+	EXPRESSÃO REGULAR QUE RECONHECE A TAGN
+
+	Pode haver linhas em branco entre a declaração dos blocos TAG EXPRESSÃOREGULAR, mas não no meio deste. Em caso de conflito entre as tags de diferentes expressões regulares, 
+        a tag resultante será a que foi declarada mais acima no arquivo.
+
 
 • MANUAL PARA A LINGUAGEM PIKACHU.ash:
 
