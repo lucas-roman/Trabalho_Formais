@@ -55,6 +55,12 @@ write
 TYPE
 (int|string|float|char|bool)((\[\])*)
 
+LEFTBRACKET
+\[
+
+RIGHTBRACKET
+\]
+
 PERIOD
 \.
 
