@@ -12,7 +12,6 @@ package main.lexer;
 public class LexicalToken {
 
 	private String tag;
-
 	private String wordRead;
 
 	public LexicalToken(String tag, String wordRead) {
@@ -27,5 +26,4 @@ public class LexicalToken {
 	public String getWord() {
 		return wordRead;
 	}
-
 }

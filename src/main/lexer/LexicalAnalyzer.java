@@ -30,6 +30,11 @@ import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
+/*
+ * This class makes the Lexical Analysis. It receives the path of a file that contains the language
+ * and tokenizes it. The result will be an list of tokens of the language.
+ * Basically this class does the magic happen.
+ */
 public class LexicalAnalyzer {
 
 	private List<String> fileContents;
@@ -40,12 +45,8 @@ public class LexicalAnalyzer {
 		this.analyzer = analyzer;
 	}
 
-	public LexicalAnalyzer(String fileName, String langSpecificationFile)
-			throws IllegalStructureOfText, IllegalRegularExpressionException,
-			MissingStateException, InvalidStateException,
-			InitialStateMissingException, IllegalAutomataException,
-			DeterministicException, FileNotFoundException,
-			UnsupportedEncodingException {
+	public LexicalAnalyzer(String fileName, String langSpecificationFile) throws IllegalStructureOfText, IllegalRegularExpressionException, MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException,
+			DeterministicException, FileNotFoundException, UnsupportedEncodingException {
 		this.fileContents = new FileToString().readFile(new File(fileName));
 		LangReader reader = new LangReader();
 		List<Lexema> lex = reader.readFile(new File(langSpecificationFile));
@@ -55,9 +56,7 @@ public class LexicalAnalyzer {
 		autIO.writeAutomata(analyzer, "lang.aut");
 	}
 
-	public LexicalAnalyzer(String fileName) throws InvalidStateException,
-			IllegalStartOfText, IllegalOrderOfTextStructure,
-			MissingStateException, InitialStateMissingException,
+	public LexicalAnalyzer(String fileName) throws InvalidStateException, IllegalStartOfText, IllegalOrderOfTextStructure, MissingStateException, InitialStateMissingException,
 			IllegalAutomataException, FileNotFoundException {
 		this.fileContents = new FileToString().readFile(new File(fileName));
 		AutomataIO autIO = new AutomataIO();
@@ -68,8 +67,7 @@ public class LexicalAnalyzer {
 		List<LexicalToken> returnList = new ArrayList<>();
 		for (String word : fileContents) {
 			try {
-				returnList
-						.add(new LexicalToken(analyzer.tagOfWord(word), word));
+				returnList.add(new LexicalToken(analyzer.tagOfWord(word), word));
 			} catch (NonDeterministicException e) {
 				// It never happens
 			}

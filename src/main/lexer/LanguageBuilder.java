@@ -22,6 +22,13 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.regularexpression.RegularExpression;
 
+/*
+ * This class is reponsible for building a language.
+ * It receives a list of lexemas and then convert it to an automata and then
+ * it minimizes it. At the end of each minimization, it makes the union
+ * of the new automata with the previous.
+ * After that, the automata of the language is returned.
+ */
 public class LanguageBuilder {
 
 	private List<Lexema> lexemas;
@@ -30,12 +37,9 @@ public class LanguageBuilder {
 		this.lexemas = lexemas;
 	}
 
-	public Automata lexicalAutomata() throws MissingStateException,
-			InvalidStateException, InitialStateMissingException,
-			IllegalAutomataException, DeterministicException {
+	public Automata lexicalAutomata() throws MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException, DeterministicException {
 		List<String> order = new ArrayList<>();
-		RegularExpression baseReg = RegularExpression
-				.emptySetRegularExpression();
+		RegularExpression baseReg = RegularExpression.emptySetRegularExpression();
 		Automata returnAutomata = baseReg.createAutomata();
 		for (Lexema lex : lexemas) {
 			order.add(lex.getTag());
@@ -60,5 +64,4 @@ public class LanguageBuilder {
 		}
 		return returnAutomata;
 	}
-
 }

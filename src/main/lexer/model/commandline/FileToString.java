@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/*
+ * This class is responsible for reading a file and returns a list of strings
+ * containing all the words from the given file.
+ */
 public class FileToString {
 	private Scanner scan;
 	private List<String> returnList = new ArrayList<>();

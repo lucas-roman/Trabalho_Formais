@@ -15,6 +15,9 @@ import java.util.List;
 
 import main.lexer.LexicalToken;
 
+/*
+ * This class is responsible for writing tokens to a given file.
+ */
 public class TokenWriter {
 
 	private String fileName;

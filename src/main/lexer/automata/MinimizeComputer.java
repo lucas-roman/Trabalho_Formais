@@ -15,8 +15,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import main.lexer.automata.Automata;
-import main.lexer.automata.AutomataSkeleton;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
@@ -25,6 +23,11 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
+
+/*
+ * This class is responsible for minimizing an given automata.
+ * The principle followed here was saw in class.
+ */
 
 public class MinimizeComputer {
 
@@ -52,8 +55,7 @@ public class MinimizeComputer {
 		categories.add(new HashSet<AutomataState>());
 	}
 
-	public Automata compute() throws InitialStateMissingException,
-			IllegalAutomataException {
+	public Automata compute() throws InitialStateMissingException, IllegalAutomataException {
 		try {
 			calculateCategories();
 			removeEmptyCategory();
@@ -66,11 +68,8 @@ public class MinimizeComputer {
 		}
 	}
 
-	private AutomataBuilder createBuilder(
-			Map<Set<AutomataState>, String> categoryMap)
-			throws InvalidStateException {
-		AutomataBuilder builder = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
+	private AutomataBuilder createBuilder(Map<Set<AutomataState>, String> categoryMap) throws InvalidStateException {
+		AutomataBuilder builder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		builder.addState("q0");
 		for (String val : categoryMap.values()) {
 			if (!val.equals("q0")) {
@@ -80,11 +79,9 @@ public class MinimizeComputer {
 		return builder;
 	}
 
-	private void addTransitions(AutomataBuilder builder,
-			Map<Set<AutomataState>, String> categoryMap) {
+	private void addTransitions(AutomataBuilder builder, Map<Set<AutomataState>, String> categoryMap) {
 		try {
-			for (Entry<Set<AutomataState>, String> entry : categoryMap
-					.entrySet()) {
+			for (Entry<Set<AutomataState>, String> entry : categoryMap.entrySet()) {
 				AutomataState state = null;
 				for (AutomataState magic : entry.getKey()) {
 					state = magic;
@@ -93,21 +90,18 @@ public class MinimizeComputer {
 				if (state.accepts()) {
 					builder.markAcceptState(entry.getValue());
 				}
-				for (Entry<Character, Set<AutomataState>> transition : state
-						.getTransitions()) {
+				for (Entry<Character, Set<AutomataState>> transition : state.getTransitions()) {
 					if (transition.getValue().size() > 0) {
 						AutomataState transitionedTo = null;
 						for (AutomataState magic : transition.getValue()) {
 							transitionedTo = magic;
 						}
-						builder.addTransition(entry.getValue(),
-								categoryMap.get(getCategory(transitionedTo)),
-								transition.getKey());
+						builder.addTransition(entry.getValue(),categoryMap.get(getCategory(transitionedTo)),transition.getKey());
 					}
 				}
 			}
 		} catch (InvalidStateException | MissingStateException e) {
-			// Should not get here...
+			// It should not get here...
 			e.printStackTrace();
 		}
 	}
@@ -131,8 +125,7 @@ public class MinimizeComputer {
 	}
 
 	private void calculateCategories() {
-		while (!lastIterationForCategory())
-			;
+		while (!lastIterationForCategory());
 	}
 
 	private boolean lastIterationForCategory() {
@@ -147,13 +140,10 @@ public class MinimizeComputer {
 						pointed = getCategoryOfNextState(state, character);
 					}
 					if (pointed != getCategoryOfNextState(state, character)) {
-						if (!temp.containsKey(getCategoryOfNextState(state,
-								character))) {
-							temp.put(getCategoryOfNextState(state, character),
-									new HashSet<AutomataState>());
+						if (!temp.containsKey(getCategoryOfNextState(state,character))) {
+							temp.put(getCategoryOfNextState(state, character), new HashSet<AutomataState>());
 						}
-						temp.get(getCategoryOfNextState(state, character)).add(
-								state);
+						temp.get(getCategoryOfNextState(state, character)).add(state);
 					}
 				}
 				newCategories.addAll(temp.values());
@@ -175,8 +165,7 @@ public class MinimizeComputer {
 		}
 	}
 
-	private AutomataState getNextStateByCharacter(AutomataState state,
-			char character) {
+	private AutomataState getNextStateByCharacter(AutomataState state, char character) {
 		if (!state.nextState(character).isEmpty())
 			for (AutomataState magic : state.nextState(character)) {
 				return magic;
@@ -184,8 +173,7 @@ public class MinimizeComputer {
 		return null;
 	}
 
-	private Set<AutomataState> getCategoryOfNextState(AutomataState state,
-			char character) {
+	private Set<AutomataState> getCategoryOfNextState(AutomataState state, char character) {
 		AutomataState nextState = getNextStateByCharacter(state, character);
 		if(nextState != null) {
 			return getCategory(nextState);
@@ -193,8 +181,7 @@ public class MinimizeComputer {
 		return deadStateCategory();
 	}
 
-	private Set<AutomataState> getCategory(AutomataState state,
-			Set<Set<AutomataState>> cat) {
+	private Set<AutomataState> getCategory(AutomataState state, Set<Set<AutomataState>> cat) {
 		for (Set<AutomataState> set : cat) {
 			if (set.contains(state)) {
 				return set;

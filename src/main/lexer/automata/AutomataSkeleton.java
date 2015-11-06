@@ -243,5 +243,4 @@ public abstract class AutomataSkeleton implements Automata {
 			build.addState(state.stateID() + lastID + "");
 		}
 	}
-
 }

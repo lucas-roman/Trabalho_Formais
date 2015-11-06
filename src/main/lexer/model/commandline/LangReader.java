@@ -19,6 +19,9 @@ import main.lexer.Lexema;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
+/*
+ * This class is responsible for read a language file and then creates the lexemas.
+ */
 public class LangReader {
 
 	private Scanner scan;
@@ -55,20 +58,6 @@ public class LangReader {
 				}
 				aux = scan.nextLine();
 				aux = aux.trim();
-				/*if (Character.isUpperCase(aux.charAt(0))){
-					String tag = aux;
-					aux = this.scan.nextLine();
-					while (checker.length() == 0) {
-						aux = this.scan.nextLine();
-						checker = aux.trim();
-					}
-					aux.trim();
-					String re = aux;
-					lexemas.add(new Lexema(tag, re));
-				} else {
-					throw new IllegalStructureOfText();
-				}
-				*/
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println("Error: File not found! Try again.");

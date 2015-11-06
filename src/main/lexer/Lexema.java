@@ -18,25 +18,25 @@ import main.lexer.regularexpression.RegularExpression;
 import main.lexer.regularexpression.StringToRE;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
+
+/*
+ * This class represents and lexema that has an TAG and a REGULAR EXPRESSION.
+ */
 public class Lexema {
 
 	private RegularExpression regularExpression;
 	private String tag;
 
-	public Lexema(String tag, String regularExpression)
-			throws IllegalRegularExpressionException {
+	public Lexema(String tag, String regularExpression) throws IllegalRegularExpressionException {
 		this.regularExpression = StringToRE.stringToRE(regularExpression);
 		this.tag = tag;
 	}
 
-	public Automata automataForLexema() throws MissingStateException,
-			InvalidStateException, InitialStateMissingException,
-			IllegalAutomataException {
+	public Automata automataForLexema() throws MissingStateException, InvalidStateException, InitialStateMissingException, IllegalAutomataException {
 		return regularExpression.createAutomata();
 	}
 
 	public String getTag() {
 		return tag;
 	}
-
 }

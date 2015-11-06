@@ -28,17 +28,18 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 import main.lexer.model.commandline.exceptions.IllegalOrderOfTextStructure;
 import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 
+/*
+ * This class reads an automata from an given file and then creates it.
+ * It writes an automata to a given file as well.
+ */
 public class AutomataIO {
 
 	private Scanner scan;
 	private AutomataBuilder automataBuilder;
 
-	public Automata readAutomata(File file) throws InvalidStateException,
-			IllegalStartOfText, IllegalOrderOfTextStructure,
-			MissingStateException, InitialStateMissingException,
-			IllegalAutomataException, FileNotFoundException {
-		automataBuilder = new AutomataBuilder(
-				new AutomataStructureGraphFactory());
+	public Automata readAutomata(File file) throws InvalidStateException, IllegalStartOfText, IllegalOrderOfTextStructure,
+			MissingStateException, InitialStateMissingException, IllegalAutomataException, FileNotFoundException {
+		automataBuilder = new AutomataBuilder(new AutomataStructureGraphFactory());
 		File aux_file = file;
 		this.scan = new Scanner(aux_file);
 		String aux = this.scan.nextLine();

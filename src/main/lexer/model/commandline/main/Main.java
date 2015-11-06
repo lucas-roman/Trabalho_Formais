@@ -27,25 +27,40 @@ import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
+/*
+ * This is the main class.
+ * This class receives at least one argument:
+ * 	args[0]: This argument has to be the path of the source code to be analyzed or
+ *  the path of the language file that will have your automata created.
+ *  args[1]: This will be the path of the automata that represents the language.
+ *
+ * In order to make this work, some steps need to be followed:
+ * 		1. The first argument has to be the path OF THE LANGUAGE and the second
+ * 			argument will be the path of output for the automata of the language
+ * 			that will be created. The automata file will have the .aut extension.
+ * 		2. Now you can run the program with one argument. That argument has to be the
+ * 			path of the source code that you want to analyze.
+ *
+ * Explanation: When we tell the program to read an file and send just one argument,
+ * 	it will understand that we want to analyze the 'lang.aut'. But to a analyze that file,
+ *  we need to create it first. In order to that, we have to call the program with two arguments
+ *  instead of one.
+ */
 public class Main {
 
 	public static void main(String[] args) {
 		switch (args.length) {
 		case 0:
-			System.err
-					.println("Should have at least one argument. Aborting...");
+			System.err.println("Should have at least one argument. Aborting...");
 			System.exit(1);
 			break;
 		case 1:
 			try {
-				System.out
-						.println("Reading language from default file: lang.aut");
-				System.out
-						.println("To build lang.aut, please provide path of language as second argument.");
+				System.out.println("Reading language from default file: lang.aut");
+				System.out.println("To build lang.aut, please provide path of language as second argument.");
 				LexicalAnalyzer analyzer = new LexicalAnalyzer(args[0]);
 				List<LexicalToken> tokens = analyzer.analyze();
-				System.out
-						.println("Printing analyze result to file: analyze.out");
+				System.out.println("Printing analyze result to file: analyze.out");
 				TokenWriter writer = new TokenWriter("analyze.out");
 				writer.writeToken(tokens);
 				System.exit(0);
@@ -60,8 +75,7 @@ public class Main {
 				try {
 					LexicalAnalyzer analyzer = new LexicalAnalyzer(args[0], scan.nextLine());
 					List<LexicalToken> tokens = analyzer.analyze();
-					System.out
-							.println("Printing analyze result to file: analyze.out");
+					System.out.println("Printing analyze result to file: analyze.out");
 					TokenWriter writer = new TokenWriter("analyze.out");
 					writer.writeToken(tokens);
 					System.exit(0);
@@ -81,14 +95,12 @@ public class Main {
 			break;
 		default:
 			System.out.println("Reading language from file : " + args[1]);
-			System.out
-					.println("Writing automata to : lang.aut. To use same language, please call this program with only " +
+			System.out.println("Writing automata to : lang.aut. To use same language, please call this program with only " +
 							"one argument.");
 			try {
 				LexicalAnalyzer analyzer = new LexicalAnalyzer(args[0], args[1]);
 				List<LexicalToken> tokens = analyzer.analyze();
-				System.out
-						.println("Printing analyze result to file: analyze.out");
+				System.out.println("Printing analyze result to file: analyze.out");
 				TokenWriter writer = new TokenWriter("analyze.out");
 				writer.writeToken(tokens);
 				System.exit(0);
