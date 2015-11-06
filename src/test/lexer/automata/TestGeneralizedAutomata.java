@@ -9,6 +9,7 @@
 
 package test.lexer.automata;
 
+import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
@@ -18,6 +19,8 @@ import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.generalizednondeterministic.GeneralizedFiniteAutomataStructure;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 import main.lexer.regularexpression.RegularExpression;
+
+import org.junit.Test;
 
 public class TestGeneralizedAutomata {
 

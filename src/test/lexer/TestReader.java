@@ -14,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import junit.framework.Assert;
 import main.lexer.LanguageBuilder;
 import main.lexer.Lexema;
 import main.lexer.automata.Automata;
@@ -29,6 +30,8 @@ import main.lexer.model.commandline.exceptions.IllegalOrderOfTextStructure;
 import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
+
+import org.junit.Test;
 
 public class TestReader {
 

@@ -12,6 +12,7 @@ package test.lexer.automata;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Assert;
 import main.lexer.automata.Automata;
 import main.lexer.automata.DeterministicAutomata;
 import main.lexer.automata.exceptions.DeterministicException;
@@ -26,6 +27,10 @@ import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
 import main.lexer.regularexpression.RegularExpression;
 import main.lexer.regularexpression.StringToRE;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 /*
  * UNIVERSIDADE FEDERAL DE SANTA CATARINA

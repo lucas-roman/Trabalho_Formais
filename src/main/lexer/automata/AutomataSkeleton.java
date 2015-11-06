@@ -162,7 +162,6 @@ public abstract class AutomataSkeleton implements Automata {
 		for (AutomataState acceptState : acceptStates()) {
 			build.addEmptyTransition(acceptState.stateID() + "", other
 					.initialState().stateID() + aut1Size + "");
-			build.addTagToState(acceptState.stateID() + "", acceptState.getTag());
 		}
 		for (AutomataState acceptState : other.acceptStates()) {
 			build.markAcceptState(acceptState.stateID() + aut1Size + "");
@@ -184,6 +183,7 @@ public abstract class AutomataSkeleton implements Automata {
 		for (AutomataState acceptState : acceptStates()) {
 			builder.markAcceptState(acceptState.stateID() + 1 + "");
 			builder.addEmptyTransition(acceptState.stateID() + 1 + "", "1");
+			builder.addTagToState(acceptState.stateID() + 1 + "" , acceptState.getTag());
 		}
 		return builder.build();
 	}

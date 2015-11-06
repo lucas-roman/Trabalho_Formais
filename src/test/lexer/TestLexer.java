@@ -24,6 +24,8 @@ import main.lexer.model.commandline.TokenWriter;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
+import org.junit.Test;
+
 public class TestLexer {
 
 	@Test
