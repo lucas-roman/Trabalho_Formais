@@ -27,24 +27,17 @@ import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
+
 /*
  * This is the main class.
  * This class receives at least one argument:
- * 	args[0]: This argument has to be the path of the source code to be analyzed or
- *  the path of the language file that will have your automata created.
- *  args[1]: This will be the path of the automata that represents the language.
+ * 	args[0]: This argument has to be the path of the source code to be analyzed.
+ *  args[1]: This will be the path of the file that represents the language.
  *
- * In order to make this work, some steps need to be followed:
- * 		1. The first argument has to be the path OF THE LANGUAGE and the second
- * 			argument will be the path of output for the automata of the language
- * 			that will be created. The automata file will have the .aut extension.
- * 		2. Now you can run the program with one argument. That argument has to be the
- * 			path of the source code that you want to analyze.
- *
- * Explanation: When we tell the program to read an file and send just one argument,
- * 	it will understand that we want to analyze the 'lang.aut'. But to a analyze that file,
- *  we need to create it first. In order to that, we have to call the program with two arguments
- *  instead of one.
+ *	After running the AnalisadorLexico.jar, the program will create a lang.aut file and
+ * and a analyze.out file. The 'lang.aut' file represents the automata of the language.
+ * It is created for a better performance for future executions of the program.
+ * The analyze.out has the tokens of the source code.
  */
 public class Main {
 

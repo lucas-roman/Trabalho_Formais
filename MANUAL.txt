@@ -55,6 +55,7 @@
 	Os algoritmos são explicados brevemente na interface /Trabalho_Formais/src/main/lexer/automata/Automata.java.
 	
 	A classe principal se encontra em: /Trabalho_Formais/src/main/lexer/model/commandline/main/Main.java.
+	Nela há uma breve explicação de como funciona o programa.
 	
 	- Sistemas de TAGS:
 		Os estados são marcados com tags. Assim, quando uma palavra for lida pelo autômato, o estado que ele estiver depois de ter a entrada toda lida terá seu tag como a categoria
@@ -80,16 +81,21 @@
 
 - USANDO O PROGRAMA
 
-	Para usar o programa, é necessário chamá-lo pela linha de comando da seguinte forma
+	Para usar o programa, e necessario chama-lo pela linha de comando da seguinte forma:
         
 	java -jar AnalisadorLexico.jar 
 
-	O programa aceita 2 argumentos, sendo o primeiro obrigatório e o segundo opcional. São eles:
+	O programa aceita 2 argumentos, sendo o primeiro obrigatorio e o segundo opcional. São eles:
 
-	1 - O arquivo a ter a estrutura analisada. Se for chamado sozinho, o programa então criará um autômato para reconhecer a linguagem através do arquivo lang.aut
-            Se o arquivo não existir, o programa pedirá que seja entrado o caminho para o arquivo que descreve a linguagem. No caso do trabalho, este arquivo é ./lang/pikachu.ash
-        2 - O arquivo que contém a estrutura da linguagem a ser usada para analisar o fonte.
-
+	1 - O arquivo a ter a estrutura analisada. Se for chamado sozinho, o programa entao criara um automato para reconhecer a linguagem atraves do arquivo
+		 lang.aut. Se o arquivo nao existir, o programa pedira que seja entrado o caminho para o arquivo que descreve a linguagem. No caso do trabalho, 
+		 este arquivo é ./lang/pikachu.ash.
+    2 - O arquivo que contém a estrutura da linguagem a ser usada para analisar o fonte.
+    
+    Depois de rodar o AnalisadorLexico.jar, o programa ira criar o lang.aut e o analyze.out. O arquivo 'lang.aut' representa o automato da linguagem.
+    Ele e criado para melhorar o desempenho do programa em analises futuras.
+    O analyze.out contera os tokens do programa fonte analisado.
+    
 - CONSTRUINDO A LINGUAGEM
 
 	O arquivo que define a linguagem deve estar organizado da seguinte forma:
