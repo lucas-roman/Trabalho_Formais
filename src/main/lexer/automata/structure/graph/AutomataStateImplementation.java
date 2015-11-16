@@ -223,7 +223,7 @@ class AutomataStateImplementation implements AutomataState {
 		}
 		AutomataState nextState = null;
 		if(nextState(input.charAt(i)).size() == 0) {
-			return "ERROR";
+			return "NOTRANSITION";
 		}
 		for(AutomataState magic : nextState(input.charAt(i))) {
 			nextState = magic;

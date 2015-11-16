@@ -299,6 +299,13 @@ public class TestRegularExpression {
 		Assert.assertFalse(aut.accepts("jao[0abacate]"));
 		Assert.assertFalse(aut.accepts("0[casd]"));
 		Assert.assertFalse(aut.accepts("0jaoao[9]"));
+		re = StringToRE.stringToRE("(\\ )*abacate");
+		aut = re.createAutomata();
+		Assert.assertTrue(aut.accepts("abacate"));
+		Assert.assertTrue(aut.accepts(" abacate"));
+		Assert.assertTrue(aut.accepts("     abacate"));
+		Assert.assertTrue(aut.accepts("           abacate"));
+		Assert.assertFalse(aut.accepts("abacate  "));
 	}
 
 }

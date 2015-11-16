@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Scanner;
 
-import main.lexer.LexicalAnalyzer;
+import main.lexer.StringLexicalAnalyzer;
 import main.lexer.LexicalToken;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
@@ -51,7 +51,7 @@ public class Main {
 			try {
 				System.out.println("Reading language from default file: lang.aut");
 				System.out.println("To build lang.aut, please provide path of language as second argument.");
-				LexicalAnalyzer analyzer = new LexicalAnalyzer(args[0]);
+				StringLexicalAnalyzer analyzer = new StringLexicalAnalyzer(args[0]);
 				List<LexicalToken> tokens = analyzer.analyze();
 				System.out.println("Printing analyze result to file: analyze.out");
 				TokenWriter writer = new TokenWriter("analyze.out");
@@ -66,7 +66,7 @@ public class Main {
 				System.out.println("Couldn't find file lang.aut. Please supply path to language file.");
 				Scanner scan = new Scanner(System.in);
 				try {
-					LexicalAnalyzer analyzer = new LexicalAnalyzer(args[0], scan.nextLine());
+					StringLexicalAnalyzer analyzer = new StringLexicalAnalyzer(args[0], scan.nextLine());
 					List<LexicalToken> tokens = analyzer.analyze();
 					System.out.println("Printing analyze result to file: analyze.out");
 					TokenWriter writer = new TokenWriter("analyze.out");
@@ -91,7 +91,7 @@ public class Main {
 			System.out.println("Writing automata to : lang.aut. To use same language, please call this program with only " +
 							"one argument.");
 			try {
-				LexicalAnalyzer analyzer = new LexicalAnalyzer(args[0], args[1]);
+				StringLexicalAnalyzer analyzer = new StringLexicalAnalyzer(args[0], args[1]);
 				List<LexicalToken> tokens = analyzer.analyze();
 				System.out.println("Printing analyze result to file: analyze.out");
 				TokenWriter writer = new TokenWriter("analyze.out");

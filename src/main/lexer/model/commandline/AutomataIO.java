@@ -37,9 +37,12 @@ public class AutomataIO {
 	private Scanner scan;
 	private AutomataBuilder automataBuilder;
 
-	public Automata readAutomata(File file) throws InvalidStateException, IllegalStartOfText, IllegalOrderOfTextStructure,
-			MissingStateException, InitialStateMissingException, IllegalAutomataException, FileNotFoundException {
-		automataBuilder = new AutomataBuilder(new AutomataStructureGraphFactory());
+	public Automata readAutomata(File file) throws InvalidStateException,
+			IllegalStartOfText, IllegalOrderOfTextStructure,
+			MissingStateException, InitialStateMissingException,
+			IllegalAutomataException, FileNotFoundException {
+		automataBuilder = new AutomataBuilder(
+				new AutomataStructureGraphFactory());
 		File aux_file = file;
 		this.scan = new Scanner(aux_file);
 		String aux = this.scan.nextLine();
@@ -101,7 +104,7 @@ public class AutomataIO {
 				while (!end) {
 					String from = "";
 					String to = "";
-					char trans;
+					char trans = '\0';
 					String[] details = aux.split(" ");
 					if (details.length >= 2) {
 						from = details[0];
@@ -114,7 +117,15 @@ public class AutomataIO {
 					 * PS: Whitespaces count.
 					 */
 					if (details.length == 3) {
-						trans = details[2].charAt(0);
+						if (details[2].equals("SPACE")) {
+							trans = ' ';
+						}
+						else if(details[2].equals("NEWLINE")) {
+							trans = '\n';
+						}
+						else {
+							trans = details[2].charAt(0);
+						}
 						this.automataBuilder.addTransition(from, to, trans);
 					} else {
 						this.automataBuilder.addEmptyTransition(from, to);
@@ -192,7 +203,13 @@ public class AutomataIO {
 					pw.print(" ");
 					pw.print(reached.stateID());
 					pw.print(" ");
-					pw.print(trans.getKey());
+					if (trans.getKey().equals(' ')) {
+						pw.print("SPACE");
+					} else if (trans.getKey().equals('\n')) {
+						pw.print("NEWLINE");
+					} else {
+						pw.print(trans.getKey());
+					}
 					pw.print('\n');
 				}
 			}

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ~/workspace/Compiler
+java -jar AnalisadorLexico.jar $1 $2

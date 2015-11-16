@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
-import main.lexer.LexicalAnalyzer;
+import main.lexer.StringListLexicalAnalyzer;
 import main.lexer.LexicalToken;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
@@ -34,7 +34,7 @@ public class TestLexer {
 			IllegalRegularExpressionException, MissingStateException,
 			InvalidStateException, InitialStateMissingException,
 			IllegalAutomataException, DeterministicException {
-		LexicalAnalyzer analyzer = new LexicalAnalyzer("test",
+		StringListLexicalAnalyzer analyzer = new StringListLexicalAnalyzer("test",
 				"lang/pikachu.ash");
 		List<LexicalToken> outputList = analyzer.analyze();
 		TokenWriter writer = new TokenWriter("analyzed.out");

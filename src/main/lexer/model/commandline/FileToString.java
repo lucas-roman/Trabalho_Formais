@@ -23,7 +23,7 @@ public class FileToString {
 	private Scanner scan;
 	private List<String> returnList = new ArrayList<>();
 
-	public List<String> readFile (File file){
+	public List<String> readFileAsList (File file){
 		File aux_file = file;
 		try{
 			this.scan = new Scanner(aux_file);
@@ -44,4 +44,16 @@ public class FileToString {
 		this.scan.close();
 		return this.returnList;
 	}
+	
+	public String readFile(String path) throws FileNotFoundException {
+		File file = new File(path);
+		scan = new Scanner(file);
+		String result = "";
+		while(scan.hasNextLine()) {
+			result += scan.nextLine() + '\n';
+		}
+		return result;
+	}
+	
+	
 }

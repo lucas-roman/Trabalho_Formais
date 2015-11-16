@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm analyze.out
+rm lang.aut

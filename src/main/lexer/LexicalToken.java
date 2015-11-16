@@ -16,7 +16,7 @@ public class LexicalToken {
 
 	public LexicalToken(String tag, String wordRead) {
 		this.tag = tag;
-		this.wordRead = wordRead;
+		this.wordRead = wordRead.trim();
 	}
 
 	public String getTag() {
