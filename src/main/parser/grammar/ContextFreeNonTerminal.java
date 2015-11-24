@@ -7,13 +7,16 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 
 	private List<ContextFreeProduction> productions;
 	
+	private String val;
+	
 	@Override
 	public List<ContextFreeProduction> productionsForSymbol() {
 		return productions;
 	}
 	
-	public ContextFreeNonTerminal() {
+	public ContextFreeNonTerminal(String val) {
 		productions = new ArrayList<>();
+		this.val = val;
 	}
 	
 	public void addProduction(ContextFreeProduction prod) {
