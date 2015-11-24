@@ -1,0 +1,31 @@
+S -> program id begin 
+		{DECLAVAR}
+		
+		begin 
+			{CMD} 
+		end
+		
+DECLAVAR -> {TIPO} id, {DECLAVAR} | {TIPO} id
+
+VAR -> {TIPO} id
+
+CMD -> {IF} | {FOR}
+
+TIPO -> int|string|float|char|bool|int\[\]|string\[\]|float\[\]|char\[\]|bool\[\]|int\[\]\[\]|string\[\]\[\]|float\[\]\[\]|char\[\]\[\]|bool\[\]\[\]
+
+IF -> if ( {CONDICAO} ) begin {BODY} end | if ( {CONDICAO} ) begin {BODY} end else {BODY} end
+
+FOR -> for ( int id = number to number ) begin {BODY} end
+
+BODY -> 
+
+CONDICAO -> 
+
+NUMEXPRESSION -> 		{T}{NUMEXPRESSIONLINE}
+NUMEXPRESSIONLINE ->	sum {T}{NUMEXPRESSIONLINE} | minus {T}{NUMEXPRESSIONLINE} | {EPSOLON}
+T ->	{F}{TLINE}
+TLINE ->	times {F} | division {F}{TLINE} | {EPSOLON}
+F -> (NUMEXPRESSION) | id
+
+
+EPSOLON -> 
