@@ -22,5 +22,10 @@ public class ContextFreeEmptyWord implements ContextFreeSymbol, ContextFreeTermi
 	private ContextFreeEmptyWord() {
 		
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+		return other == this;
+	}
 
 }

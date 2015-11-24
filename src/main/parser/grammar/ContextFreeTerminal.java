@@ -20,5 +20,17 @@ public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTermin
 		terminalValue = val;
 	}
 	
+    
+    @Override
+	public boolean equals(Object other) {
+		if(!(other instanceof ContextFreeTerminal)) {
+			return false;
+		}
+		ContextFreeTerminal valOfOther = (ContextFreeTerminal)other;
+		if(valOfOther.terminalValue.equals(terminalValue)) {
+			return true;
+		}
+		return false;
+	}
 
 }
