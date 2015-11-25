@@ -32,5 +32,10 @@ public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTermin
 		}
 		return false;
 	}
+    
+    @Override
+	public int hashCode() {
+		return terminalValue.hashCode();
+	}
 
 }

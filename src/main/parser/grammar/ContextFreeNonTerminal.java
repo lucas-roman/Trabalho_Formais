@@ -62,15 +62,40 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 		}
 		return false;
 	}
+	
+	@Override
+	public int hashCode() {
+		return val.hashCode();
+	}
 
 	public void reorganizeTransitionsForEmpty(
 			Set<ContextFreeSymbol> symbolsThatDeriveEmptyWord) {
 		for(ContextFreeProduction production : productions) {
 			if(production.derivesAny(symbolsThatDeriveEmptyWord)) {
+				List<ContextFreeSymbol> commonSymbols = production.commonSymbols(symbolsThatDeriveEmptyWord);
 				List<ContextFreeSymbol> productionValue = new ArrayList<>(production.getValue());
+				createNewProductions(commonSymbols, productionValue);
 				//TODO
 			}
 		}
+	}
+
+	private void createNewProductions(List<ContextFreeSymbol> commonSymbols,
+			List<ContextFreeSymbol> productionValue) {
+		List<List<ContextFreeSymbol>> powerSet = createPowerSet(commonSymbols);
+		for(List<ContextFreeSymbol> elements : powerSet) {
+			List<ContextFreeSymbol> toAdd = new ArrayList<>(productionValue);
+			for(ContextFreeSymbol symbol : elements) {
+				toAdd.remove(symbol);
+			}
+			addProduction(toAdd);
+		}
+	}
+
+	private List<List<ContextFreeSymbol>> createPowerSet(
+			List<ContextFreeSymbol> commonSymbols) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

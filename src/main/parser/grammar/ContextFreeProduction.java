@@ -44,4 +44,10 @@ public class ContextFreeProduction {
 		return null;
 	}
 
+	public List<ContextFreeSymbol> commonSymbols(
+			Set<ContextFreeSymbol> symbolsThatDeriveEmptyWord) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
