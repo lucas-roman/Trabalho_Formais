@@ -6,6 +6,7 @@ import java.util.List;
 import junit.framework.Assert;
 import main.parser.grammar.ContextFreeGrammar;
 import main.parser.grammar.ContextFreeNonTerminal;
+import main.parser.grammar.ContextFreeProduction;
 import main.parser.grammar.ContextFreeSymbol;
 import main.parser.grammar.ContextFreeTerminalSymbol;
 
@@ -56,7 +57,7 @@ public class TestContextFreeGrammar {
 	}
 	
 	@Test
-	public void testRemoveEpslonTransition() {
+	public void testRemoveEpslonTransition1() {
 		ContextFreeGrammar grammar = new ContextFreeGrammar();
 		ContextFreeTerminalSymbol id = grammar.createTerminalForString("id");
 		ContextFreeTerminalSymbol k = grammar.createTerminalForString("k");
@@ -97,6 +98,45 @@ public class TestContextFreeGrammar {
 		Assert.assertEquals(4, s.productionsForSymbol().size());
 		Assert.assertEquals(2, a.productionsForSymbol().size());
 		Assert.assertEquals(1, b.productionsForSymbol().size());
+	}
+	
+	@Test
+	public void testRemoveEpslonTransition2() {
+		ContextFreeGrammar grammar = new ContextFreeGrammar();
+		ContextFreeTerminalSymbol id = grammar.createTerminalForString("id");
+		ContextFreeTerminalSymbol k = grammar.createTerminalForString("k");
+		ContextFreeTerminalSymbol ab = grammar.createTerminalForString("ab");
+		ContextFreeNonTerminal s = grammar.createNonTerminalForString("S");
+		ContextFreeNonTerminal a = grammar.createNonTerminalForString("A");
+		ContextFreeNonTerminal b = grammar.createNonTerminalForString("B");
+		List<ContextFreeSymbol> production = new ArrayList<>();
+		production.add(id);
+		production.add(a);
+		production.add(b);
+		s.addProduction(production);
+		production = new ArrayList<>();
+		production.add(a);
+		production.add(b);
+		s.addProduction(production);
+		production = new ArrayList<>();
+		production.add(id);
+		s.addProduction(production);
+		production = new ArrayList<>();
+		production.add(grammar.createTerminalForString(""));
+		a.addProduction(production);
+		production = new ArrayList<>();
+		production.add(k);
+		a.addProduction(production);
+		production = new ArrayList<>();
+		production.add(k);
+		production.add(a);
+		a.addProduction(production);
+		production = new ArrayList<>();
+		production.add(ab);
+		b.addProduction(production);
+		System.out.println(grammar);
+		grammar.removeEmptyWord();
+		System.out.println(grammar);
 	}
 
 }

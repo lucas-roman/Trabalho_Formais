@@ -11,6 +11,7 @@ public class ContextFreeGrammar {
 
 	private Map<String, ContextFreeTerminalSymbol> terminalMap;
 	private Map<String, ContextFreeNonTerminal> nonTerminalMap;
+	private ContextFreeNonTerminal head;
 
 	public ContextFreeGrammar() {
 		terminalMap = new HashMap<>();
@@ -33,7 +34,11 @@ public class ContextFreeGrammar {
 
 	public ContextFreeNonTerminal createNonTerminalForString(String val) {
 		if (!nonTerminalMap.containsKey(val)) {
-			nonTerminalMap.put(val, new ContextFreeNonTerminal(val));
+			ContextFreeNonTerminal nt = new ContextFreeNonTerminal(val);
+			if(head == null) {
+				head = nt;
+			}
+			nonTerminalMap.put(val, nt);
 		}
 		return nonTerminalMap.get(val);
 	}
@@ -46,6 +51,16 @@ public class ContextFreeGrammar {
 		Set<ContextFreeSymbol> symbolsThatDeriveEmptyWord = symbolsThatDeriveEmptyWord();
 		removeDerivationsByEmptyWord();
 		reorganizeTransitions(symbolsThatDeriveEmptyWord);
+		if(symbolsThatDeriveEmptyWord.contains(head)) {
+			ContextFreeNonTerminal oldHead = head;
+			head = createNonTerminalForString("NEWHEADEMPYWORD");
+			ContextFreeProduction toOldHead = new ContextFreeProduction();
+			toOldHead.addSymbol(oldHead);
+			head.addProduction(toOldHead);
+			ContextFreeProduction empty = new ContextFreeProduction();
+			empty.addSymbol(ContextFreeEmptyWord.getInstance());
+			head.addProduction(empty);
+		}
 	}
 	
 	private void reorganizeTransitions(
@@ -84,6 +99,28 @@ public class ContextFreeGrammar {
 		} while (oldSize != newSize);
 		canDeriveEmpty.remove(ContextFreeEmptyWord.getInstance());
 		return canDeriveEmpty;
+	}
+	
+	@Override
+	public String toString() {
+		String result = "";
+		result += head + " -> ";
+		for(ContextFreeProduction p : head.productionsForSymbol()) {
+			result += p + " | ";
+		}
+		result = result.substring(0, result.length() - 2);
+		result += '\n';
+		for(ContextFreeNonTerminal nt : nonTerminalSet()) {
+			if(nt != head) {
+				result += nt + " -> ";
+				for(ContextFreeProduction p : nt.productionsForSymbol()) {
+					result += p + " | ";
+				}
+				result = result.substring(0, result.length() - 2);
+				result += '\n';
+			}
+		}
+		return result;
 	}
 
 }

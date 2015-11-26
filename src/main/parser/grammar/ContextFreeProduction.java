@@ -34,20 +34,55 @@ public class ContextFreeProduction {
 		return true;
 	}
 
-	public boolean derivesAny(Set<ContextFreeSymbol> symbolsThatDeriveEmptyWord) {
-		//TODO
+	public boolean derivesAny(Set<ContextFreeSymbol> set) {
+		for(ContextFreeSymbol symbol : productions) {
+			if(set.contains(symbol)) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	public List<ContextFreeSymbol> getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return productions;
 	}
 
 	public List<ContextFreeSymbol> commonSymbols(
-			Set<ContextFreeSymbol> symbolsThatDeriveEmptyWord) {
-		// TODO Auto-generated method stub
-		return null;
+			Set<ContextFreeSymbol> symbols) {
+		List<ContextFreeSymbol> returnList = new ArrayList<>(productions);
+		for(ContextFreeSymbol symbol : productions) {
+			if(!symbols.contains(symbol)) {
+				returnList.remove(symbol);
+			}
+		}
+		return returnList;
+	}
+	
+	@Override
+	public String toString() {
+		String result = "";
+		for(ContextFreeSymbol symbol : productions) {
+			result += symbol + " ";
+		}
+		result = result.substring(0, result.length() - 1);
+		return result;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if(!(other instanceof ContextFreeProduction)) {
+			return false;
+		}
+		ContextFreeProduction otherProduction = (ContextFreeProduction)other;
+		if (productions.equals(otherProduction.productions)) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return productions.hashCode();
 	}
 
 }

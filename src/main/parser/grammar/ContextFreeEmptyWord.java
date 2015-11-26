@@ -27,5 +27,10 @@ public class ContextFreeEmptyWord implements ContextFreeSymbol, ContextFreeTermi
 	public boolean equals(Object other) {
 		return other == this;
 	}
+	
+	@Override
+	public String toString() {
+		return "EPSLON";
+	}
 
 }
