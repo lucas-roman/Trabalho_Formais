@@ -2,11 +2,13 @@ package test.parser.grammar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import junit.framework.Assert;
+import main.parser.grammar.ContextFreeEmptyWord;
 import main.parser.grammar.ContextFreeGrammar;
 import main.parser.grammar.ContextFreeNonTerminal;
-import main.parser.grammar.ContextFreeProduction;
 import main.parser.grammar.ContextFreeSymbol;
 import main.parser.grammar.ContextFreeTerminalSymbol;
 
@@ -134,9 +136,58 @@ public class TestContextFreeGrammar {
 		production = new ArrayList<>();
 		production.add(ab);
 		b.addProduction(production);
-		System.out.println(grammar);
 		grammar.removeEmptyWord();
+	}
+	
+	@Test
+	public void testFirst() {
+		ContextFreeGrammar grammar = new ContextFreeGrammar();
+		ContextFreeNonTerminal e = grammar.createNonTerminalForString("E");
+		ContextFreeNonTerminal e1 = grammar.createNonTerminalForString("E1");
+		ContextFreeNonTerminal t = grammar.createNonTerminalForString("T");
+		ContextFreeNonTerminal t1 = grammar.createNonTerminalForString("T1");
+		ContextFreeNonTerminal f = grammar.createNonTerminalForString("F");
+		ContextFreeTerminalSymbol plus = grammar.createTerminalForString("+");
+		ContextFreeTerminalSymbol times = grammar.createTerminalForString("*");
+		ContextFreeTerminalSymbol leftPar = grammar.createTerminalForString("(");
+		ContextFreeTerminalSymbol rightPar = grammar.createTerminalForString(")");
+		ContextFreeTerminalSymbol id = grammar.createTerminalForString("id");
+		List<ContextFreeSymbol> productions = new ArrayList<>();
+		productions.add(t);
+		productions.add(e1);
+		e.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(plus);
+		productions.add(t);
+		productions.add(e1);
+		e1.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(ContextFreeEmptyWord.getInstance());
+		e1.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(f);
+		productions.add(t1);
+		t.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(times);
+		productions.add(f);
+		productions.add(t1);
+		t1.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(ContextFreeEmptyWord.getInstance());
+		t1.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(leftPar);
+		productions.add(e);
+		productions.add(rightPar);
+		f.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(id);
+		f.addProduction(productions);
 		System.out.println(grammar);
+		for(Entry<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> entry : grammar.first().entrySet()) {
+			System.out.println("first de " + entry.getKey() + " : " + entry.getValue());
+		}
 	}
 
 }

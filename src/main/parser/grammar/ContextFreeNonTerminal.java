@@ -1,6 +1,7 @@
 package main.parser.grammar;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -98,6 +99,20 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 	@Override
 	public String toString() {
 		return val;
+	}
+
+	@Override
+	public Set<ContextFreeTerminalSymbol> first() {
+		Set<ContextFreeTerminalSymbol> returnSet = new HashSet<>();
+		for(ContextFreeProduction production: productions) {
+			List<ContextFreeSymbol> productionList = production.getValue();
+			for(ContextFreeSymbol symbol : productionList) {
+				returnSet.addAll(symbol.first());
+				if(!symbol.first().contains(ContextFreeEmptyWord.getInstance()))
+					break;
+			}
+		}
+		return returnSet;
 	}
 
 

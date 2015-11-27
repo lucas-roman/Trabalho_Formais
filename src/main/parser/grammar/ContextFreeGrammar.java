@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import sun.awt.geom.Crossings.NonZero;
+
 public class ContextFreeGrammar {
 
 	private Map<String, ContextFreeTerminalSymbol> terminalMap;
@@ -121,6 +123,14 @@ public class ContextFreeGrammar {
 			}
 		}
 		return result;
+	}
+	
+	public Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> first() {
+		Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap = new HashMap<>();
+		for(ContextFreeNonTerminal nt : nonTerminalSet()) {
+			returnMap.put(nt, nt.first());
+		}
+		return returnMap;
 	}
 
 }

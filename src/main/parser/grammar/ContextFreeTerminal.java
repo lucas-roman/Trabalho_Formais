@@ -1,7 +1,9 @@
 package main.parser.grammar;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTerminalSymbol {
 	
@@ -41,6 +43,13 @@ public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTermin
     @Override
 	public String toString() {
 		return terminalValue;
+	}
+    
+    @Override
+	public Set<ContextFreeTerminalSymbol> first() {
+		Set<ContextFreeTerminalSymbol> returnSet = new HashSet<>();
+		returnSet.add(this);
+		return returnSet;
 	}
 
 }
