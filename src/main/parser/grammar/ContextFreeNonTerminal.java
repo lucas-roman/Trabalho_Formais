@@ -3,6 +3,7 @@ package main.parser.grammar;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ContextFreeNonTerminal implements ContextFreeSymbol {
@@ -113,6 +114,30 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 			}
 		}
 		return returnSet;
+	}
+
+	@Override
+	public void calculateFollow(
+			Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap,
+			ContextFreeSymbol symbol) {
+		if(returnMap.containsKey(this)) {
+			for(ContextFreeTerminalSymbol symbol2 : symbol.first()) {
+				if(!symbol2.equals(ContextFreeEmptyWord.getInstance())) {
+					returnMap.get(this).add(symbol2);
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public boolean addFollowOf(
+			Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap,
+			ContextFreeNonTerminal nt) {
+		int oldSize = returnMap.get(this).size();
+		returnMap.get(this).addAll(returnMap.get(nt));
+		int newSize = returnMap.get(this).size();
+		return oldSize != newSize;
 	}
 
 

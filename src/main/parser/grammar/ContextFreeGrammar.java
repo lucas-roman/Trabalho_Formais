@@ -37,7 +37,7 @@ public class ContextFreeGrammar {
 	public ContextFreeNonTerminal createNonTerminalForString(String val) {
 		if (!nonTerminalMap.containsKey(val)) {
 			ContextFreeNonTerminal nt = new ContextFreeNonTerminal(val);
-			if(head == null) {
+			if (head == null) {
 				head = nt;
 			}
 			nonTerminalMap.put(val, nt);
@@ -53,7 +53,7 @@ public class ContextFreeGrammar {
 		Set<ContextFreeSymbol> symbolsThatDeriveEmptyWord = symbolsThatDeriveEmptyWord();
 		removeDerivationsByEmptyWord();
 		reorganizeTransitions(symbolsThatDeriveEmptyWord);
-		if(symbolsThatDeriveEmptyWord.contains(head)) {
+		if (symbolsThatDeriveEmptyWord.contains(head)) {
 			ContextFreeNonTerminal oldHead = head;
 			head = createNonTerminalForString("NEWHEADEMPYWORD");
 			ContextFreeProduction toOldHead = new ContextFreeProduction();
@@ -64,27 +64,27 @@ public class ContextFreeGrammar {
 			head.addProduction(empty);
 		}
 	}
-	
+
 	private void reorganizeTransitions(
 			Set<ContextFreeSymbol> symbolsThatDeriveEmptyWord) {
-		for(ContextFreeNonTerminal nt : nonTerminalSet()) {
+		for (ContextFreeNonTerminal nt : nonTerminalSet()) {
 			nt.reorganizeTransitionsForEmpty(symbolsThatDeriveEmptyWord);
 		}
-		
+
 	}
 
 	private void removeDerivationsByEmptyWord() {
 		Set<ContextFreeSymbol> emptyWord = new HashSet<ContextFreeSymbol>();
 		emptyWord.add(ContextFreeEmptyWord.getInstance());
-		for(ContextFreeNonTerminal nt : nonTerminalSet()) {
-			if(nt.derivesOnly(emptyWord)) {
+		for (ContextFreeNonTerminal nt : nonTerminalSet()) {
+			if (nt.derivesOnly(emptyWord)) {
 				List<ContextFreeSymbol> production = new ArrayList<>();
 				production.add(ContextFreeEmptyWord.getInstance());
 				nt.removeProduction(production);
 			}
 		}
 	}
-	
+
 	private Set<ContextFreeSymbol> symbolsThatDeriveEmptyWord() {
 		Set<ContextFreeSymbol> canDeriveEmpty = new HashSet<>();
 		canDeriveEmpty.add(ContextFreeEmptyWord.getInstance());
@@ -102,20 +102,20 @@ public class ContextFreeGrammar {
 		canDeriveEmpty.remove(ContextFreeEmptyWord.getInstance());
 		return canDeriveEmpty;
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "";
 		result += head + " -> ";
-		for(ContextFreeProduction p : head.productionsForSymbol()) {
+		for (ContextFreeProduction p : head.productionsForSymbol()) {
 			result += p + " | ";
 		}
 		result = result.substring(0, result.length() - 2);
 		result += '\n';
-		for(ContextFreeNonTerminal nt : nonTerminalSet()) {
-			if(nt != head) {
+		for (ContextFreeNonTerminal nt : nonTerminalSet()) {
+			if (nt != head) {
 				result += nt + " -> ";
-				for(ContextFreeProduction p : nt.productionsForSymbol()) {
+				for (ContextFreeProduction p : nt.productionsForSymbol()) {
 					result += p + " | ";
 				}
 				result = result.substring(0, result.length() - 2);
@@ -124,13 +124,52 @@ public class ContextFreeGrammar {
 		}
 		return result;
 	}
-	
+
 	public Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> first() {
 		Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap = new HashMap<>();
-		for(ContextFreeNonTerminal nt : nonTerminalSet()) {
+		for (ContextFreeNonTerminal nt : nonTerminalSet()) {
 			returnMap.put(nt, nt.first());
 		}
 		return returnMap;
 	}
 
+	public Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> follow() {
+		Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap = new HashMap<>();
+		for (ContextFreeNonTerminal nt : nonTerminalSet()) {
+			returnMap.put(nt, new HashSet<ContextFreeTerminalSymbol>());
+		}
+		returnMap.get(head).add(ContextFreeEOF.getInstance());
+		for (ContextFreeNonTerminal nt : nonTerminalSet()) {
+			for (ContextFreeProduction production : nt.productionsForSymbol()) {
+				ContextFreeSymbol prevSymbol = null;
+				for (ContextFreeSymbol symbol : production.getValue()) {
+					if (prevSymbol != null) {
+						prevSymbol.calculateFollow(returnMap, symbol);
+					}
+					prevSymbol = symbol;
+				}
+			}
+		}
+		addToTail(returnMap);
+		return returnMap;
+	}
+
+	private void addToTail(
+			Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap) {
+		boolean changed = true;
+		do {
+			for (ContextFreeNonTerminal nt : nonTerminalSet()) {
+				for (ContextFreeProduction prod : nt.productionsForSymbol()) {
+					List<ContextFreeSymbol> productionValue = prod.getValue();
+					for (int i = productionValue.size() - 1; i >= 0; i--) {
+						changed = productionValue.get(i).addFollowOf(returnMap, nt);
+						if (!productionValue.get(i).first()
+								.contains(ContextFreeEmptyWord.getInstance())) {
+							break;
+						}
+					}
+				}
+			}
+		} while (changed);
+	}
 }

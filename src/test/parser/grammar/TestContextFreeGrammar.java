@@ -184,10 +184,22 @@ public class TestContextFreeGrammar {
 		productions = new ArrayList<>();
 		productions.add(id);
 		f.addProduction(productions);
-		System.out.println(grammar);
-		for(Entry<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> entry : grammar.first().entrySet()) {
-			System.out.println("first de " + entry.getKey() + " : " + entry.getValue());
-		}
+		Assert.assertTrue(t.first().contains(id));
+		Assert.assertTrue(t.first().contains(leftPar));
+		Assert.assertTrue(e.first().contains(id));
+		Assert.assertTrue(e.first().contains(leftPar));
+		Assert.assertTrue(f.first().contains(id));
+		Assert.assertTrue(f.first().contains(leftPar));
+		Assert.assertTrue(e1.first().contains(plus));
+		Assert.assertTrue(e1.first().contains(ContextFreeEmptyWord.getInstance()));
+		Assert.assertTrue(t1.first().contains(ContextFreeEmptyWord.getInstance()));
+		Assert.assertTrue(t1.first().contains(times));
+		Assert.assertTrue(e.first().size()==2);
+		Assert.assertTrue(e1.first().size()==2);
+		Assert.assertTrue(t.first().size()==2);
+		Assert.assertTrue(t1.first().size()==2);
+		Assert.assertTrue(f.first().size()==2);
+		grammar.follow();
 	}
 
 }
