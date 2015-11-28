@@ -1,7 +1,7 @@
 package main.parser.grammar;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -47,9 +47,9 @@ public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTermin
 	}
     
     @Override
-	public Set<ContextFreeTerminalSymbol> first() {
-		Set<ContextFreeTerminalSymbol> returnSet = new HashSet<>();
-		returnSet.add(this);
+	public Map<ContextFreeTerminalSymbol, ContextFreeProduction> first() {
+    	Map<ContextFreeTerminalSymbol, ContextFreeProduction> returnSet = new HashMap<>();
+		returnSet.put(this, productionsForSymbol().get(0));
 		return returnSet;
 	}
 

@@ -9,8 +9,11 @@ import junit.framework.Assert;
 import main.parser.grammar.ContextFreeEmptyWord;
 import main.parser.grammar.ContextFreeGrammar;
 import main.parser.grammar.ContextFreeNonTerminal;
+import main.parser.grammar.ContextFreeProduction;
 import main.parser.grammar.ContextFreeSymbol;
 import main.parser.grammar.ContextFreeTerminalSymbol;
+import main.parser.grammar.exceptions.NonDeterministicGrammarException;
+import main.parser.grammar.exceptions.NotLLLanguageException;
 
 import org.junit.Test;
 
@@ -140,7 +143,7 @@ public class TestContextFreeGrammar {
 	}
 	
 	@Test
-	public void testFirst() {
+	public void testFirst() throws NonDeterministicGrammarException {
 		ContextFreeGrammar grammar = new ContextFreeGrammar();
 		ContextFreeNonTerminal e = grammar.createNonTerminalForString("E");
 		ContextFreeNonTerminal e1 = grammar.createNonTerminalForString("E1");
@@ -184,22 +187,43 @@ public class TestContextFreeGrammar {
 		productions = new ArrayList<>();
 		productions.add(id);
 		f.addProduction(productions);
-		Assert.assertTrue(t.first().contains(id));
-		Assert.assertTrue(t.first().contains(leftPar));
-		Assert.assertTrue(e.first().contains(id));
-		Assert.assertTrue(e.first().contains(leftPar));
-		Assert.assertTrue(f.first().contains(id));
-		Assert.assertTrue(f.first().contains(leftPar));
-		Assert.assertTrue(e1.first().contains(plus));
-		Assert.assertTrue(e1.first().contains(ContextFreeEmptyWord.getInstance()));
-		Assert.assertTrue(t1.first().contains(ContextFreeEmptyWord.getInstance()));
-		Assert.assertTrue(t1.first().contains(times));
+		Assert.assertTrue(t.first().containsKey(id));
+		Assert.assertTrue(t.first().containsKey(leftPar));
+		Assert.assertTrue(e.first().containsKey(id));
+		Assert.assertTrue(e.first().containsKey(leftPar));
+		Assert.assertTrue(f.first().containsKey(id));
+		Assert.assertTrue(f.first().containsKey(leftPar));
+		Assert.assertTrue(e1.first().containsKey(plus));
+		Assert.assertTrue(e1.first().containsKey(ContextFreeEmptyWord.getInstance()));
+		Assert.assertTrue(t1.first().containsKey(ContextFreeEmptyWord.getInstance()));
+		Assert.assertTrue(t1.first().containsKey(times));
 		Assert.assertTrue(e.first().size()==2);
 		Assert.assertTrue(e1.first().size()==2);
 		Assert.assertTrue(t.first().size()==2);
 		Assert.assertTrue(t1.first().size()==2);
 		Assert.assertTrue(f.first().size()==2);
-		grammar.follow();
+	}
+	
+	@Test(expected=NonDeterministicGrammarException.class)
+	public void testDetectNonDeterministicGrammar() throws NotLLLanguageException, NonDeterministicGrammarException {
+		ContextFreeGrammar grammar = new ContextFreeGrammar();
+		ContextFreeNonTerminal s = grammar.createNonTerminalForString("S");
+		ContextFreeTerminalSymbol a = grammar.createTerminalForString("a");
+		ContextFreeNonTerminal b = grammar.createNonTerminalForString("B");
+		ContextFreeProduction production = new ContextFreeProduction();
+		production.addSymbol(a);
+		s.addProduction(production);
+		production = new ContextFreeProduction();
+		production.addSymbol(a);
+		production.addSymbol(s);
+		s.addProduction(production);
+		production = new ContextFreeProduction();
+		production.addSymbol(b);
+		s.addProduction(production);
+		production = new ContextFreeProduction();
+		production.addSymbol(a);
+		b.addProduction(production);
+		grammar.createTable();
 	}
 
 }

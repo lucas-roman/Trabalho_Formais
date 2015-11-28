@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import main.parser.grammar.exceptions.NonDeterministicGrammarException;
+import main.parser.grammar.exceptions.NotLLLanguageException;
+
 import sun.awt.geom.Crossings.NonZero;
 
 public class ContextFreeGrammar {
@@ -125,15 +128,15 @@ public class ContextFreeGrammar {
 		return result;
 	}
 
-	public Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> first() {
-		Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap = new HashMap<>();
+	public Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> first() throws NonDeterministicGrammarException {
+		Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> returnMap = new HashMap<>();
 		for (ContextFreeNonTerminal nt : nonTerminalSet()) {
 			returnMap.put(nt, nt.first());
 		}
 		return returnMap;
 	}
 
-	public Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> follow() {
+	public Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> follow() throws NonDeterministicGrammarException {
 		Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap = new HashMap<>();
 		for (ContextFreeNonTerminal nt : nonTerminalSet()) {
 			returnMap.put(nt, new HashSet<ContextFreeTerminalSymbol>());
@@ -155,7 +158,7 @@ public class ContextFreeGrammar {
 	}
 
 	private void addToTail(
-			Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap) {
+			Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap) throws NonDeterministicGrammarException {
 		boolean changed = true;
 		do {
 			for (ContextFreeNonTerminal nt : nonTerminalSet()) {
@@ -163,13 +166,19 @@ public class ContextFreeGrammar {
 					List<ContextFreeSymbol> productionValue = prod.getValue();
 					for (int i = productionValue.size() - 1; i >= 0; i--) {
 						changed = productionValue.get(i).addFollowOf(returnMap, nt);
-						if (!productionValue.get(i).first()
-								.contains(ContextFreeEmptyWord.getInstance())) {
-							break;
+							if (!productionValue.get(i).first()
+									.containsKey(ContextFreeEmptyWord.getInstance())) {
+								break;
+							}
 						}
 					}
 				}
-			}
 		} while (changed);
+	}
+	
+	public LL1Table createTable() throws NotLLLanguageException, NonDeterministicGrammarException {
+		Map<ContextFreeNonTerminal, Map< ContextFreeTerminalSymbol ,ContextFreeProduction>> first = first();
+		Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> follow = follow();
+		return new LL1Table(first, follow);
 	}
 }

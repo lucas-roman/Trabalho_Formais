@@ -1,10 +1,12 @@
 package main.parser.grammar;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import main.parser.grammar.exceptions.NonDeterministicGrammarException;
 
 public class ContextFreeNonTerminal implements ContextFreeSymbol {
 
@@ -103,25 +105,30 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 	}
 
 	@Override
-	public Set<ContextFreeTerminalSymbol> first() {
-		Set<ContextFreeTerminalSymbol> returnSet = new HashSet<>();
+	public Map<ContextFreeTerminalSymbol, ContextFreeProduction> first() throws NonDeterministicGrammarException {
+		Map<ContextFreeTerminalSymbol, ContextFreeProduction> returnMap = new HashMap<>();
 		for(ContextFreeProduction production: productions) {
 			List<ContextFreeSymbol> productionList = production.getValue();
 			for(ContextFreeSymbol symbol : productionList) {
-				returnSet.addAll(symbol.first());
-				if(!symbol.first().contains(ContextFreeEmptyWord.getInstance()))
+				for(ContextFreeTerminalSymbol valToPut : symbol.first().keySet()) {
+					if(returnMap.containsKey(valToPut)) {
+						throw new NonDeterministicGrammarException();
+					}
+					returnMap.put(valToPut,production);
+				}
+				if(!symbol.first().containsValue(ContextFreeEmptyWord.getInstance()))
 					break;
 			}
 		}
-		return returnSet;
+		return returnMap;
 	}
 
 	@Override
 	public void calculateFollow(
 			Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap,
-			ContextFreeSymbol symbol) {
+			ContextFreeSymbol symbol) throws NonDeterministicGrammarException {
 		if(returnMap.containsKey(this)) {
-			for(ContextFreeTerminalSymbol symbol2 : symbol.first()) {
+			for(ContextFreeTerminalSymbol symbol2 : symbol.first().keySet()) {
 				if(!symbol2.equals(ContextFreeEmptyWord.getInstance())) {
 					returnMap.get(this).add(symbol2);
 				}

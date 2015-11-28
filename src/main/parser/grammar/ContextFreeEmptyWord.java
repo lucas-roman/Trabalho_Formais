@@ -1,7 +1,7 @@
 package main.parser.grammar;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,9 +37,9 @@ public class ContextFreeEmptyWord implements ContextFreeSymbol, ContextFreeTermi
 	}
 
 	@Override
-	public Set<ContextFreeTerminalSymbol> first() {
-		Set<ContextFreeTerminalSymbol> returnSet = new HashSet<>();
-		returnSet.add(this);
+	public Map<ContextFreeTerminalSymbol, ContextFreeProduction> first() {
+		Map<ContextFreeTerminalSymbol, ContextFreeProduction> returnSet = new HashMap<>();
+		returnSet.put(this, new ContextFreeProduction());
 		return returnSet;
 	}
 
