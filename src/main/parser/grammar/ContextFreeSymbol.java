@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import main.parser.grammar.exceptions.NonDeterministicGrammarException;
+import main.parser.grammar.exceptions.TerminalMissingException;
 
 public interface ContextFreeSymbol {
 	
@@ -21,6 +22,6 @@ public interface ContextFreeSymbol {
 			ContextFreeNonTerminal nt);
 
 	public ContextFreeProduction consultTable(
-			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table, Analyzer analyzer);
+			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table, Analyzer analyzer) throws TerminalMissingException;
 	
 }

@@ -8,6 +8,7 @@ import java.util.Set;
 
 import main.parser.grammar.exceptions.NonDeterministicGrammarException;
 import main.parser.grammar.exceptions.NotLLLanguageException;
+import main.parser.grammar.exceptions.TerminalMissingException;
 
 public class LL1Table {
 	
@@ -42,10 +43,9 @@ public class LL1Table {
 				}
 			}
 		}
-		System.out.println(table);
 	}
 	
-	public ContextFreeProduction consult(ContextFreeSymbol symbolToConsult, Analyzer analyzer) {
+	public ContextFreeProduction consult(ContextFreeSymbol symbolToConsult, Analyzer analyzer) throws TerminalMissingException {
 		return symbolToConsult.consultTable(table, analyzer);
 	}
 

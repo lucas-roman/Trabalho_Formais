@@ -2,18 +2,22 @@ package test.parser.grammar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import junit.framework.Assert;
+import main.lexer.LexicalToken;
+import main.parser.grammar.Analyzer;
 import main.parser.grammar.ContextFreeEmptyWord;
 import main.parser.grammar.ContextFreeGrammar;
 import main.parser.grammar.ContextFreeNonTerminal;
 import main.parser.grammar.ContextFreeProduction;
 import main.parser.grammar.ContextFreeSymbol;
 import main.parser.grammar.ContextFreeTerminalSymbol;
+import main.parser.grammar.LL1Table;
+import main.parser.grammar.exceptions.InvalidSentenceException;
 import main.parser.grammar.exceptions.NonDeterministicGrammarException;
+import main.parser.grammar.exceptions.NonTerminalMissingException;
 import main.parser.grammar.exceptions.NotLLLanguageException;
+import main.parser.grammar.exceptions.TerminalMissingException;
 
 import org.junit.Test;
 
@@ -49,16 +53,12 @@ public class TestContextFreeGrammar {
 	}
 	
 	@Test
-	public void testEmptyWordTerminal() {
+	public void testEmptyWordTerminal() throws TerminalMissingException {
 		ContextFreeGrammar grammar = new ContextFreeGrammar();
-		boolean execute = false;
-		for(ContextFreeTerminalSymbol symbol : grammar.terminalSet()) {
-			execute = true;
-			Assert.assertTrue(symbol.productionsForSymbol().isEmpty());
-		}
-		if(!execute) {
-			Assert.fail("Shouldn't skip for loop.");
-		}
+		ContextFreeTerminalSymbol empty = grammar.getTerminalFor("");
+		if(empty == null)
+			Assert.fail("Should have empty.");
+		Assert.assertEquals(0, empty.productionsForSymbol().size());
 	}
 	
 	@Test
@@ -224,6 +224,104 @@ public class TestContextFreeGrammar {
 		production.addSymbol(a);
 		b.addProduction(production);
 		grammar.createTable();
+	}
+	
+	@Test
+	public void testEOFConsult() throws NonDeterministicGrammarException, NotLLLanguageException, TerminalMissingException, NonTerminalMissingException {
+		ContextFreeGrammar grammar = new ContextFreeGrammar();
+		grammar.createNonTerminalForString("S");
+		ContextFreeNonTerminal s = grammar.getNonTerminalFor("s");
+		Assert.assertTrue(s != null);
+		ContextFreeProduction prod = new ContextFreeProduction();
+		prod.addSymbol(ContextFreeEmptyWord.getInstance());
+		s.addProduction(prod);
+		LL1Table table = grammar.createTable();
+		Analyzer analyzer = new Analyzer(grammar, new ArrayList<LexicalToken>());
+		Assert.assertEquals(prod, table.consult(s, analyzer));
+	}
+	
+	@Test
+	public void testLexicalListConsult() throws NotLLLanguageException, NonDeterministicGrammarException, TerminalMissingException {
+		ContextFreeGrammar grammar = new ContextFreeGrammar();
+		ContextFreeNonTerminal e = grammar.createNonTerminalForString("E");
+		ContextFreeNonTerminal e1 = grammar.createNonTerminalForString("E1");
+		ContextFreeNonTerminal t = grammar.createNonTerminalForString("T");
+		ContextFreeNonTerminal t1 = grammar.createNonTerminalForString("T1");
+		ContextFreeNonTerminal f = grammar.createNonTerminalForString("F");
+		ContextFreeTerminalSymbol plus = grammar.createTerminalForString("plus");
+		ContextFreeTerminalSymbol times = grammar.createTerminalForString("times");
+		ContextFreeTerminalSymbol leftPar = grammar.createTerminalForString("leftpar");
+		ContextFreeTerminalSymbol rightPar = grammar.createTerminalForString("rightpar");
+		ContextFreeTerminalSymbol id = grammar.createTerminalForString("id");
+		List<ContextFreeSymbol> productions = new ArrayList<>();
+		productions.add(t);
+		productions.add(e1);
+		e.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(plus);
+		productions.add(t);
+		productions.add(e1);
+		e1.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(ContextFreeEmptyWord.getInstance());
+		e1.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(f);
+		productions.add(t1);
+		t.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(times);
+		productions.add(f);
+		productions.add(t1);
+		t1.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(ContextFreeEmptyWord.getInstance());
+		t1.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(leftPar);
+		productions.add(e);
+		productions.add(rightPar);
+		f.addProduction(productions);
+		productions = new ArrayList<>();
+		productions.add(id);
+		f.addProduction(productions);
+		LL1Table table = grammar.createTable();
+		List<LexicalToken> tokenList = new ArrayList<>();
+		LexicalToken token = new LexicalToken("id", "abacate");
+		tokenList.add(token);
+		token = new LexicalToken("plus", "+");
+		tokenList.add(token);
+		token = new LexicalToken("id", "mamao");
+		tokenList.add(token);
+		token = new LexicalToken("times", "*");
+		tokenList.add(token);
+		token = new LexicalToken("id", "limao");
+		tokenList.add(token);
+		Analyzer analyzer = new Analyzer(grammar, tokenList);
+		try {
+			analyzer.analyze();
+		} catch (InvalidSentenceException e3) {
+			Assert.fail();
+		}
+		tokenList = new ArrayList<>();
+		token = new LexicalToken("id", "mamao");
+		tokenList.add(token);
+		token = new LexicalToken("plus", "+");
+		tokenList.add(token);
+		token = new LexicalToken("id", "mamao");
+		tokenList.add(token);
+		token = new LexicalToken("times", "*");
+		tokenList.add(token);
+		token = new LexicalToken("times", "*");
+		tokenList.add(token);
+		token = new LexicalToken("id", "mamao");
+		tokenList.add(token);
+		analyzer = new Analyzer(grammar, tokenList);
+		try {
+			analyzer.analyze();
+			Assert.fail();
+		} catch (InvalidSentenceException e2) {
+		}
 	}
 
 }

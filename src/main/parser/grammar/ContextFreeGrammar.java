@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 import main.parser.grammar.exceptions.NonDeterministicGrammarException;
+import main.parser.grammar.exceptions.NonTerminalMissingException;
 import main.parser.grammar.exceptions.NotLLLanguageException;
+import main.parser.grammar.exceptions.TerminalMissingException;
 
 import sun.awt.geom.Crossings.NonZero;
 
@@ -25,11 +27,17 @@ public class ContextFreeGrammar {
 		terminalMap.put("eof", ContextFreeEOF.getInstance());
 	}
 	
-	public ContextFreeTerminalSymbol getTerminalFor(String term) {
+	public ContextFreeTerminalSymbol getTerminalFor(String term) throws TerminalMissingException {
+		if(!terminalMap.containsKey(term.toLowerCase())) {
+			throw new TerminalMissingException(term);
+		}
 		return terminalMap.get(term.toLowerCase());
 	}
 	
-	public ContextFreeNonTerminal getNonTerminalFor(String nonTerminal) {
+	public ContextFreeNonTerminal getNonTerminalFor(String nonTerminal) throws NonTerminalMissingException {
+		if(!nonTerminalMap.containsKey(nonTerminal.toLowerCase())) {
+			throw new NonTerminalMissingException(nonTerminal);
+		}
 		return nonTerminalMap.get(nonTerminal.toLowerCase());
 	}
 

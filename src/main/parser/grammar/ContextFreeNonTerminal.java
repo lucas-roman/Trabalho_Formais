@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import main.parser.grammar.exceptions.NonDeterministicGrammarException;
+import main.parser.grammar.exceptions.TerminalMissingException;
 
 public class ContextFreeNonTerminal implements ContextFreeSymbol {
 
@@ -151,7 +152,7 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 	@Override
 	public ContextFreeProduction consultTable(
 			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table,
-			Analyzer analyzer) {
+			Analyzer analyzer) throws TerminalMissingException {
 		ContextFreeTerminalSymbol terminal = analyzer.currentTerminalSymbol();
 		if(!table.get(this).containsKey(terminal)) {
 			return new ProductionError();

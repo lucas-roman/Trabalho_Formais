@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import main.parser.grammar.exceptions.TerminalMissingException;
+
 public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTerminalSymbol {
 	
 	private String terminalValue;
@@ -70,7 +72,7 @@ public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTermin
 	@Override
 	public ContextFreeProduction consultTable(
 			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table,
-			Analyzer analyzer) {
+			Analyzer analyzer) throws TerminalMissingException {
 		if(analyzer.currentTerminalSymbol().equals(this)) {
 			analyzer.advanceToken();
 			return new ContextFreeProduction();

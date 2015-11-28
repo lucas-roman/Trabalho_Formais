@@ -64,7 +64,9 @@ public class ContextFreeProduction {
 		for(ContextFreeSymbol symbol : productions) {
 			result += symbol + " ";
 		}
-		result = result.substring(0, result.length() - 1);
+		if(result.length() > 0) {
+			result = result.substring(0, result.length() - 1);
+		}
 		return result;
 	}
 	
@@ -83,6 +85,10 @@ public class ContextFreeProduction {
 	@Override
 	public int hashCode() {
 		return productions.hashCode();
+	}
+
+	public boolean checkValid() {
+		return true;
 	}
 
 }
