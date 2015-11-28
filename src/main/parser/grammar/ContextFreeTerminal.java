@@ -74,7 +74,9 @@ public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTermin
 			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table,
 			Analyzer analyzer) throws TerminalMissingException {
 		if(analyzer.currentTerminalSymbol().equals(this)) {
+			String tag = analyzer.getCurrentTokenTag();
 			analyzer.advanceToken();
+			analyzer.addTagToTree(tag);
 			return new ContextFreeProduction();
 		}
 		return new ProductionError();

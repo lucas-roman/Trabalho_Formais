@@ -17,6 +17,8 @@ public class Analyzer {
 
 	private ContextFreeGrammar grammar;
 
+	private ParseTree parseTree;
+
 	private int i = 0;
 
 	public void advanceToken() {
@@ -32,6 +34,10 @@ public class Analyzer {
 			throws TerminalMissingException {
 		return grammar.getTerminalFor(currentToken.getTag());
 	}
+	
+	public String getCurrentTokenTag() {
+		return currentToken.getWord();
+	}
 
 	public Analyzer(ContextFreeGrammar grammar, List<LexicalToken> tokenList) {
 		this.grammar = grammar;
@@ -43,9 +49,9 @@ public class Analyzer {
 		}
 	}
 
-	public Stack<ContextFreeProduction> analyze()
+	public boolean analyze()
 			throws NotLLLanguageException, NonDeterministicGrammarException,
-			TerminalMissingException, InvalidSentenceException {
+			TerminalMissingException {
 		LL1Table table = grammar.createTable();
 		Stack<ContextFreeProduction> resultStack = new Stack<>();
 		ContextFreeProduction production = new ContextFreeProduction();
@@ -61,7 +67,7 @@ public class Analyzer {
 				resultStack.push(productionToApply);
 			}
 			if (!productionToApply.checkValid()) {
-				throw new InvalidSentenceException();
+				return false;
 			}
 			List<ContextFreeSymbol> symbols = productionToApply.getValue();
 			for (int i = symbols.size() - 1; i >= 0; i--) {
@@ -69,7 +75,26 @@ public class Analyzer {
 			}
 
 		}
-		return resultStack;
+		return true;
+	}
+
+	public void addToTree(ContextFreeProduction contextFreeProduction) {
+		if (parseTree == null) {
+			parseTree = new ParseTree(grammar.head());
+		}
+		parseTree.addChildren(contextFreeProduction);
+
+	}
+
+	public ParseTree getParseTree() throws NotLLLanguageException,
+			NonDeterministicGrammarException, TerminalMissingException {
+		if(parseTree == null)
+			analyze();
+		return parseTree;
+	}
+
+	public void addTagToTree(String tag) {
+		parseTree.addTag(tag);
 	}
 
 }

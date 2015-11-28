@@ -298,11 +298,7 @@ public class TestContextFreeGrammar {
 		token = new LexicalToken("id", "limao");
 		tokenList.add(token);
 		Analyzer analyzer = new Analyzer(grammar, tokenList);
-		try {
-			analyzer.analyze();
-		} catch (InvalidSentenceException e3) {
-			Assert.fail();
-		}
+		Assert.assertTrue(analyzer.analyze());
 		tokenList = new ArrayList<>();
 		token = new LexicalToken("id", "mamao");
 		tokenList.add(token);
@@ -317,11 +313,7 @@ public class TestContextFreeGrammar {
 		token = new LexicalToken("id", "mamao");
 		tokenList.add(token);
 		analyzer = new Analyzer(grammar, tokenList);
-		try {
-			analyzer.analyze();
-			Assert.fail();
-		} catch (InvalidSentenceException e2) {
-		}
+		Assert.assertFalse(analyzer.analyze());
 	}
 
 }

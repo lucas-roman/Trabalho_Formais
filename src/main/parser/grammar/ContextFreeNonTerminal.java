@@ -157,6 +157,7 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 		if(!table.get(this).containsKey(terminal)) {
 			return new ProductionError();
 		}
+		analyzer.addToTree(table.get(this).get(terminal));
 		return table.get(this).get(terminal);
 	}
 
