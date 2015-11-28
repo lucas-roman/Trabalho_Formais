@@ -1,8 +1,11 @@
 package main.parser.grammar;
 
 import java.util.List;
+import java.util.Stack;
 
 import main.lexer.LexicalToken;
+import main.parser.grammar.exceptions.NonDeterministicGrammarException;
+import main.parser.grammar.exceptions.NotLLLanguageException;
 
 public class Analyzer {
 	
@@ -39,9 +42,12 @@ public class Analyzer {
 		}
 	}
 	
-	public boolean analyze() {
+	public boolean analyze() throws NotLLLanguageException, NonDeterministicGrammarException {
 		//TODO
 		//SHOULD USE GRAMMAR AND A STACK TO ANALYZE TOKEN LIST.
+		LL1Table table = grammar.createTable();
+		Stack<ContextFreeSymbol> stack = new Stack<>();
+		stack.push(grammar.head());
 		return false;
 	}
 

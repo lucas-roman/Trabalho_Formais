@@ -190,4 +190,8 @@ public class ContextFreeGrammar {
 		Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> follow = follow();
 		return new LL1Table(first, follow);
 	}
+
+	public ContextFreeSymbol head() {
+		return head;
+	}
 }
