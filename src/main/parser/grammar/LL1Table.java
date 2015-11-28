@@ -44,5 +44,9 @@ public class LL1Table {
 		}
 		System.out.println(table);
 	}
+	
+	public ContextFreeProduction consult(ContextFreeSymbol symbolToConsult, Analyzer analyzer) {
+		return symbolToConsult.consultTable(table, analyzer);
+	}
 
 }

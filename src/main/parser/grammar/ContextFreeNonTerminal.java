@@ -148,4 +148,16 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 	}
 
 
+	@Override
+	public ContextFreeProduction consultTable(
+			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table,
+			Analyzer analyzer) {
+		ContextFreeTerminalSymbol terminal = analyzer.currentTerminalSymbol();
+		if(!table.get(this).containsKey(terminal)) {
+			return new ProductionError();
+		}
+		return table.get(this).get(terminal);
+	}
+
+
 }

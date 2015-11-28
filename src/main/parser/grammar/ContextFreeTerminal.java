@@ -67,4 +67,17 @@ public class ContextFreeTerminal implements ContextFreeSymbol, ContextFreeTermin
 		return false;
 	}
 
+	@Override
+	public ContextFreeProduction consultTable(
+			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table,
+			Analyzer analyzer) {
+		if(analyzer.currentTerminalSymbol().equals(this)) {
+			analyzer.advanceToken();
+			return new ContextFreeProduction();
+		}
+		return new ProductionError();
+	}
+
+
+
 }

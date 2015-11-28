@@ -19,5 +19,8 @@ public interface ContextFreeSymbol {
 	public boolean addFollowOf(
 			Map<ContextFreeNonTerminal, Set<ContextFreeTerminalSymbol>> returnMap,
 			ContextFreeNonTerminal nt);
+
+	public ContextFreeProduction consultTable(
+			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table, Analyzer analyzer);
 	
 }

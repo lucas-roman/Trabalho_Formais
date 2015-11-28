@@ -57,4 +57,12 @@ public class ContextFreeEmptyWord implements ContextFreeSymbol, ContextFreeTermi
 		return false;
 	}
 
+	@Override
+	public ContextFreeProduction consultTable(
+			Map<ContextFreeNonTerminal, Map<ContextFreeTerminalSymbol, ContextFreeProduction>> table,
+			Analyzer analyzer) {
+		return new ContextFreeProduction();
+	}
+
+
 }

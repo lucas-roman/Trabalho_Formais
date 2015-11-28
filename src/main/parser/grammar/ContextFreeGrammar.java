@@ -22,15 +22,24 @@ public class ContextFreeGrammar {
 		terminalMap = new HashMap<>();
 		terminalMap.put("", ContextFreeEmptyWord.getInstance());
 		nonTerminalMap = new HashMap<>();
+		terminalMap.put("eof", ContextFreeEOF.getInstance());
+	}
+	
+	public ContextFreeTerminalSymbol getTerminalFor(String term) {
+		return terminalMap.get(term.toLowerCase());
+	}
+	
+	public ContextFreeNonTerminal getNonTerminalFor(String nonTerminal) {
+		return nonTerminalMap.get(nonTerminal.toLowerCase());
 	}
 
 	// Returns the terminal symbol which corresponds to the given String.
 	// The String "" corresponds to the empty word.
 	public ContextFreeTerminalSymbol createTerminalForString(String val) {
-		if (!terminalMap.containsKey(val)) {
-			terminalMap.put(val, new ContextFreeTerminal(val));
+		if (!terminalMap.containsKey(val.toLowerCase())) {
+			terminalMap.put(val.toLowerCase(), new ContextFreeTerminal(val));
 		}
-		return terminalMap.get(val);
+		return terminalMap.get(val.toLowerCase());
 	}
 
 	public Set<ContextFreeTerminalSymbol> terminalSet() {
@@ -38,14 +47,14 @@ public class ContextFreeGrammar {
 	}
 
 	public ContextFreeNonTerminal createNonTerminalForString(String val) {
-		if (!nonTerminalMap.containsKey(val)) {
+		if (!nonTerminalMap.containsKey(val.toLowerCase())) {
 			ContextFreeNonTerminal nt = new ContextFreeNonTerminal(val);
 			if (head == null) {
 				head = nt;
 			}
-			nonTerminalMap.put(val, nt);
+			nonTerminalMap.put(val.toLowerCase(), nt);
 		}
-		return nonTerminalMap.get(val);
+		return nonTerminalMap.get(val.toLowerCase());
 	}
 
 	public Set<ContextFreeNonTerminal> nonTerminalSet() {
@@ -58,7 +67,7 @@ public class ContextFreeGrammar {
 		reorganizeTransitions(symbolsThatDeriveEmptyWord);
 		if (symbolsThatDeriveEmptyWord.contains(head)) {
 			ContextFreeNonTerminal oldHead = head;
-			head = createNonTerminalForString("NEWHEADEMPYWORD");
+			head = createNonTerminalForString("--newheademptyword--");
 			ContextFreeProduction toOldHead = new ContextFreeProduction();
 			toOldHead.addSymbol(oldHead);
 			head.addProduction(toOldHead);
