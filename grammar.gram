@@ -3,12 +3,12 @@ S -> program id begin {FUNCT} period
 FUNCT -> funct id leftpar {VAR} rightpar begin {CMD} end
 
 CMD -> {IF} | {FOR}
+CMDBODY2 -> BODY2
+CMDBODY2 -> 
 
-IF -> if leftpar {CONDICAO} rightpar begin {BODY} end | if leftpar {CONDICAO} rightpar begin {BODY} else {BODY} end
+IF -> if leftpar {BOOLEXP} rightpar begin {BODY} end | if leftpar {BOOLEXP} rightpar begin {BODY} else {BODY} end
 
-CONDICAO -> id equals id | id different id | id greatereq id | id lesseq id | id greater id | id less id | id equals id or {CONDICAO}| id different id or {CONDICAO}| id greatereq id or {CONDICAO}| id lesseq id or {CONDICAO}| id greater id or {CONDICAO}| id less id or {CONDICAO}| id equals id and {CONDICAO}| id different id and {CONDICAO}| id greatereq id and {CONDICAO}| id lesseq id and {CONDICAO}| id greater id and {CONDICAO}| id less id and {CONDICAO}
-
-BODY -> {DECLAVAR} {BODY1} | {DECLAVAR} | return id | {CMD} {BODY2} | {CMD} | {NUMEXPRESSION} {BODY3} | {NUMEXPRESSION} | print leftpar string rightpar semicolon {BODY}
+BODY -> {DECLAVAR} {DECLAVARBODY1} | return id | {CMD} {CMDBODY2} | {NUMEXPRESSION} {NUMEXPRESSIONBODY3}| print leftpar string rightpar semicolon {BODY1}
 BODY1 -> {BODY}
 BODY1 -> 
 BODY2 -> {BODY}
@@ -21,6 +21,8 @@ DECLAVAR1 -> {DECLAVAR}
 DECLAVAR1 -> 
 DECLAVAR2 -> {DECLAVAR}
 DECLAVAR2 -> 
+DECLAVARBODY1 -> BODY1
+DECLAVARBODY -> 
 
 BOOLEXP -> {BOOLEXP2} {BOOLEXPNEW}
 BOOLEXPNEW -> or {BOOLEXP2} {BOOLEXPNEW}
@@ -48,3 +50,6 @@ NUMEXPRESSIONLINE ->	sum {T}{NUMEXPRESSIONLINE} | minus {T}{NUMEXPRESSIONLINE} |
 T ->	{F}{TLINE}
 TLINE ->	times {F} | division {F}{TLINE} | {EPSOLON}
 F -> leftpar {NUMEXPRESSION} rightpar | id
+
+NUMEXPRESSIONBODY3 -> BODY3
+NUMEXPRESSIONBODY3 ->
