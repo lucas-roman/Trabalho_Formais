@@ -1,4 +1,4 @@
-S -> program id begin {FUNCT} end
+S -> program id begin {FUNCT} .
 
 FUNCT -> funct id ( {VAR} ) begin {CMD} end
 
@@ -8,18 +8,19 @@ IF -> if ( {CONDICAO} ) begin {BODY} end | if ( {CONDICAO} ) begin {BODY} else {
 
 CONDICAO -> id equals id | id different id | id greatereq id | id lesseq id | id greater id | id less id | id equals id or {CONDICAO}| id different id or {CONDICAO}| id greatereq id or {CONDICAO}| id lesseq id or {CONDICAO}| id greater id or {CONDICAO}| id less id or {CONDICAO}| id equals id and {CONDICAO}| id different id and {CONDICAO}| id greatereq id and {CONDICAO}| id lesseq id and {CONDICAO}| id greater id and {CONDICAO}| id less id and {CONDICAO}
 
-BODY -> {DECLAVAR} {BODY1} | {DECLAVAR} | return id | {CMD} {BODY2} | {CMD} 
+BODY -> {DECLAVAR} {BODY1} | {DECLAVAR} | return id | {CMD} {BODY2} | {CMD} | {NUMEXPRESSION} {BODY3} | {NUMEXPRESSION} | print(string); {BODY}
 BODY1 -> {BODY}
 BODY1 -> 
 BODY2 -> {BODY}
 BODY2 -> 
+BODY3 -> {BODY}
+BODY3 -> 
 
 DECLAVAR -> {TIPO} id, {DECLAVAR1} | {TIPO} id | {TIPO} id assign {VAL}, {DECLAVAR2} | {TIPO} id assign id 
 DECLAVAR1 -> {DECLAVAR}
 DECLAVAR1 -> 
 DECLAVAR2 -> {DECLAVAR}
 DECLAVAR2 -> 
-
 
 BOOLEXP -> {BOOLEXP2} {BOOLEXPNEW}
 BOOLEXPNEW -> or {BOOLEXP2} {BOOLEXPNEW}
@@ -34,23 +35,16 @@ BOOLEXP4 -> {BOOLEXP5} {BOOLEXPNEW4}
 BOOLEXPNEW4 -> greatereq {BOOLEXP5} {BOOLEXPNEW4} | lesseq {BOOLEXP5} {boole    xpnew4} | greater {BOOLEXP5} {BOOLEXPNEW4} | less {BOOLEXP5} {BOOLEXPNEW4}
 BOOLEXP5 -> not {BOOLEXP} | boolean | id | leftpar {BOOLEXP} rightpar | number | string
 
-
-VAL -> 
+VAL -> number| id
 
 VAR -> {TIPO} id
 
 TIPO -> int|string|float|char|bool|int\[\]|string\[\]|float\[\]|char\[\]|bool\[\]|int\[\]\[\]|string\[\]\[\]|float\[\]\[\]|char\[\]\[\]|bool\[\]\[\]
 
-
-FOR -> for ( {VAR} assign number to number ) begin {BODY} end
-
-
+FOR -> for ( {VAR} assign {VAL} to {VAL} ) begin {BODY} end
 
 NUMEXPRESSION -> 		{T}{NUMEXPRESSIONLINE}
 NUMEXPRESSIONLINE ->	sum {T}{NUMEXPRESSIONLINE} | minus {T}{NUMEXPRESSIONLINE} | {EPSOLON}
 T ->	{F}{TLINE}
 TLINE ->	times {F} | division {F}{TLINE} | {EPSOLON}
-F -> (NUMEXPRESSION) | id
-
-
-EPSOLON -> 
+F -> ({NUMEXPRESSION}) | id
