@@ -204,8 +204,8 @@ public class TestContextFreeGrammar {
 		Assert.assertTrue(f.first().size()==2);
 	}
 	
-	@Test(expected=NonDeterministicGrammarException.class)
-	public void testDetectNonDeterministicGrammar() throws NotLLLanguageException, NonDeterministicGrammarException {
+	@Test
+	public void testDetectNonDeterministicGrammar() throws NotLLLanguageException{
 		ContextFreeGrammar grammar = new ContextFreeGrammar();
 		ContextFreeNonTerminal s = grammar.createNonTerminalForString("S");
 		ContextFreeTerminalSymbol a = grammar.createTerminalForString("a");
@@ -223,7 +223,11 @@ public class TestContextFreeGrammar {
 		production = new ContextFreeProduction();
 		production.addSymbol(a);
 		b.addProduction(production);
-		grammar.createTable();
+		try {
+			grammar.createTable();
+			Assert.fail();
+		} catch (NonDeterministicGrammarException e) {
+		}
 	}
 	
 	@Test

@@ -49,16 +49,7 @@ public class Control {
 			InvalidSentenceException {
 		StringLexicalAnalyzer lexical;
 		if (langSpecificationFile.equals("")) {
-			try {
 				lexical = new StringLexicalAnalyzer(path);
-			} catch (FileNotFoundException e) {
-				System.out
-						.println("Couldn't find file lang.aut. Please supply path to language file.");
-				Scanner scan = new Scanner(System.in);
-				String scanned = scan.nextLine();
-				scan.close();
-				lexical = new StringLexicalAnalyzer(path, scanned);
-			}
 		} else {
 			lexical = new StringLexicalAnalyzer(path, langSpecificationFile);
 		}

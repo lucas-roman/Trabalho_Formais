@@ -113,7 +113,7 @@ public class ContextFreeNonTerminal implements ContextFreeSymbol {
 			for(ContextFreeSymbol symbol : productionList) {
 				for(ContextFreeTerminalSymbol valToPut : symbol.first().keySet()) {
 					if(returnMap.containsKey(valToPut)) {
-						throw new NonDeterministicGrammarException();
+						throw new NonDeterministicGrammarException(valToPut, production, returnMap.get(valToPut));
 					}
 					returnMap.put(valToPut,production);
 				}
