@@ -7,6 +7,9 @@ for
 TO
 to
 
+PRINT
+print
+
 RETURN
 return
 
