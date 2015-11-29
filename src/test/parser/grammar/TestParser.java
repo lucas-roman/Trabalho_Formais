@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 
 import main.analyzer.Control;
-import main.fileio.ContextFreeGrammarIO;
 import main.fileio.exceptions.IllegalOrderOfTextStructure;
 import main.fileio.exceptions.IllegalStartOfText;
 import main.fileio.exceptions.IllegalStructureOfText;
@@ -14,7 +13,6 @@ import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
-import main.parser.grammar.ContextFreeGrammar;
 import main.parser.grammar.exceptions.InvalidSentenceException;
 import main.parser.grammar.exceptions.NonDeterministicGrammarException;
 import main.parser.grammar.exceptions.NotLLLanguageException;
@@ -34,7 +32,7 @@ public class TestParser {
 			NotLLLanguageException, NonDeterministicGrammarException,
 			TerminalMissingException, InvalidSentenceException {
 		Control control = new Control("numbers/lex", "numbers/parse");
-		control.analyze("numbers/numberexp");
+		System.out.println(control.analyze("numbers/numberexp"));
 	}
 
 }
