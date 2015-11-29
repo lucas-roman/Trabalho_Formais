@@ -7,7 +7,7 @@
  * Copyright c 2015
  */
 
-package main.lexer.model.commandline.exceptions;
+package main.fileio.exceptions;
 
-public class IllegalStartOfText extends Exception {
+public class IllegalOrderOfTextStructure extends Exception {
 }

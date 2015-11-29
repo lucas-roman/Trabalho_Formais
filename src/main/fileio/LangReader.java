@@ -7,7 +7,7 @@
  * Copyright c 2015
  */
 
-package main.lexer.model.commandline;
+package main.fileio;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import main.fileio.exceptions.IllegalStructureOfText;
 import main.lexer.Lexema;
-import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
 /*

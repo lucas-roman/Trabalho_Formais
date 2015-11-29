@@ -15,6 +15,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.fileio.AutomataIO;
+import main.fileio.FileToString;
+import main.fileio.LangReader;
+import main.fileio.exceptions.IllegalOrderOfTextStructure;
+import main.fileio.exceptions.IllegalStartOfText;
+import main.fileio.exceptions.IllegalStructureOfText;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.DeterministicException;
 import main.lexer.automata.exceptions.IllegalAutomataException;
@@ -22,12 +28,6 @@ import main.lexer.automata.exceptions.InitialStateMissingException;
 import main.lexer.automata.exceptions.InvalidStateException;
 import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.exceptions.NonDeterministicException;
-import main.lexer.model.commandline.AutomataIO;
-import main.lexer.model.commandline.FileToString;
-import main.lexer.model.commandline.LangReader;
-import main.lexer.model.commandline.exceptions.IllegalOrderOfTextStructure;
-import main.lexer.model.commandline.exceptions.IllegalStartOfText;
-import main.lexer.model.commandline.exceptions.IllegalStructureOfText;
 import main.lexer.regularexpression.exceptions.IllegalRegularExpressionException;
 
 /*

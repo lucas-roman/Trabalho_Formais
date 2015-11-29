@@ -7,7 +7,7 @@
  * Copyright c 2015
  */
 
-package main.lexer.model.commandline;
+package main.fileio;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

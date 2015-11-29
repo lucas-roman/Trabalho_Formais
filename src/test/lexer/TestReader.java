@@ -11,7 +11,7 @@ package test.lexer;
 
 import java.io.FileNotFoundException;
 
-import main.lexer.model.commandline.FileToString;
+import main.fileio.FileToString;
 
 import org.junit.Test;
 

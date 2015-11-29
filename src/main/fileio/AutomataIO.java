@@ -7,7 +7,7 @@
  * Copyright c 2015
  */
 
-package main.lexer.model.commandline;
+package main.fileio;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +17,8 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 import java.util.Set;
 
+import main.fileio.exceptions.IllegalOrderOfTextStructure;
+import main.fileio.exceptions.IllegalStartOfText;
 import main.lexer.automata.Automata;
 import main.lexer.automata.exceptions.IllegalAutomataException;
 import main.lexer.automata.exceptions.InitialStateMissingException;
@@ -25,8 +27,6 @@ import main.lexer.automata.exceptions.MissingStateException;
 import main.lexer.automata.factory.AutomataBuilder;
 import main.lexer.automata.structure.graph.AutomataState;
 import main.lexer.automata.structure.graph.AutomataStructureGraphFactory;
-import main.lexer.model.commandline.exceptions.IllegalOrderOfTextStructure;
-import main.lexer.model.commandline.exceptions.IllegalStartOfText;
 
 /*
  * This class reads an automata from an given file and then creates it.
