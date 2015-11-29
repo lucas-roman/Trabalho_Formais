@@ -126,6 +126,9 @@ public class ContextFreeGrammar {
 	@Override
 	public String toString() {
 		String result = "";
+		if(head == null) {
+			return result;
+		}
 		result += head + " -> ";
 		for (ContextFreeProduction p : head.productionsForSymbol()) {
 			result += p + " | ";

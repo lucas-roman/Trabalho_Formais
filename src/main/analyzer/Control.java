@@ -44,7 +44,9 @@ public class Control {
 			MissingStateException, InvalidStateException,
 			InitialStateMissingException, IllegalAutomataException,
 			DeterministicException, FileNotFoundException, IllegalStartOfText,
-			IllegalOrderOfTextStructure, NotLLLanguageException, NonDeterministicGrammarException, TerminalMissingException, InvalidSentenceException {
+			IllegalOrderOfTextStructure, NotLLLanguageException,
+			NonDeterministicGrammarException, TerminalMissingException,
+			InvalidSentenceException {
 		StringLexicalAnalyzer lexical;
 		if (langSpecificationFile.equals("")) {
 			try {
@@ -61,9 +63,10 @@ public class Control {
 			lexical = new StringLexicalAnalyzer(path, langSpecificationFile);
 		}
 		List<LexicalToken> tokens = lexical.analyze();
-		ContextFreeGrammar grammar = new ContextFreeGrammarIO().readGrammar(grammarSpecificationFile);
+		ContextFreeGrammar grammar = new ContextFreeGrammarIO()
+				.readGrammar(grammarSpecificationFile);
 		Analyzer analyzer = new Analyzer(grammar, tokens);
-		if(!analyzer.analyze()) {
+		if (!analyzer.analyze()) {
 			throw new InvalidSentenceException();
 		}
 		return analyzer.getParseTree();

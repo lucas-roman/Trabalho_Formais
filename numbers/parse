@@ -1,0 +1,7 @@
+E -> {T} {E1}
+E1 -> plus {T} {E1}
+E1 ->
+T -> {F} {T1}
+T1 -> times {F} {T1}
+T1 -> 
+F -> lpar {E} rpar | id | number

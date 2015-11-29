@@ -71,9 +71,15 @@ public class StringLexicalAnalyzer implements ILexicalAnalyzer {
 			} catch (NonDeterministicException e) {
 			}
 			if (token.equals("NOTRANSITION")) {
-				LexicalToken lexToken = new LexicalToken(prevToken, read);
-				previous = i - 1;
-				i--;
+				LexicalToken lexToken;
+				if (prevToken.equals("NOTRANSITION")) {
+					lexToken = new LexicalToken("ERROR", read + fileContents.charAt(i-1));
+					previous = i;
+				} else {
+					lexToken = new LexicalToken(prevToken, read);
+					previous = i - 1;
+					i--;
+				}
 				returnList.add(lexToken);
 			}
 			read = fileContents.substring(previous, i);
