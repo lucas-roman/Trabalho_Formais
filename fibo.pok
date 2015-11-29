@@ -1,18 +1,17 @@
 program fibo begin
 
-funct fibonacci(int _fibo) begin
-    if(_fibo == 0 or _fibo == 1) begin
-        return 1;
-    else
-        int a = 1
-        int b = 1
-        for(i = 1 to _fibo) begin
-            int temp = a;
-            a = b;
-            b = temp + b;
-        end
-        print("result of fibo " + _a); 
-        return _a;
-    end
+	funct fibonacci(int _fibo) begin
+	    if(_fibo == 0 or _fibo == 1) begin
+	        return 1;
+	    else
+	        int a = 1
+	        int b = 1
+	        for(i = 1 to _fibo) begin
+	            int temp = a;
+	            a = b;
+	            b = temp + b;
+	        end
+	        print("result of fibo " + _a); 
+	        return _a;
+	    end
 end
-.
