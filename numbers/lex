@@ -4,6 +4,9 @@ number
 plus
 \+
 
+power
+\*\*
+
 times
 \*
 
@@ -15,3 +18,9 @@ lpar
 
 rpar
 \)
+
+divide
+\/
+
+minus
+\-

@@ -1,0 +1,65 @@
+E -> T E1 
+T -> P T1 
+P -> F P1 
+F -> number 
+number -> 1
+P1 -> EPSLON 
+T1 -> EPSLON 
+E1 -> plus T E1 
+plus -> +
+T -> P T1 
+P -> F P1 
+F -> lpar E rpar 
+lpar -> (
+E -> T E1 
+T -> P T1 
+P -> F P1 
+F -> number 
+number -> 2
+P1 -> EPSLON 
+T1 -> times P T1 
+times -> *
+P -> F P1 
+F -> id 
+id -> abacate
+P1 -> EPSLON 
+T1 -> EPSLON 
+E1 -> plus T E1 
+plus -> +
+T -> P T1 
+P -> F P1 
+F -> id 
+id -> melao
+P1 -> EPSLON 
+T1 -> EPSLON 
+E1 -> EPSLON 
+rpar -> )
+P1 -> EPSLON 
+T1 -> EPSLON 
+E1 -> plus T E1 
+plus -> +
+T -> P T1 
+P -> F P1 
+F -> number 
+number -> 87
+P1 -> EPSLON 
+T1 -> divide P T1 
+divide -> /
+P -> F P1 
+F -> id 
+id -> jajaja
+P1 -> power F P1 
+power -> **
+F -> number 
+number -> 98
+P1 -> EPSLON 
+T1 -> EPSLON 
+E1 -> minus T E1 
+minus -> -
+T -> P T1 
+P -> F P1 
+F -> number 
+number -> 27
+P1 -> EPSLON 
+T1 -> EPSLON 
+E1 -> EPSLON 

@@ -1,7 +1,10 @@
 E -> {T} {E1}
-E1 -> plus {T} {E1}
+E1 -> plus {T} {E1} | minus {T} {E1}
 E1 ->
-T -> {F} {T1}
-T1 -> times {F} {T1}
+T -> {P} {T1}
+T1 -> times {P} {T1} | divide {P} {T1}
 T1 -> 
+P -> {F} {P1}
+P1 -> power {F} {P1}
+P1 ->
 F -> lpar {E} rpar | id | number
