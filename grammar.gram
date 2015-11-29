@@ -16,7 +16,7 @@ BODY2 ->
 BODY3 -> {BODY}
 BODY3 -> 
 
-DECLAVAR -> {TIPO} id comma {DECLAVAR1} | {TIPO} id | {TIPO} id assign {VAL} comma {DECLAVAR2} | {TIPO} id assign id 
+DECLAVAR -> type id comma {DECLAVAR1} | type id | type id assign {VAL} comma {DECLAVAR2} | type id assign id 
 DECLAVAR1 -> {DECLAVAR}
 DECLAVAR1 -> 
 DECLAVAR2 -> {DECLAVAR}
@@ -39,9 +39,7 @@ BOOLEXP5 -> not {BOOLEXP} | boolean | id | leftpar {BOOLEXP} rightpar | number |
 
 VAL -> number| id
 
-VAR -> {TIPO} id
-
-TIPO -> int|string|float|char|bool|int leftbracket rightbracket|string leftbracket rightbracket|float leftbracket rightbracket|char leftbracket rightbracket|bool leftbracket rightbracket|int leftbracket rightbracket leftbracket rightbracket|string leftbracket rightbracket leftbracket rightbracket|float leftbracket rightbracket leftbracket rightbracket|char leftbracket rightbracket leftbracket rightbracket|bool leftbracket rightbracket leftbracket rightbracket
+VAR -> type id
 
 FOR -> for leftpar {VAR} assign {VAL} to {VAL} rightpar begin {BODY} end
 
